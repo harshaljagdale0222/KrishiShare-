@@ -1,0 +1,303 @@
+import { useState, useEffect } from 'react'
+import {
+  Cloud, Sun, CloudRain, Wind, Droplets,
+  Thermometer, MapPin, RefreshCw,
+  AlertTriangle, Navigation, Sunrise, Sunset,
+  CloudSun, CloudLightning, Waves, Locate
+} from 'lucide-react'
+import useLanguageStore from '../../store/languageStore'
+
+// ─── Maharashtra all 36 districts ────────────────────
+const locations = [
+  { name: 'Pune', lat: 18.5204, lon: 73.8567 },
+  { name: 'Mumbai', lat: 18.9220, lon: 72.8347 },
+  { name: 'Nagpur', lat: 21.1458, lon: 79.0882 },
+  { name: 'Nashik', lat: 19.9975, lon: 73.7898 },
+  { name: 'Sambhaji Nagar', lat: 19.8762, lon: 75.3433 },
+  { name: 'Ahmednagar', lat: 19.0948, lon: 74.7480 },
+  { name: 'Solapur', lat: 17.6868, lon: 75.9064 },
+  { name: 'Kolhapur', lat: 16.7050, lon: 74.2433 },
+  { name: 'Amravati', lat: 20.9320, lon: 77.7523 },
+  { name: 'Akola', lat: 20.7002, lon: 77.0082 },
+  { name: 'Latur', lat: 18.4088, lon: 76.5604 },
+  { name: 'Jalgaon', lat: 21.0077, lon: 75.5626 },
+  { name: 'Satara', lat: 17.6805, lon: 74.0183 },
+  { name: 'Sangli', lat: 16.8524, lon: 74.5815 },
+  { name: 'Chandrapur', lat: 19.9510, lon: 79.2961 },
+  { name: 'Parbhani', lat: 19.2644, lon: 76.7713 },
+  { name: 'Dhule', lat: 20.9042, lon: 74.7749 },
+  { name: 'Jalna', lat: 19.8297, lon: 75.8800 },
+  { name: 'Wardha', lat: 20.7453, lon: 78.6022 },
+  { name: 'Dharashiv', lat: 18.1853, lon: 76.0420 },
+  { name: 'Beed', lat: 18.9891, lon: 75.7601 },
+  { name: 'Gadchiroli', lat: 20.1849, lon: 79.9948 },
+  { name: 'Nandurbar', lat: 21.3734, lon: 74.2443 },
+  { name: 'Ratnagiri', lat: 16.9902, lon: 73.3120 },
+  { name: 'Sindhudurg', lat: 16.1158, lon: 73.5583 },
+  { name: 'Raigad', lat: 18.5204, lon: 73.1812 },
+  { name: 'Palghar', lat: 19.6936, lon: 72.7655 },
+  { name: 'Thane', lat: 19.2183, lon: 72.9781 },
+  { name: 'Gondia', lat: 21.4604, lon: 80.1917 },
+  { name: 'Bhandara', lat: 21.1717, lon: 79.6544 },
+  { name: 'Washim', lat: 20.1082, lon: 77.1352 },
+  { name: 'Buldhana', lat: 20.5287, lon: 76.1844 },
+  { name: 'Yavatmal', lat: 20.3888, lon: 78.1204 },
+  { name: 'Hingoli', lat: 19.7182, lon: 77.1477 },
+]
+
+// ─── Weather Themes ────────────────────────────────────
+function getWeatherTheme(code) {
+  if (code === 0) return { icon: '☀️', labelKey: 'swachhAakaash', gradient: 'from-orange-400 via-amber-400 to-yellow-300', textColor: 'text-amber-900' }
+  if (code <= 3) return { icon: '⛅', labelKey: 'partiallyCloudy', gradient: 'from-sky-400 via-blue-400 to-indigo-300', textColor: 'text-blue-900' }
+  if (code <= 49) return { icon: '🌫️', labelKey: 'dhukyachaMausam', gradient: 'from-slate-400 via-gray-400 to-slate-200', textColor: 'text-slate-900' }
+  if (code <= 69 || (code >= 80 && code <= 82)) return { icon: '🌧️', labelKey: 'paaus', gradient: 'from-blue-700 via-cyan-600 to-sky-400', textColor: 'text-white' }
+  if (code <= 79) return { icon: '❄️', labelKey: 'baraf', gradient: 'from-cyan-300 via-blue-100 to-white', textColor: 'text-cyan-900' }
+  return { icon: '⛈️', labelKey: 'thunderstorm', gradient: 'from-indigo-900 via-purple-800 to-slate-700', textColor: 'text-white' }
+}
+
+function getFarmAlerts(current, daily, t) {
+  const alerts = []
+  if (current.temperature_2m > 38) alerts.push({ type:'danger', icon:'🔥', title: t('dangerHeat') || 'Jaast Unta!', msg: t('cropStressMsg') || 'Pikanla paani dya.' })
+  if (current.wind_speed_10m > 40) alerts.push({ type:'danger', icon:'💨', title: t('highWind') || 'Bhari Vara!', msg: t('stopWorkMsg') || 'Sheti kaam band theva.' })
+  if (current.relative_humidity_2m > 85) alerts.push({ type:'warning', icon:'💧', title: t('highHumidity') || 'Jaast Damp!', msg: t('fungalMsg') || 'Fungal disease hovu shakto.' })
+  if (current.precipitation > 2) alerts.push({ type:'info', icon:'🌧️', title: t('rainStarting') || 'Paaus Chalu!', msg: t('machineInside') || 'Machine baher neva.' })
+  if (alerts.length === 0) alerts.push({ type:'good', icon:'✅', title: t('weatherGood') || 'Mausam Changla Aahe!', msg: t('goodVel') || 'Sheti kaamasathi yogya vel.' })
+  return alerts
+}
+
+const alertStyles = {
+  danger:  'bg-red-500/10 border-red-500/20 text-white',
+  warning: 'bg-amber-500/10 border-amber-500/20 text-white',
+  info:    'bg-blue-500/10 border-blue-500/20 text-white',
+  good:    'bg-green-500/10 border-green-500/20 text-white',
+}
+
+export default function WeatherPage() {
+  const [selectedLoc, setSelectedLoc] = useState(null)
+  const [weather,     setWeather]     = useState(null)
+  const [loading,     setLoading]     = useState(true)
+  const [error,       setError]       = useState(null)
+  const [lastUpdated, setLastUpdated] = useState(null)
+  const [isAutoLoc,   setIsAutoLoc]   = useState(false)
+  const { t, language } = useLanguageStore()
+
+  const fetchWeather = async (lat, lon, name) => {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch(
+        `https://api.open-meteo.com/v1/forecast` +
+        `?latitude=${lat}&longitude=${lon}` +
+        `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,` +
+        `weather_code,wind_speed_10m,wind_direction_10m,uv_index` +
+        `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,` +
+        `wind_speed_10m_max,uv_index_max,sunrise,sunset` +
+        `&timezone=Asia%2FKolkata&forecast_days=7`
+      )
+      if (!res.ok) throw new Error('API error')
+      const data = await res.json()
+      setWeather(data)
+      setSelectedLoc({ name, lat, lon })
+      setLastUpdated(new Date().toLocaleTimeString(language === 'en' ? 'en-US' : 'mr-IN', { hour:'2-digit', minute:'2-digit' }))
+    } catch (e) {
+      setError(t('weatherError') || 'Data Load Failed')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const detectLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation not supported")
+      fetchWeather(locations[0].lat, locations[0].lon, locations[0].name)
+      return
+    }
+    setLoading(true)
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords
+        setIsAutoLoc(true)
+        try {
+          // Reverse geocode to get locality name
+          const geoRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
+          const geoData = await geoRes.json()
+          const name = geoData.locality || geoData.city || 'My Location'
+          fetchWeather(latitude, longitude, name)
+        } catch {
+          fetchWeather(latitude, longitude, 'My Location')
+        }
+      },
+      () => {
+        setIsAutoLoc(false)
+        fetchWeather(locations[0].lat, locations[0].lon, locations[0].name)
+      }
+    )
+  }
+
+  useEffect(() => { detectLocation() }, [])
+
+  const current = weather?.current
+  const daily   = weather?.daily
+  const theme = current ? getWeatherTheme(current.weather_code) : getWeatherTheme(0)
+  const alerts = current ? getFarmAlerts(current, daily, t) : []
+  const marathiDays = ['Ravi', 'Som', 'Mangal', 'Budh', 'Guru', 'Shukra', 'Shani']
+
+  return (
+    <div className={`min-h-screen transition-all duration-1000 bg-gradient-to-b ${theme.gradient} overflow-x-hidden pt-10`}>
+      
+      {/* Header & Sync */}
+      <div className="pt-10 px-6 max-w-4xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4 cursor-pointer" onClick={() => fetchWeather(selectedLoc.lat, selectedLoc.lon, selectedLoc.name)}>
+            <div className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center transition hover:bg-white/30 border border-white/20 shadow-xl">
+              <RefreshCw size={24} className={`text-white ${loading ? 'animate-spin' : ''}`} />
+            </div>
+            <div>
+              <h1 className="text-white font-black text-3xl tracking-tighter flex items-center gap-2">
+                {selectedLoc?.name || 'Locating...'} {isAutoLoc && <Navigation size={18} className="text-white animate-pulse" />}
+              </h1>
+              <p className="text-white/70 text-[10px] font-black uppercase tracking-[0.2em]">
+                {lastUpdated ? `Real-Time Sync: ${lastUpdated}` : 'Scanning Atmosphere...'}
+              </p>
+            </div>
+          </div>
+          <button onClick={detectLocation} className="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 flex items-center justify-center text-white shadow-2xl transition hover:scale-110 active:scale-95 group">
+             <Locate size={26} className="group-hover:rotate-90 transition duration-500" />
+          </button>
+        </div>
+
+        {/* District Shortcuts */}
+        <div className="flex gap-3 overflow-x-auto pb-10 mask-fade-right scrollbar-hide px-1">
+          {locations.map((loc) => (
+            <button key={loc.name}
+              onClick={() => { setIsAutoLoc(false); fetchWeather(loc.lat, loc.lon, loc.name) }}
+              className={`px-8 py-3.5 rounded-[20px] text-xs font-black uppercase tracking-widest transition-all duration-500 whitespace-nowrap border
+                ${selectedLoc?.name === loc.name
+                  ? 'bg-white text-gray-900 border-white shadow-xl scale-110'
+                  : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white active:scale-95'
+                }`}>
+              {loc.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6 pb-24 space-y-10 animate-in slide-in-from-bottom-20 duration-1000">
+        
+        {loading && !weather ? (
+          <div className="h-[50vh] flex flex-col items-center justify-center text-white space-y-6">
+            <div className="w-16 h-16 border-4 border-white/10 border-t-white rounded-full animate-spin" />
+            <p className="font-black tracking-[0.4em] uppercase text-[10px] opacity-50">Syncing Satellite Data</p>
+          </div>
+        ) : error ? (
+          <div className="bg-red-500/20 backdrop-blur-3xl p-14 rounded-[50px] text-center border border-red-500/20 shadow-2xl">
+            <p className="text-white font-black text-2xl mb-6">{error}</p>
+            <button onClick={detectLocation} className="bg-white text-red-600 px-10 py-4 rounded-3xl font-black text-sm transition hover:scale-110 shadow-xl">Try Again</button>
+          </div>
+        ) : current && (
+          <>
+            {/* HERO CARD */}
+            <div className="relative group overflow-hidden bg-white/20 backdrop-blur-[40px] rounded-[60px] border border-white/40 shadow-2xl p-10 lg:p-16">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between relative z-10 gap-12">
+                <div className="space-y-4 order-2 lg:order-1 text-center lg:text-left text-white">
+                  <div className="inline-flex items-center gap-2 bg-white/30 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest border border-white/20">
+                    <CloudSun size={14} className="animate-pulse" /> {t(theme.labelKey)}
+                  </div>
+                  <h2 className="text-8xl lg:text-[150px] font-black tracking-[-0.08em] leading-[0.8] drop-shadow-2xl">
+                    {Math.round(current.temperature_2m)}°
+                  </h2>
+                  <p className="font-black text-xl italic opacity-80">Feels like {Math.round(current.apparent_temperature)}° in {selectedLoc.name}</p>
+                </div>
+                <div className="order-1 lg:order-2 flex flex-col items-center">
+                  <div className="text-[140px] lg:text-[200px] drop-shadow-2xl animate-float">
+                    {theme.icon}
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-16 border-t border-white/20 pt-12">
+                {[
+                  { icon: <Droplets />, label: 'Humidity', value: `${current.relative_humidity_2m}%` },
+                  { icon: <Wind />, labelKey: 'vara', value: `${Math.round(current.wind_speed_10m)} km/h` },
+                  { icon: <Sunrise />, label: 'Sunrise', value: new Date(daily.sunrise[0]).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) },
+                  { icon: <Sunset />, label: 'Sunset', value: new Date(daily.sunset[0]).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) },
+                ].map((stat, i) => (
+                  <div key={i} className="flex flex-col items-center text-center text-white">
+                    <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-4 transition hover:scale-110 hover:bg-white/30 shadow-2xl border border-white/10">
+                      {stat.icon}
+                    </div>
+                    <p className="font-black uppercase tracking-widest text-[9px] opacity-40 mb-1">{stat.labelKey ? t(stat.labelKey) : stat.label}</p>
+                    <p className="font-black text-lg">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ALERTS */}
+            <div className="bg-white/10 backdrop-blur-3xl rounded-[50px] border border-white/10 p-6 shadow-2xl space-y-3">
+              <h3 className="text-white font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 px-4 border-b border-white/10 pb-4">
+                <Waves size={16} className="text-teal-300 animate-pulse" /> {t('weatherAdvice') || 'Sheti Saathi Alerts'}
+              </h3>
+              <div className="space-y-3">
+                {alerts.map((alert, i) => (
+                  <div key={i} className={`rounded-[35px] p-6 border flex items-center gap-8 transition hover:scale-[1.02] ${alertStyles[alert.type]}`}>
+                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-4xl shadow-xl">{alert.icon}</div>
+                    <div className="flex-1">
+                      <p className="font-black text-sm uppercase tracking-wider mb-2">{alert.title}</p>
+                      <p className="text-xs opacity-70 font-black leading-relaxed">{alert.msg}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FORECAST */}
+            <div className="bg-black/30 backdrop-blur-[60px] rounded-[60px] border border-white/10 overflow-hidden shadow-2xl">
+              <div className="p-10 border-b border-white/10 bg-white/5 flex items-center justify-between">
+                <h3 className="text-white font-black text-sm uppercase tracking-[0.4em] flex items-center gap-4">
+                  <CloudLightning size={24} className="text-indigo-400" /> {t('forecast')}
+                </h3>
+              </div>
+              <div className="divide-y divide-white/5">
+                {daily.time.map((date, i) => {
+                  const dTheme = getWeatherTheme(daily.weather_code[i])
+                  const dObj   = new Date(date)
+                  const isToday = i === 0
+                  return (
+                    <div key={date} className={`flex items-center px-10 py-8 gap-8 transition hover:bg-white/5 ${isToday ? 'bg-white/5' : ''}`}>
+                      <div className="w-16 text-white text-center">
+                        <p className="text-[10px] uppercase tracking-widest opacity-40 mb-1">{language === 'mr' ? marathiDays[dObj.getDay()] : dObj.toLocaleDateString([], { weekday: 'short' })}</p>
+                        <p className="font-black text-2xl">{isToday ? 'Now' : dObj.getDate()}</p>
+                      </div>
+                      <div className="text-6xl drop-shadow-2xl">{dTheme.icon}</div>
+                      <div className="flex-1 min-w-0 md:pl-6">
+                        <p className="text-white font-black text-lg uppercase tracking-tighter opacity-80">{t(dTheme.labelKey)}</p>
+                        {daily.precipitation_sum[i] > 0 && (
+                          <p className="text-[11px] text-cyan-400 font-black uppercase tracking-widest mt-2">Rain: {daily.precipitation_sum[i]} mm</p>
+                        )}
+                      </div>
+                      <div className="flex gap-4 bg-white/5 px-6 py-3 rounded-[24px] border border-white/10 text-white">
+                        <span className="font-black text-2xl">{Math.round(daily.temperature_2m_max[i])}°</span>
+                        <div className="w-[1px] h-6 bg-white/10" />
+                        <span className="opacity-30 font-black text-base">{Math.round(daily.temperature_2m_min[i])}°</span>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(15px); } }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .mask-fade-right { mask-image: linear-gradient(to right, black 85%, transparent 100%); }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}} />
+    </div>
+  )
+}

@@ -1,0 +1,24 @@
+{
+  "lines": [
+    "        <div className=\"mt-4 bg-primary-50 border border-primary-100 rounded-xl p-3 flex items-center gap-3 animate-pulse\">",
+    "          <div className=\"text-2xl\">🛵</div>",
+    "          <div className=\"flex-1\">",
+    "            <p className=\"text-xs font-bold text-primary-800\">डिलिव्हरी बॉय निघाला आहे!</p>",
+    "            <p className=\"text-[10px] text-primary-600\">अंदाजे १०-१५ मि�import OrderTrackingMap from '../../components/OrderTrackingMap'",
+    "",
+    "export default function Orders() {",
+    "  const [activeFilter, setActiveFilter] = useState('all')",
+    "  const [expandedId,   setExpandedId]   = useState(null)",
+    "",
+    "  const { getFarmerOrders, fetchMyOrders, loading } = useOrderStore()",
+    "  const { user }   = useAuthStore()",
+    "  const { t }      = useLanguageStore()",
+    "  const navigate   = useNavigate()",
+    "",
+    "  useEffect(() => { fetchMyOrders() }, [])",
+    "",
+    "  const myOrders = getFarmerOrders()",
+    "",
+    "  const statusConfig = {"
+  ]
+}

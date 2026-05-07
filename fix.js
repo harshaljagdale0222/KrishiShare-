@@ -1,0 +1,41 @@
+const fs = require('fs');
+const file = 'C:/Users/Sanjivani/Desktop/krishi-share-frontend 2/krishi-share-frontend/src/pages/Mart/Orders.jsx';
+let txt = fs.readFileSync(file, 'utf8');
+
+// The file has completely mangled text due to corruption between the delivery boy line and export default function Orders()
+const fnIndex = txt.indexOf('export default function Orders() {');
+if (fnIndex === -1) {
+    console.log("FN NOT FOUND");
+    process.exit(1);
+}
+
+// Find where the corruption starts: after the delivery boy notification header
+const searchStr1 = '<div className=\"flex-1\">\r\n            <p className=\"text-xs font-bold text-primary-800\">डिलिव्हरी बॉय निघाला आहे!</p>';
+const searchStr2 = '<div className=\"flex-1\">\n            <p className=\"text-xs font-bold text-primary-800\">डिलिव्हरी बॉय निघाला आहे!</p>';
+
+let matchIndex = txt.indexOf(searchStr1);
+if (matchIndex === -1) matchIndex = txt.indexOf(searchStr2);
+
+if (matchIndex === -1) {
+    console.log("NOT FOUND");
+    process.exit(1);
+}
+
+const before = txt.substring(0, matchIndex);
+const correctMiddle = `<div className="flex-1">
+            <p className="text-xs font-bold text-primary-800">डिलिव्हरी बॉय निघाला आहे!</p>
+            <p className="text-[10px] text-primary-600">अंदाजे १०-१५ मिनीटात पोहोचेल</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+import OrderTrackingMap from '../../components/OrderTrackingMap'
+
+`;
+const after = txt.substring(fnIndex);
+
+fs.writeFileSync(file, before + correctMiddle + after, 'utf8');
+console.log('DONE');
