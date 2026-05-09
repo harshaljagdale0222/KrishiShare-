@@ -1,25 +1,46 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const harvestRequestSchema = new mongoose.Schema({
-  farmerId:    { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  farmerName:  { type: String, required: true },
-  farmerPhone: { type: String, required: true },
-  ownerId:     { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  factoryId:   { type: String, required: true },
-  factoryName: { type: String, required: true },
-  cropType:    { type: String, required: true },
-  acres:       { type: Number, required: true },
-  date:        { type: Date,   required: true },
-  village:     { type: String, required: true },
-  location:    { type: String, default: '' },
-  notes:       { type: String, default: '' },
-  photo:       { type: String, default: '' },
-  status:      { type: String, enum: ['pending', 'scheduled', 'harvesting', 'completed', 'rejected', 'cancelled'], default: 'pending' },
-  estimatedTons: { type: Number, default: 0 },
-  actualTons:    { type: Number, default: 0 },
-  toliName:      { type: String, default: '' },
-  scheduledDate: { type: Date },
-  factoryNote:   { type: String, default: '' },
-}, { timestamps: true })
+const HarvestRequestSchema = new mongoose.Schema({
+  farmerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  farmerName: String,
+  farmerPhone: String,
+  location: String,
+  district: {
+    type: String,
+    required: true
+  },
+  photo: String, // Base64 or URL
+  area: String, // e.g. "2 Acre"
+  variety: String, // e.g. "86032"
+  status: {
+    type: String,
+    enum: ['pending', 'accepted', 'finalized', 'rejected'],
+    default: 'pending'
+  },
+  requestedFactories: [{
+    factoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'accepted', 'rejected'],
+      default: 'pending'
+    },
+    acceptedAt: Date
+  }],
+  finalFactoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-module.exports = mongoose.model('HarvestRequest', harvestRequestSchema)
+module.exports = mongoose.model('HarvestRequest', HarvestRequestSchema);

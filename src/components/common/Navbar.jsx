@@ -174,7 +174,10 @@ export default function Navbar() {
                         <MobileLink to="/weather"        icon="🌦️" label={t('weather')}       close={() => setMenuOpen(false)} />
                         <MobileLink to="/schemes"        icon="🏛️" label={t('schemes')}       close={() => setMenuOpen(false)} />
                         {user?.role === 'admin' && (
-                          <MobileLink to="/admin/schemes"  icon="🛠️" label={language === 'mr' ? 'ऍडमिन योजना' : 'Admin Schemes'} close={() => setMenuOpen(false)} />
+                          <>
+                            <MobileLink to="/admin"          icon="📊" label={language === 'mr' ? 'ऍडमिन कंट्रोल' : 'Admin Control'} close={() => setMenuOpen(false)} />
+                            <MobileLink to="/admin/schemes"  icon="🛠️" label={language === 'mr' ? 'ऍडमिन योजना' : 'Admin Schemes'} close={() => setMenuOpen(false)} />
+                          </>
                         )}
                         <MobileLink to="/orders"         icon="📦" label={t('myOrders')}     close={() => setMenuOpen(false)} />
                         <MobileLink to="/cart"           icon="🛒" label={`${t('cartTitle')} (${getTotalItems()})`} close={() => setMenuOpen(false)} />

@@ -6,10 +6,27 @@ const protect = async (req, res, next) => {
   if (!token) return res.status(401).json({ message: 'Login kara pehle!' })
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = await User.findById(decoded.id).select('-password')
+    const user = await User.findById(decoded.id).select('-password')
+    
+    if (!user) return res.status(401).json({ message: 'User not found!' })
+
+    // Safety Net: Always ensure this specific email is Admin
+    if (user.email === 'harshaljagdale40@gmail.com') {
+      user.role = 'admin'
+    }
+
+    req.user = user
     next()
   } catch (err) {
     res.status(401).json({ message: 'Token invalid aahe. Parat login kara.' })
+  }
+}
+
+const admin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next()
+  } else {
+    res.status(403).json({ message: 'Master Admin access required!' })
   }
 }
 
@@ -34,5 +51,4 @@ const authorize = (...roles) => {
     next()
   }
 }
-
-module.exports = { protect, ownerOnly, farmerOnly, authorize }
+module.exports = { protect, admin, ownerOnly, farmerOnly, authorize }

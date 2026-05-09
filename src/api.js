@@ -84,6 +84,14 @@ export const complaintAPI = {
   updateStatus: (id, status) => api.put(`/complaints/${id}`, { status })
 }
 
+export const harvestAPI = {
+  submitRequest: (data) => api.post('/harvest/request', data),
+  getFarmerRequests: () => api.get('/harvest/farmer'),
+  getFactoryRequests: () => api.get('/harvest/factory'),
+  acceptRequest: (id) => api.put(`/harvest/accept/${id}`),
+  finalizeFactory: (id, factoryId) => api.put(`/harvest/finalize/${id}`, { factoryId })
+}
+
 // ─── Equipment APIs ───────────────────────────────────────
 export const equipmentAPI = {
   getAll: (params) => api.get('/equipments', { params }),
