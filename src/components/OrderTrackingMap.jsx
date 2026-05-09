@@ -74,9 +74,9 @@ export default function OrderTrackingMap({ status, orderId, orderData, height = 
   return (
     <div className={`relative rounded-[32px] overflow-hidden shadow-inner border border-gray-100 ${height} w-full`}>
       <MapContainer center={currentPos} zoom={14} style={{ height: '100%', width: '100%' }} scrollWheelZoom={false} zoomControl={false}>
-        {/* Google Maps Hybrid Layer for Better Accuracy */}
+        {/* Google Maps Standard Road Layer for Familiar UI */}
         <TileLayer
-          url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
+          url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
           attribution='&copy; Google Maps'
         />
         <Marker position={shopCoord}><Popup>{orderData?.equipmentId ? 'मालकाचे ठिकाण' : 'दुकान (KrishiStore)'}</Popup></Marker>
