@@ -126,7 +126,7 @@ function RequestForm({ factory, onSubmit, onBack, loading, t }) {
   )
 }
 
-export default function SugarFactory() {
+const SugarFactory = () => {
   const { user } = useAuthStore()
   const { language, t } = useLanguageStore()
   const { postRequest, loading } = useHarvestStore()

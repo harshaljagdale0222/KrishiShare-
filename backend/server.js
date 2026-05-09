@@ -55,7 +55,8 @@ app.use('/api/factories', require('./routes/factories'))
 app.use('/api/notifications', require('./routes/notifications'))
 app.use('/api/products', require('./routes/products'))
 app.use('/api/bookings', require('./routes/bookings'))
-app.use('/api/complaints', require('./routes/complaints'))
+app.use('/api/factories', require('./routes/factories'));
+app.use('/api/complaints', require('./routes/complaints'));
 app.use('/api/equipments', require('./routes/equipments'))
 app.use('/api/payments', require('./routes/payments'))
 app.use('/api/schemes', require('./routes/schemeRoutes'))

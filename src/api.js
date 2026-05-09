@@ -70,11 +70,18 @@ export const productAPI = {
 }
 
 // ─── Complaint APIs ───────────────────────────────────────
+export const factoryAPI = {
+  getAll: () => api.get('/factories'),
+  create: (data) => api.post('/factories', data),
+  delete: (id) => api.delete(`/factories/${id}`)
+}
+
 export const complaintAPI = {
+  getAll: () => api.get('/complaints'),
   create: (data) => api.post('/complaints', data),
   getFarmerComplaints: () => api.get('/complaints/my'),
-  getFactoryComplaints: () => api.get('/complaints/factory'),
-  updateStatus: (id, status) => api.put(`/complaints/${id}`, { status }),
+  getBusinessComplaints: () => api.get('/complaints/factory'),
+  updateStatus: (id, status) => api.put(`/complaints/${id}`, { status })
 }
 
 // ─── Equipment APIs ───────────────────────────────────────

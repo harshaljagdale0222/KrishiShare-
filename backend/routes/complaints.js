@@ -1,10 +1,17 @@
-const express = require('express')
-const Complaint = require('../models/Complaint')
-const Notification = require('../models/Notification')
-const { protect } = require('../middleware/auth')
-const mongoose = require('mongoose')
+const { protect, admin } = require('../middleware/auth')
 
 const router = express.Router()
+
+// @route   GET /api/complaints
+// @desc    Get all complaints (Admin only)
+router.get('/', protect, admin, async (req, res) => {
+  try {
+    const complaints = await Complaint.find().sort({ createdAt: -1 })
+    res.json(complaints)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
 
 // @route   POST /api/complaints
 // @desc    File a new complaint
