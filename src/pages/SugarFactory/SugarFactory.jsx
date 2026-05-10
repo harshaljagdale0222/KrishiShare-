@@ -268,3 +268,4 @@ const SugarFactory = () => {
     </div>
   )
 }
+export default SugarFactory

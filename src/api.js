@@ -38,6 +38,11 @@ export const harvestAPI = {
   updateStatus:   (id, data) => api.put(`/harvest/${id}`, data),
   generateSlip:   (id, data) => api.post(`/harvest/${id}/slip`, data),
   cancelRequest:  (id) => api.delete(`/harvest/${id}`),
+  submitRequest: (data) => api.post('/harvest/request', data),
+  getFarmerRequests: () => api.get('/harvest/farmer'),
+  getFactoryRequests: () => api.get('/harvest/factory'),
+  acceptRequest: (id) => api.put(`/harvest/accept/${id}`),
+  finalizeFactory: (id, factoryId) => api.put(`/harvest/finalize/${id}`, { factoryId })
 }
 
 // ─── Order APIs ───────────────────────────────────────────
@@ -58,6 +63,8 @@ export const factoryAPI = {
   applyMembership: (fId, data) => api.post(`/factories/${fId}/apply-membership`, data),
   getMyMemberships: () => api.get('/factories/my-memberships'),
   getApplications: (fId) => api.get(`/factories/${fId}/applications`),
+  create: (data) => api.post('/factories', data),
+  delete: (id) => api.delete(`/factories/${id}`)
 }
 
 // ─── Product APIs ─────────────────────────────────────────
@@ -70,26 +77,12 @@ export const productAPI = {
 }
 
 // ─── Complaint APIs ───────────────────────────────────────
-export const factoryAPI = {
-  getAll: () => api.get('/factories'),
-  create: (data) => api.post('/factories', data),
-  delete: (id) => api.delete(`/factories/${id}`)
-}
-
 export const complaintAPI = {
   getAll: () => api.get('/complaints'),
   create: (data) => api.post('/complaints', data),
   getFarmerComplaints: () => api.get('/complaints/my'),
   getBusinessComplaints: () => api.get('/complaints/factory'),
   updateStatus: (id, status) => api.put(`/complaints/${id}`, { status })
-}
-
-export const harvestAPI = {
-  submitRequest: (data) => api.post('/harvest/request', data),
-  getFarmerRequests: () => api.get('/harvest/farmer'),
-  getFactoryRequests: () => api.get('/harvest/factory'),
-  acceptRequest: (id) => api.put(`/harvest/accept/${id}`),
-  finalizeFactory: (id, factoryId) => api.put(`/harvest/finalize/${id}`, { factoryId })
 }
 
 // ─── Equipment APIs ───────────────────────────────────────
