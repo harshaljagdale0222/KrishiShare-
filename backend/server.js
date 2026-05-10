@@ -48,26 +48,20 @@ app.use((req, res, next) => {
   next()
 })
 
+// ─── API Routes ───────────────────────────────────────────
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/harvest', require('./routes/harvest'))
 app.use('/api/orders', require('./routes/orders'))
 app.use('/api/factories', require('./routes/factories'))
-app.use('/api/harvest', require('./routes/harvest'))
 app.use('/api/notifications', require('./routes/notifications'))
 app.use('/api/products', require('./routes/products'))
 app.use('/api/bookings', require('./routes/bookings'))
-app.use('/api/factories', require('./routes/factories'));
-app.use('/api/complaints', require('./routes/complaints'));
+app.use('/api/complaints', require('./routes/complaints'))
 app.use('/api/equipments', require('./routes/equipments'))
 app.use('/api/payments', require('./routes/payments'))
 app.use('/api/schemes', require('./routes/schemeRoutes'))
 
-
 app.get('/', (req, res) => {
-  console.log('--- 🛣️ REGISTERED ROUTES ---');
-  console.log('Auth:', '/api/auth');
-  console.log('Notifications:', '/api/notifications');
-  console.log('Orders:', '/api/orders');
   res.json({ message: '🌾 KrishiShare API chalu aahe!', status: 'ok' })
 })
 
@@ -77,11 +71,15 @@ app.use((req, res) => {
 
 // Start server after DB connection
 const startServer = async () => {
-  await connectDB()
-  const PORT = process.env.PORT || 5000
-  server.listen(PORT, () => {
-    console.log(`🚀 Server chalu aahe: http://localhost:${PORT}`)
-  })
+  try {
+    await connectDB()
+    const PORT = process.env.PORT || 5000
+    server.listen(PORT, () => {
+      console.log(`🚀 Server chalu aahe: http://localhost:${PORT}`)
+    })
+  } catch (err) {
+    console.error('❌ Server startup error:', err)
+  }
 }
 
 startServer()
