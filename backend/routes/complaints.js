@@ -1,6 +1,9 @@
-const { protect, admin } = require('../middleware/auth')
-
+const express = require('express')
 const router = express.Router()
+const mongoose = require('mongoose')
+const Complaint = require('../models/Complaint')
+const Notification = require('../models/Notification')
+const { protect, admin } = require('../middleware/auth')
 
 // @route   GET /api/complaints
 // @desc    Get all complaints (Admin only)
@@ -37,16 +40,18 @@ router.post('/', protect, async (req, res) => {
 
     // Notify Target Owner (Factory/Equipment/Mart) only if we have a valid ID
     if (validTargetId) {
-      const dbNotif = await Notification.create({
-        user: validTargetId,
-        title: 'नवीन तक्रार प्राप्त!',
-        message: `${req.user.name || 'शेतकरी'} कडून '${subject}' संदर्भात तक्रार आली आहे.`,
-        type: category === 'factory' ? 'harvest' : category === 'equipment' ? 'booking' : 'order',
-        link: '/store-dashboard'
-      })
-      if (req.io) {
-        req.io.to(validTargetId).emit('notification', { id: dbNotif._id, title: dbNotif.title, message: dbNotif.message, type: dbNotif.type })
-      }
+      try {
+        const dbNotif = await Notification.create({
+          user: validTargetId,
+          title: 'नवीन तक्रार प्राप्त!',
+          message: `${req.user.name || 'शेतकरी'} कडून '${subject}' संदर्भात तक्रार आली आहे.`,
+          type: category === 'factory' ? 'harvest' : category === 'equipment' ? 'booking' : 'order',
+          link: '/store-dashboard'
+        })
+        if (req.io) {
+          req.io.to(validTargetId.toString()).emit('notification', { id: dbNotif._id, title: dbNotif.title, message: dbNotif.message, type: dbNotif.type })
+        }
+      } catch (e) { console.log('Notification fail:', e) }
     }
 
     res.status(201).json(complaint)
