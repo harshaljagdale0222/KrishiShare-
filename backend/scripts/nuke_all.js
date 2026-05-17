@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config({ path: 'backend/.env' });
 
 const nukeEverything = async () => {
-  const uri = "mongodb://harshaljagdale40_db_user:Harshal770222@ac-icjfoeu-shard-00-00.ddhzlo2.mongodb.net:27017,ac-icjfoeu-shard-00-01.ddhzlo2.mongodb.net:27017,ac-icjfoeu-shard-00-02.ddhzlo2.mongodb.net:27017/?ssl=true&authSource=admin&retryWrites=true&w=majority";
+  const uri = process.env.MONGO_URI || "mongodb://localhost:27017/krishishare";
 
   try {
     console.log('🚀 Connecting to Cluster...');

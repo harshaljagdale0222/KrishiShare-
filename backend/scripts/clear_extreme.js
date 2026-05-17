@@ -3,13 +3,13 @@ require('dotenv').config({ path: 'backend/.env' });
 
 const clearBothDBs = async () => {
   const dbNames = ['krishishare', 'krishi-share'];
-  const baseUri = "mongodb://harshaljagdale40_db_user:Harshal770222@ac-icjfoeu-shard-00-00.ddhzlo2.mongodb.net:27017,ac-icjfoeu-shard-00-01.ddhzlo2.mongodb.net:27017,ac-icjfoeu-shard-00-02.ddhzlo2.mongodb.net:27017/";
-  const options = "?ssl=true&authSource=admin&retryWrites=true&w=majority";
+  const baseUri = process.env.MONGO_URI || "mongodb://localhost:27017";
 
   for (const name of dbNames) {
     try {
       console.log(`🔄 Connecting to database: ${name}...`);
-      const uri = `${baseUri}${name}${options}`;
+      // Re-use connection string but specify DB name if it's a localhost URI, otherwise just connect with env.
+      const uri = baseUri.includes('?') ? baseUri.replace(/\/\?/, `/${name}?`) : `${baseUri}/${name}`;
       const conn = await mongoose.connect(uri);
       
       const collections = mongoose.connection.collections;
