@@ -4,9 +4,18 @@ import useAuthStore from '../../store/authStore'
 export default function ProtectedRoute({ allowedRoles }) {
   const { isAuthenticated, user } = useAuthStore()
 
-  // Login nahi kel tar → Login page
+  // 1. Login check
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
+  }
+
+  // 2. Profile completion check
+  const isProfileComplete = !!(user?.phone && user?.location && user?.role)
+  const isCompletingProfile = window.location.pathname === '/complete-profile'
+
+  if (!isProfileComplete && !isCompletingProfile) {
+    console.log('Redirecting to complete-profile: missing fields')
+    return <Navigate to="/complete-profile" replace />
   }
 
   // Role check — specific roles sathi

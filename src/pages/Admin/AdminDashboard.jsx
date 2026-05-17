@@ -27,6 +27,8 @@ export default function AdminDashboard() {
   const [usersData, setUsersData] = useState([])
   const [factoriesData, setFactoriesData] = useState([])
   const [complaintsData, setComplaintsData] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const fetchStats = async () => {
     try {
@@ -80,14 +82,20 @@ export default function AdminDashboard() {
 
   const getRoleBadge = (role) => {
     const map = {
-      'farmer': { bg: 'bg-blue-100 text-blue-700', label: 'शेतकरी' },
-      'equipment_owner': { bg: 'bg-green-100 text-green-700', label: 'मालक' },
-      'mart_owner': { bg: 'bg-orange-100 text-orange-700', label: 'दुकानदार' },
-      'factory_owner': { bg: 'bg-purple-100 text-purple-700', label: 'कारखाना' },
-      'admin': { bg: 'bg-slate-900 text-white', label: 'ऍडमिन' }
+      'farmer':          { bg: 'bg-emerald-100 text-emerald-700', label: 'शेतकरी', icon: '🧑‍🌾' },
+      'equipment_owner': { bg: 'bg-blue-100 text-blue-700',       label: 'अवजारे मालक', icon: '🚜' },
+      'owner':           { bg: 'bg-blue-100 text-blue-700',       label: 'अवजारे मालक', icon: '🚜' },
+      'mart_owner':      { bg: 'bg-orange-100 text-orange-700',   label: 'मार्ट मालक', icon: '🛒' },
+      'factory_owner':   { bg: 'bg-purple-100 text-purple-700',   label: 'साखर कारखाना', icon: '🏭' },
+      'admin':           { bg: 'bg-slate-900 text-white',         label: 'प्रशासक', icon: '🛡️' }
     }
-    const data = map[role] || { bg: 'bg-slate-100 text-slate-700', label: role }
-    return <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${data.bg}`}>{data.label}</span>
+    const data = map[role] || { bg: 'bg-slate-100 text-slate-700', label: role, icon: '👤' }
+    return (
+      <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider ${data.bg} border border-current/10 shadow-sm`}>
+        <span>{data.icon}</span>
+        {data.label}
+      </span>
+    )
   }
 
   return (
@@ -288,32 +296,77 @@ export default function AdminDashboard() {
             {/* ─── USERS TAB ─── */}
             {activeTab === 'users' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="overflow-x-auto rounded-3xl border border-slate-50">
+                <div className="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+                  <div className="relative w-full md:w-96 group">
+                    <div className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-600 transition-colors">
+                      <LayoutGrid size={20} />
+                    </div>
+                    <input 
+                      type="text" 
+                      placeholder="Search users by name or email..." 
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-16 pr-8 py-5 bg-slate-50 border-2 border-transparent rounded-[28px] outline-none focus:border-primary-600 focus:bg-white focus:shadow-2xl focus:shadow-primary-500/10 transition-all font-black text-slate-800 placeholder:text-slate-300"
+                    />
+                  </div>
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100">
+                    Found {usersData.filter(u => u.name.toLowerCase().includes(searchTerm.toLowerCase()) || u.email.toLowerCase().includes(searchTerm.toLowerCase())).length} Users
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto rounded-[40px] border border-slate-100 bg-white">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                        <th className="p-6">User / Business</th>
-                        <th className="p-6">Role</th>
-                        <th className="p-6">Location</th>
-                        <th className="p-6 text-right">Action</th>
+                      <tr className="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                        <th className="p-8">User Identity</th>
+                        <th className="p-8">Role / Access</th>
+                        <th className="p-8">Region</th>
+                        <th className="p-8 text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody className="text-sm font-bold text-slate-700">
-                      {usersData.map((u) => (
-                        <tr key={u._id} className="border-t border-slate-50 hover:bg-slate-50/30 transition-colors">
-                          <td className="p-6">
-                             <p className="font-black text-slate-900">{u.name}</p>
-                             <p className="text-xs text-slate-400 font-bold">{u.email}</p>
+                      {usersData
+                        .filter(u => 
+                          u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          u.email.toLowerCase().includes(searchTerm.toLowerCase())
+                        )
+                        .map((u) => (
+                        <tr 
+                          key={u._id} 
+                          onClick={() => setSelectedUser(u)}
+                          className="border-t border-slate-50 hover:bg-primary-50/30 transition-all cursor-pointer group"
+                        >
+                          <td className="p-8">
+                             <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-xl font-black group-hover:bg-primary-600 group-hover:text-white transition-all">
+                                   {u.name?.[0]?.toUpperCase()}
+                                </div>
+                                <div>
+                                   <p className="font-black text-slate-900 text-lg group-hover:text-primary-600 transition-colors">{u.name}</p>
+                                   <p className="text-xs text-slate-400 font-bold">{u.email}</p>
+                                </div>
+                             </div>
                           </td>
-                          <td className="p-6">{getRoleBadge(u.role)}</td>
-                          <td className="p-6 text-slate-500 text-xs">{u.location || 'Maharashtra'}</td>
-                          <td className="p-6 text-right">
-                             <button className="text-[10px] font-black uppercase text-primary-600 hover:underline">Manage</button>
+                          <td className="p-8">{getRoleBadge(u.role)}</td>
+                          <td className="p-8">
+                             <div className="flex items-center gap-2 text-slate-500 text-xs font-black uppercase tracking-wide">
+                                <MapPin size={14} className="text-slate-300" /> {u.location || 'Maharashtra'}
+                             </div>
+                          </td>
+                          <td className="p-8 text-right">
+                             <button className="bg-slate-50 text-slate-400 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest group-hover:bg-primary-600 group-hover:text-white transition-all">
+                               VIEW PROFILE
+                             </button>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                  {usersData.filter(u => u.name.toLowerCase().includes(searchTerm.toLowerCase()) || u.email.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
+                    <div className="py-20 text-center text-slate-400 uppercase font-black text-xs tracking-widest opacity-40">
+                       No users found matching your search
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -332,6 +385,128 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* ─── USER PROFILE MODAL ─── */}
+      {selectedUser && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+           <div className="bg-white rounded-[56px] w-full max-w-2xl shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] animate-in zoom-in-95 duration-500 overflow-hidden relative">
+              <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-primary-400 via-purple-500 to-indigo-600" />
+              
+              <div className="p-12 pb-8 flex justify-between items-start">
+                 <div className="flex items-center gap-8">
+                    <div className="w-32 h-32 bg-slate-100 rounded-[40px] flex items-center justify-center text-5xl font-black text-slate-300 shadow-inner border-4 border-white">
+                       {selectedUser.name?.[0]?.toUpperCase()}
+                    </div>
+                    <div>
+                       <div className="flex items-center gap-4 mb-2">
+                          <h2 className="text-4xl font-black text-slate-900 tracking-tight">{selectedUser.name}</h2>
+                          {getRoleBadge(selectedUser.role)}
+                       </div>
+                       <p className="text-slate-400 text-lg font-bold">{selectedUser.email}</p>
+                    </div>
+                 </div>
+                 <button 
+                   onClick={() => setSelectedUser(null)}
+                   className="w-14 h-14 bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 rounded-[22px] flex items-center justify-center transition-all group border border-slate-100"
+                 >
+                    <Plus size={28} className="rotate-45 group-hover:rotate-[135deg] transition-transform duration-500" />
+                 </button>
+              </div>
+
+              <div className="p-12 pt-0 grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <div className="bg-slate-50 p-8 rounded-[40px] border border-slate-100">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Contact Information</p>
+                    <div className="space-y-6">
+                       <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-primary-600 shadow-sm"><Phone size={18} /></div>
+                          <div>
+                             <p className="text-[9px] font-black text-slate-400 uppercase">Phone Number</p>
+                             <p className="font-black text-slate-800">{selectedUser.phone || 'Not Provided'}</p>
+                          </div>
+                       </div>
+                       <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-primary-600 shadow-sm"><MapPin size={18} /></div>
+                          <div>
+                             <p className="text-[9px] font-black text-slate-400 uppercase">Primary Location</p>
+                             <p className="font-black text-slate-800">{selectedUser.location || 'Maharashtra, India'}</p>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+
+                 <div className="bg-slate-900 p-8 rounded-[40px] text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/20 blur-3xl -mr-10 -mt-10" />
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-4">Account Status</p>
+                    <div className="space-y-6 relative z-10">
+                       <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                          <span className="text-xs font-bold text-white/60">Registered On</span>
+                          <span className="text-sm font-black">{new Date(selectedUser.createdAt || Date.now()).toLocaleDateString()}</span>
+                       </div>
+                       <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                          <span className="text-xs font-bold text-white/60">Profile Status</span>
+                          <span className="text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full">Verified</span>
+                       </div>
+                       <div className="flex justify-between items-center">
+                          <span className="text-xs font-bold text-white/60">System ID</span>
+                          <span className="text-[9px] font-black tracking-widest text-white/40">#{selectedUser._id.slice(-8).toUpperCase()}</span>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+
+              <div className="p-12 pt-0 flex gap-4">
+                 {selectedUser.role !== 'admin' ? (
+                   <button 
+                     onClick={async () => {
+                       if(window.confirm(`Make ${selectedUser.name} an Admin?`)) {
+                         try {
+                           await authAPI.updateUserRole(selectedUser._id, 'admin')
+                           toast.success('Promoted to Admin!')
+                           setSelectedUser(null)
+                           fetchStats()
+                         } catch(e) { toast.error('Failed to update role') }
+                       }
+                     }}
+                     className="flex-1 bg-primary-600 text-white py-6 rounded-[32px] font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-primary-700 transition-all active:scale-95"
+                   >
+                      MAKE ADMIN
+                   </button>
+                 ) : (
+                   <button 
+                     onClick={async () => {
+                       if(window.confirm(`Remove Admin rights from ${selectedUser.name}?`)) {
+                         try {
+                           await authAPI.updateUserRole(selectedUser._id, 'farmer') // Default back to farmer
+                           toast.success('Admin rights removed')
+                           setSelectedUser(null)
+                           fetchStats()
+                         } catch(e) { toast.error('Failed to update role') }
+                       }
+                     }}
+                     className="flex-1 bg-amber-500 text-white py-6 rounded-[32px] font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-amber-600 transition-all active:scale-95"
+                   >
+                      REMOVE ADMIN
+                   </button>
+                 )}
+                 <button 
+                   onClick={async () => {
+                     if(window.confirm(`PERMANENTLY DELETE ${selectedUser.name}? This cannot be undone.`)) {
+                       try {
+                         await authAPI.deleteUser(selectedUser._id)
+                         toast.success('User Deleted Permanently')
+                         setSelectedUser(null)
+                         fetchStats()
+                       } catch(e) { toast.error('Delete failed') }
+                     }
+                   }}
+                   className="flex-1 bg-red-50 text-red-600 border-2 border-red-100 py-6 rounded-[32px] font-black text-sm uppercase tracking-widest hover:bg-red-100 transition-all active:scale-95"
+                 >
+                    DEACTIVATE USER
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
     </div>
   )
 }

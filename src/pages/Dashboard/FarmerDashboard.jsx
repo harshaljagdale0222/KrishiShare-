@@ -41,13 +41,13 @@ const getCropTips = (t, language) => {
 export default function FarmerDashboard() {
   const { user } = useAuthStore()
   const { t, language } = useLanguageStore()
-  const { fetchAllOrders } = useOrderStore()
-  const { fetchAllBookings } = useBookingStore()
+  const { fetchMyOrders } = useOrderStore()
+  const { fetchMyBookings } = useBookingStore()
   const [activeTip, setActiveTip] = useState(0)
 
   useEffect(() => {
-    fetchAllOrders()
-    fetchAllBookings()
+    fetchMyOrders()
+    fetchMyBookings()
   }, [])
 
   const quickActions = getQuickActions(t)

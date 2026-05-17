@@ -10,10 +10,18 @@ const productSchema = new mongoose.Schema({
   weight: { type: Number, default: 0 },
   icon: { type: String, default: '📦' },
   desc: { type: String },
+  brand: { type: String },
   stock: { type: Number, default: 0 },
   active: { type: Boolean, default: true },
-  rating: { type: Number, default: 4.5 },
+  rating: { type: Number, default: 0 },
   reviews: { type: Number, default: 0 },
+  ratings: [{
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userName: String,
+    star: { type: Number, min: 1, max: 5 },
+    comment: String,
+    date: { type: Date, default: Date.now }
+  }],
   tag: { type: String }
 }, { timestamps: true })
 

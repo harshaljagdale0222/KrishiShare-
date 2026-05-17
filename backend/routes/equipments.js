@@ -14,8 +14,17 @@ router.get('/', async (req, res) => {
     if (category && category !== 'all') query.category = category
     if (search) query.name = { $regex: search, $options: 'i' }
     
-    const equipments = await Equipment.find(query).sort({ rating: -1 })
-    res.json(equipments)
+    const equipments = await Equipment.find(query).populate('owner', 'name').sort({ rating: -1 })
+    const sanitized = equipments.map(e => {
+      const obj = e.toObject()
+      // If shopName is default or missing, use the old ownerName which had the business name
+      const oldName = obj.ownerName
+      obj.ownerName = obj.owner?.name || oldName
+      obj.shopName = (obj.shopName && obj.shopName !== 'Krishi Mart') ? obj.shopName : oldName
+      obj.price = obj.price || obj.pricePerHour || obj.rate || 0
+      return obj
+    })
+    res.json(sanitized)
   } catch (err) {
     console.error('Fetch Equipments Error:', err)
     res.status(500).json({ message: err.message })
@@ -26,8 +35,16 @@ router.get('/', async (req, res) => {
 // @desc    Get owner's own equipments
 router.get('/my', protect, async (req, res) => {
   try {
-    const equipments = await Equipment.find({ owner: req.user._id })
-    res.json(equipments)
+    const equipments = await Equipment.find({ owner: req.user._id }).populate('owner', 'name')
+    const sanitized = equipments.map(e => {
+      const obj = e.toObject()
+      const oldName = obj.ownerName
+      obj.ownerName = obj.owner?.name || oldName
+      obj.shopName = (obj.shopName && obj.shopName !== 'Krishi Mart') ? obj.shopName : oldName
+      obj.price = obj.price || obj.pricePerHour || obj.rate || 0
+      return obj
+    })
+    res.json(sanitized)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -37,18 +54,20 @@ router.get('/my', protect, async (req, res) => {
 // @desc    Register new equipment
 router.post('/', protect, authorize('equipment_owner'), async (req, res) => {
   try {
-    const { name, category, location, pricePerHour, experience, features, description, district, taluka, icon } = req.body
+    const { name, category, location, price, experience, features, description, district, taluka, icon, pincode } = req.body
     
     const equipment = await Equipment.create({
       owner: req.user._id,
-      ownerName: req.user.businessName || req.user.name || 'Agri Owner',
+      ownerName: req.user.name || 'Verified Owner',
+      shopName: req.user.shopName || req.user.name || 'Krishi Mart',
       ownerPhone: req.user.phone || 'Contact via App',
       name,
       category,
       location,
       district,
       taluka,
-      pricePerHour,
+      pincode,
+      price,
       experience,
       features,
       description,

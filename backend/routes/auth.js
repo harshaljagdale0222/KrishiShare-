@@ -29,7 +29,7 @@ router.post('/google-login', async (req, res) => {
 
   try {
     let payload;
-    
+
     // Attempt to verify as ID Token
     try {
       const client = new OAuth2Client(GOOGLE_CLIENT_ID)
@@ -103,7 +103,7 @@ router.post('/send-otp', async (req, res) => {
     await user.save()
 
     console.log(`[REAL OTP SENT TO ${email}]: ${otp}`)
-    
+
     // 1️⃣ Method: OTP via Email
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
@@ -157,14 +157,14 @@ router.post('/verify-otp', async (req, res) => {
 router.post('/register', async (req, res) => {
   try {
     let { name, email, password, phone, role, location, businessName, factoryName, hasDeliveryService } = req.body
-    
+
     // 🛡️ Security: Prevent unauthorized admin registration
     if (role === 'admin') {
       role = 'farmer';
     }
 
     if (!name || !email || !password) return res.status(400).json({ message: 'Mandatory fields bhara!' })
-    
+
     if (role === 'mart_owner' && hasDeliveryService === false) {
       return res.status(400).json({ message: 'Mart Owners sathi delivery service mandatory aahe!' })
     }
@@ -178,7 +178,7 @@ router.post('/register', async (req, res) => {
     }
 
     const user = await User.create({ name, email, password, phone, role, location, businessName, factoryName, hasDeliveryService })
-    
+
     // 📧 Trigger Welcome Email
     sendWelcomeEmail(user.email, user.name, user.role).catch(err => console.error('Welcome Email Error:', err.message));
 
@@ -194,7 +194,7 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body
     const user = await User.findOne({ email })
     if (!user || !(await user.matchPassword(password))) return res.status(401).json({ message: 'Email/Password chukla!' })
-    
+
     if (user.isBlacklisted) {
       return res.status(403).json({ message: 'तुमच्यावर गैरव्यवहारासाठी बंदी (Ban) घालण्यात आली आहे. लॉगिन नाकारले.' })
     }
@@ -236,7 +236,7 @@ router.get('/role/:role', protect, async (req, res) => {
   try {
     const role = req.params.role
     let users = await User.find({ role }).select('name businessName factoryName location')
-    
+
     // Seed check removed to keep DB clean as requested
     /*
     if (users.length === 0) {
@@ -268,17 +268,35 @@ router.put('/profile', protect, async (req, res) => {
       }
       userToUpdate.hasDeliveryService = req.body.hasDeliveryService;
     }
-    
+
     if (req.body.password) {
       userToUpdate.password = req.body.password;
     }
 
     const savedUser = await userToUpdate.save();
     sendWelcomeEmail(savedUser.email, savedUser.name, savedUser.role).catch(err => console.error('Email error:', err));
-    
+
     res.json(savedUser);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+})
+
+// ✅ RESET PASSWORD
+router.post('/reset-password', async (req, res) => {
+  const { email, otp, newPassword } = req.body
+  try {
+    const user = await User.findOne({ email, otp, otpExpires: { $gt: Date.now() } })
+    if (!user) return res.status(400).json({ message: 'OTP chukla aahe ya expire zala aahe!' })
+
+    user.password = newPassword
+    user.otp = undefined
+    user.otpExpires = undefined
+    await user.save()
+
+    res.json({ message: 'पासवर्ड यशस्वीरित्या बदलला आहे! आता नवीन पासवर्डने लॉगिन करा.' })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
   }
 })
 

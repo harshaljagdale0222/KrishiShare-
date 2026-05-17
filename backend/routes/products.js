@@ -8,7 +8,9 @@ const router = express.Router()
 // @desc    Get all products for the shop
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find({ active: true }).sort({ createdAt: -1 })
+    const products = await Product.find({ active: true })
+      .populate('ownerId', 'name businessName')
+      .sort({ createdAt: -1 })
     res.json(products)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -30,16 +32,17 @@ router.get('/owner', protect, ownerOnly, async (req, res) => {
 // @desc    Create a new product
 router.post('/', protect, ownerOnly, async (req, res) => {
   try {
-    const { name, category, price, mrp, unit, icon, desc, tag, stock, weight } = req.body
+    const { name, category, price, mrp, unit, icon, desc, tag, stock, weight, brand } = req.body
     const product = await Product.create({
       ownerId: req.user._id,
-      name, category, price, mrp, unit, icon, desc, tag, weight,
+      name, category, price, mrp, unit, icon, desc, tag, weight, brand,
       stock: Number(stock) || 0
     })
 
     if (req.io) req.io.emit('product_added', product)
 
-    res.status(201).json(product)
+    const populatedProduct = await Product.findById(product._id).populate('ownerId', 'name businessName')
+    res.status(201).json(populatedProduct)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -58,7 +61,8 @@ router.put('/:id', protect, ownerOnly, async (req, res) => {
     
     if (req.io) req.io.emit('product_updated', product)
 
-    res.json(product)
+    const populatedProduct = await Product.findById(product._id).populate('ownerId', 'name businessName')
+    res.json(populatedProduct)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -74,6 +78,37 @@ router.delete('/:id', protect, ownerOnly, async (req, res) => {
     if (req.io) req.io.emit('product_deleted', req.params.id)
 
     res.json({ message: 'Product kadhun takla!' })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// @route   POST /api/products/:id/rate
+// @desc    Rate a product
+router.post('/:id/rate', protect, async (req, res) => {
+  try {
+    const { star, comment } = req.body
+    const product = await Product.findById(req.params.id)
+    if (!product) return res.status(404).json({ message: 'Product sapdala nahi!' })
+
+    // Add new rating
+    product.ratings.push({
+      userId: req.user._id,
+      userName: req.user.name,
+      star: Number(star),
+      comment
+    })
+
+    // Calculate new average rating
+    const totalStars = product.ratings.reduce((sum, r) => sum + r.star, 0)
+    product.rating = (totalStars / product.ratings.length).toFixed(1)
+    product.reviews = product.ratings.length
+
+    await product.save()
+    
+    if (req.io) req.io.emit('product_updated', product)
+
+    res.json(product)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

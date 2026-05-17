@@ -4,11 +4,8 @@ import useBookingStore from '../../store/bookingStore'
 
 export default function QuickStats() {
   const { t } = useLanguageStore()
-  const { getAllOrders } = useOrderStore()
-  const { allBookings }  = useBookingStore()
-
-  const myOrders   = getAllOrders()
-  const myBookings = allBookings
+  const { myOrders } = useOrderStore()
+  const { bookings: myBookings } = useBookingStore()
 
   // Calculate Stats
   const totalOrders   = myOrders.length

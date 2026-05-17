@@ -36,7 +36,11 @@ const orderSchema = new mongoose.Schema({
   status:        { type: String, enum: ['pending', 'accepted', 'packing', 'out_for_delivery', 'delivered', 'rejected'], default: 'pending' },
   advancePaid:   { type: Boolean, default: false },
   advanceAmount: { type: Number, default: 0 },
+  balancePaid:   { type: Boolean, default: false },
   billGenerated: { type: Boolean, default: false },
+  returnRequested: { type: Boolean, default: false },
+  returnReason:    { type: String, default: '' },
+  returnStatus:    { type: String, enum: ['', 'pending', 'approved', 'rejected'], default: '' },
   note:          { type: String, default: '' },
 }, { timestamps: true })
 

@@ -81,6 +81,18 @@ const useOrderStore = create((set, get) => ({
     }
   },
 
+  payBalance: async (orderId) => {
+    try {
+      const res = await orderAPI.payBalance(orderId)
+      set((state) => ({
+        myOrders: state.myOrders.map(o => o._id === orderId ? res.data : o)
+      }))
+      toast.success('Purna Payment zala! 💰✅')
+    } catch (err) {
+      toast.error('Payment failed!')
+    }
+  },
+
   // ─── Owner: Status update ─────────────────────────────
   updateOrderStatus: async (orderId, status) => {
     try {

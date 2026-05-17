@@ -4,6 +4,45 @@ const { protect } = require('../middleware/auth');
 const HarvestRequest = require('../models/HarvestRequest');
 const Notification = require('../models/Notification');
 
+// @route   POST /api/harvest
+// @desc    Farmer sends a harvest request to a specific factory
+router.post('/', protect, async (req, res) => {
+  try {
+    const { factoryId, factoryName, ownerId, cropType, acres, date, village, location, notes, photo } = req.body;
+    
+    const request = await HarvestRequest.create({
+      farmerId: req.user._id,
+      farmerName: req.user.name,
+      farmerPhone: req.user.phone,
+      location: location || village || req.user.location || 'Maharashtra',
+      district: req.user.district || 'Unknown',
+      photo: photo || '',
+      area: acres ? `${acres} Acres` : '',
+      variety: cropType || '',
+      requestedFactories: [{ factoryId: ownerId || factoryId }],
+      status: 'pending'
+    });
+
+    const targetUserId = ownerId || factoryId;
+    if (targetUserId) {
+      await Notification.create({
+        user: targetUserId,
+        title: 'नवीन तोडणी विनंती!',
+        message: `${req.user.name} कडून तोडणीसाठी विनंती आली आहे.`,
+        type: 'harvest',
+        link: '/factory-dashboard'
+      });
+      if (req.io) {
+        req.io.to(targetUserId.toString()).emit('notification', { title: 'नवीन तोडणी विनंती!', message: 'एक नवीन तोडणी विनंती प्राप्त झाली आहे.' });
+      }
+    }
+
+    res.status(201).json(request);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // @route   POST /api/harvest/request
 // @desc    Farmer sends harvesting request to multiple factories
 router.post('/request', protect, async (req, res) => {
@@ -14,7 +53,7 @@ router.post('/request', protect, async (req, res) => {
       farmerId: req.user._id,
       farmerName: req.user.name,
       farmerPhone: req.user.phone,
-      location: req.user.location,
+      location: req.user.location || 'Maharashtra',
       district,
       photo,
       area,
@@ -32,7 +71,7 @@ router.post('/request', protect, async (req, res) => {
         link: '/factory-dashboard'
       });
       if (req.io) {
-        req.io.to(factoryId).emit('notification', { title: 'नवीन तोडणी विनंती!', message: 'एक नवीन तोडणी विनंती प्राप्त झाली आहे.' });
+        req.io.to(factoryId.toString()).emit('notification', { title: 'नवीन तोडणी विनंती!', message: 'एक नवीन तोडणी विनंती प्राप्त झाली आहे.' });
       }
     }
 

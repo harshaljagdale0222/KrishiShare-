@@ -7,6 +7,134 @@ import useAuthStore from '../../store/authStore'
 import useLanguageStore from '../../store/languageStore'
 import toast from 'react-hot-toast'
 import { generateInvoice } from '../../utils/invoiceGenerator'
+import { orderAPI, productAPI } from '../../api'
+import { X, AlertCircle, RefreshCw } from 'lucide-react'
+
+// ─── 🔄 RETURN/EXCHANGE MODAL ──────────────────────────
+function ReturnModal({ isOpen, onClose, onSubmit, isMR }) {
+  const [reason, setReason] = useState('')
+  const reasons = isMR ? [
+    'चुकीची वस्तू मिळाली (Wrong Product)',
+    'वस्तू खराब आहे/तुटली आहे (Damaged Item)',
+    'दुसऱ्या कंपनीची वस्तू आहे (Different Company)',
+    'Expiry झाली आहे (Expired Product)',
+    'अपेक्षित गुणवत्ता नाही (Low Quality)',
+    'प्रमाण कमी आहे (Less Quantity)'
+  ] : [
+    'Wrong Product Received',
+    'Damaged Item',
+    'Different Company/Brand',
+    'Expired Product',
+    'Quality Not as Expected',
+    'Quantity is Less'
+  ]
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[300] flex items-end md:items-center justify-center p-4">
+      <div className="bg-white rounded-t-[40px] md:rounded-[48px] w-full max-w-lg animate-in slide-in-from-bottom duration-500 overflow-hidden shadow-2xl">
+        <div className="p-8 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
+          <div>
+            <h3 className="font-black text-xl text-gray-900 tracking-tight">{isMR ? 'परतावा / एक्सचेंज' : 'Return / Exchange'}</h3>
+            <p className="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{isMR ? 'कृपया कारण निवडा' : 'Please select a reason'}</p>
+          </div>
+          <button onClick={onClose} className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-gray-400 hover:text-gray-900 shadow-sm border border-gray-100 transition-all"><X size={20} /></button>
+        </div>
+        
+        <div className="p-8 space-y-3">
+          {reasons.map((r) => (
+            <button key={r} onClick={() => setReason(r)}
+              className={`w-full p-5 rounded-3xl text-left font-bold text-sm transition-all border-2 flex items-center justify-between group ${reason === r ? 'bg-red-50 border-red-500 text-red-700' : 'bg-white border-gray-50 text-gray-600 hover:border-red-100'}`}>
+              {r}
+              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${reason === r ? 'bg-red-500 border-red-500 text-white' : 'border-gray-100'}`}>
+                {reason === r && <div className="w-2 h-2 bg-white rounded-full" />}
+              </div>
+            </button>
+          ))}
+          
+          <button 
+            disabled={!reason}
+            onClick={() => onSubmit(reason)}
+            className={`w-full py-5 rounded-[28px] font-black text-sm uppercase tracking-[0.2em] mt-8 transition-all shadow-xl flex items-center justify-center gap-3 ${!reason ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-red-600 text-white shadow-red-500/20 active:scale-95'}`}>
+            <RefreshCw size={18} className={reason ? 'animate-spin-slow' : ''} /> {isMR ? 'विनंती पाठवा' : 'Send Request'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── ⭐ PRODUCT RATING MODAL ──────────────────────────
+function RatingModal({ isOpen, onClose, onSubmit, products, isMR }) {
+  const [ratings, setRatings] = useState({})
+  
+  if (!isOpen || !products) return null
+
+  const handleStarClick = (pId, star) => {
+    setRatings(prev => ({
+      ...prev,
+      [pId]: { ...prev[pId], star, comment: prev[pId]?.comment || '' }
+    }))
+  }
+
+  const handleCommentChange = (pId, comment) => {
+    setRatings(prev => ({
+      ...prev,
+      [pId]: { ...prev[pId], star: prev[pId]?.star || 5, comment }
+    }))
+  }
+
+  return (
+    <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-md z-[301] flex items-center justify-center p-4">
+      <div className="bg-white rounded-[40px] w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in duration-300">
+        <div className="p-8 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
+           <div>
+              <h3 className="font-black text-xl text-gray-900">{isMR ? 'उत्पादनांना रेटिंग द्या' : 'Rate Products'}</h3>
+              <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mt-1">{isMR ? 'तुमचा अनुभव सांगा' : 'Share your experience'}</p>
+           </div>
+           <button onClick={onClose} className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-gray-400 hover:text-gray-900 shadow-sm border border-gray-100 transition-all"><X size={18} /></button>
+        </div>
+
+        <div className="p-8 max-h-[60vh] overflow-y-auto space-y-8">
+           {products.map((item) => (
+             <div key={item.productId} className="space-y-4">
+                <div className="flex items-center gap-3">
+                   <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-2xl border border-gray-100">{item.icon}</div>
+                   <p className="font-black text-gray-800 text-sm">{item.name}</p>
+                </div>
+                
+                <div className="flex gap-2">
+                   {[1,2,3,4,5].map(s => (
+                     <button key={s} onClick={() => handleStarClick(item.productId, s)}
+                       className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${ (ratings[item.productId]?.star || 0) >= s ? 'bg-amber-400 text-white shadow-lg shadow-amber-400/20 scale-110' : 'bg-gray-50 text-gray-300' }`}>
+                       <Star size={18} fill={ (ratings[item.productId]?.star || 0) >= s ? 'currentColor' : 'none' } />
+                     </button>
+                   ))}
+                </div>
+
+                <textarea 
+                  placeholder={isMR ? "रिव्ह्यू लिहा (पर्यायी)..." : "Write a review (optional)..."}
+                  value={ratings[item.productId]?.comment || ''}
+                  onChange={(e) => handleCommentChange(item.productId, e.target.value)}
+                  className="w-full p-4 bg-gray-50 border-2 border-transparent focus:border-emerald-500 rounded-2xl outline-none text-xs font-bold text-gray-700 transition-all min-h-[80px] resize-none"
+                />
+             </div>
+           ))}
+        </div>
+
+        <div className="p-8 pt-0">
+           <button 
+             onClick={() => onSubmit(ratings)}
+             className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-[28px] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 active:scale-95 transition-all"
+           >
+             {isMR ? 'रेटिंग सबमिट करा' : 'Submit Ratings'}
+           </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // ─── 🚀 SWIGGY/ZOMATO STYLE TRACKING OVERLAY ──────────────────────────
 function SwiggyTracking({ order, onBack, t, language }) {
@@ -156,8 +284,12 @@ export default function Orders() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [expandedId,   setExpandedId]   = useState(null)
   const [trackingOrder, setTrackingOrder] = useState(null)
+  const [returnOrderId, setReturnOrderId] = useState(null)
+  const [isReturnModalOpen, setIsReturnModalOpen] = useState(false)
+  const [ratingOrder, setRatingOrder] = useState(null)
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false)
 
-  const { getFarmerOrders, fetchMyOrders, cancelOrder, payAdvance, loading } = useOrderStore()
+  const { getFarmerOrders, fetchMyOrders, cancelOrder, payAdvance, payBalance, loading } = useOrderStore()
   const { user }   = useAuthStore()
   const { t, language } = useLanguageStore()
   const isMR       = language === 'mr'
@@ -180,6 +312,33 @@ export default function Orders() {
   const filterLabels = { all: t('filterAll') || 'All', pending: t('pending'), accepted: t('accepted'), delivered: t('delivered'), rejected: t('cancelled') }
   const filtered     = myOrders.filter(o => activeFilter === 'all' || o.status === activeFilter)
 
+  const handleReturn = async (reason) => {
+    try {
+      await orderAPI.requestReturn(returnOrderId, { reason })
+      toast.success(isMR ? 'विनंती पाठवली! मालक लवकरच संपर्क करेल. ✅' : 'Request sent! Owner will contact you soon. ✅')
+      setIsReturnModalOpen(false)
+      fetchMyOrders()
+    } catch (err) {
+      toast.error('Failed to request return.')
+    }
+  }
+
+  const handleRateSubmit = async (ratingsMap) => {
+    try {
+      // Logic to submit multiple ratings
+      const productIds = Object.keys(ratingsMap)
+      for (const pId of productIds) {
+        await productAPI.rate(pId, ratingsMap[pId])
+      }
+      
+      toast.success(isMR ? 'तुमची रेटिंग सबमिट झाली! धन्यवाद. ⭐' : 'Ratings submitted! Thank you. ⭐')
+      setIsRatingModalOpen(false)
+      fetchMyOrders()
+    } catch (err) {
+      toast.error('Failed to submit ratings.')
+    }
+  }
+
   if (loading) return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="text-center">
@@ -200,6 +359,22 @@ export default function Orders() {
           language={language}
         />
       )}
+
+       {/* 🚀 Render Return Modal */}
+      <ReturnModal 
+        isOpen={isReturnModalOpen} 
+        onClose={() => setIsReturnModalOpen(false)} 
+        onSubmit={handleReturn}
+        isMR={isMR}
+      />
+
+      <RatingModal 
+        isOpen={isRatingModalOpen}
+        onClose={() => setIsRatingModalOpen(false)}
+        onSubmit={handleRateSubmit}
+        products={ratingOrder?.items}
+        isMR={isMR}
+      />
 
       <div className="max-w-3xl mx-auto px-4 py-6">
 
@@ -266,6 +441,11 @@ export default function Orders() {
                         <span className={`flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${status.color}`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />{status.label}
                         </span>
+                        {order.status === 'delivered' && !order.balancePaid && (
+                          <span className="text-[9px] font-black bg-amber-100 text-amber-700 px-2 py-0.5 rounded-md uppercase tracking-widest italic animate-pulse border border-amber-200">
+                            {isMR ? 'पेमेंट बाकी' : 'Payment Pending'}
+                          </span>
+                        )}
                         {['accepted', 'packing', 'out_for_delivery'].includes(order.status) && (
                           <button 
                             onClick={(e) => { e.stopPropagation(); setTrackingOrder(order._id) }}
@@ -283,14 +463,30 @@ export default function Orders() {
                           <div className="flex-1">
                             <p className="text-sm font-bold text-gray-800 flex items-center gap-2"><span>{item.icon}</span>{item.name} <span className="text-primary-600 font-black">× {item.qty}</span></p>
                           </div>
-                          <span className="text-sm font-black text-gray-900">₹{item.price * item.qty}</span>
+                          <span className="text-xs font-bold text-gray-400">₹{item.price * item.qty}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-400">{order.payment?.toUpperCase()}</span>
-                      <span className="font-bold text-gray-900">₹{order.finalAmount}</span>
+                    <div className="flex items-center justify-between mt-2 pt-3 border-t border-gray-50">
+                      <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{order.payment?.toUpperCase()}</span>
+                      <div className="text-right space-y-1">
+                        <p className="text-[9px] font-black text-gray-400/60 uppercase tracking-widest leading-none">
+                          {isMR ? 'एकूण वस्तू' : 'Items Total'}: ₹{order.totalAmount}
+                        </p>
+                        {order.discount > 0 && (
+                          <p className="text-[9px] font-black text-red-400 uppercase tracking-widest leading-none">
+                            {isMR ? 'सवलत (-)' : 'Discount (-)'}: ₹{order.discount}
+                          </p>
+                        )}
+                        <p className="text-[9px] font-black text-gray-400/60 uppercase tracking-widest leading-none">
+                          {isMR ? 'डिलिव्हरी (+)' : 'Delivery (+)'}: ₹{order.deliveryCharge}
+                        </p>
+                        <div className="pt-1 mt-1 border-t border-gray-50">
+                          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">{isMR ? 'अंतिम बिल' : 'Final Bill'}</p>
+                          <p className="font-black text-emerald-600 text-lg leading-none">₹{order.finalAmount}</p>
+                        </div>
+                      </div>
                     </div>
 
                     <OrderTimeline status={order.status} t={t} />
@@ -334,44 +530,128 @@ export default function Orders() {
                       </div>
 
                       {order.status === 'pending'   && <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700 font-medium text-center">⏳ {isMR ? 'दुकानदार तुमची ऑर्डर बघत आहे...' : 'Store owner is reviewing your order...'}</div>}
-                      {order.status === 'accepted'  && (
-                        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center space-y-3">
-                          <p className="text-xs text-blue-700 font-medium">
-                            ✅ {isMR ? 'ऑर्डर स्वीकारली! पॅकिंग सुरू करण्यासाठी १०% अ‍ॅडव्हान्स भरा.' : 'Order accepted! Pay 10% advance to start packing.'}
-                          </p>
-                          {!order.advancePaid ? (
-                            <button 
-                              onClick={() => payAdvance(order._id)}
-                              className="bg-blue-600 text-white px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-500/20 active:scale-95 transition-all"
-                            >
-                              💰 {isMR ? `₹${order.advanceAmount} अ‍ॅडव्हान्स भरा` : `Pay ₹${order.advanceAmount} Advance`}
-                            </button>
-                          ) : (
-                            <div className="flex items-center justify-center gap-2 text-emerald-600 font-black text-xs">
-                              <span>✔️</span> {isMR ? 'अ‍ॅडव्हान्स भरला आहे' : 'Advance Paid'}
-                            </div>
-                          )}
+                      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                        <div className="bg-gray-50/50 px-5 py-3 border-b border-gray-50 flex items-center justify-between">
+                           <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{isMR ? 'पेमेंट माहिती' : 'Payment Progress'}</p>
+                           <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${order.advancePaid && order.balancePaid ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                             {order.advancePaid && order.balancePaid ? (isMR ? 'पूर्ण भरले' : 'Fully Paid') : (isMR ? 'अंशत: भरले' : 'Partial')}
+                           </span>
                         </div>
-                      )}
+                        
+                        <div className="p-5 space-y-6">
+                          {/* Payment Stages */}
+                          <div className="flex items-center justify-between relative px-2">
+                             <div className="absolute left-8 right-8 top-4 h-0.5 bg-gray-100">
+                                <div className={`h-full bg-emerald-500 transition-all duration-1000 ${order.advancePaid ? (order.balancePaid ? 'w-full' : 'w-1/2') : 'w-0'}`} />
+                             </div>
+                             
+                             {/* Advance Stage */}
+                             <div className="flex flex-col items-center gap-2 relative z-10">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs border-2 transition-all ${order.advancePaid ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg' : 'bg-white border-gray-200 text-gray-300'}`}>
+                                  {order.advancePaid ? '✓' : '1'}
+                                </div>
+                                <p className={`text-[9px] font-black uppercase tracking-widest ${order.advancePaid ? 'text-emerald-700' : 'text-gray-300'}`}>{isMR ? 'अ‍ॅडव्हान्स' : 'Advance'}</p>
+                             </div>
+
+                             {/* Balance Stage */}
+                             <div className="flex flex-col items-center gap-2 relative z-10">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs border-2 transition-all ${order.balancePaid ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg' : 'bg-white border-gray-200 text-gray-300'}`}>
+                                  {order.balancePaid ? '✓' : '2'}
+                                </div>
+                                <p className={`text-[9px] font-black uppercase tracking-widest ${order.balancePaid ? 'text-emerald-700' : 'text-gray-300'}`}>{isMR ? 'उर्वरित' : 'Balance'}</p>
+                             </div>
+                          </div>
+
+                          {/* Action Buttons */}
+                          <div className="space-y-3">
+                            {order.status === 'accepted' && !order.advancePaid && (
+                              <div className="animate-in zoom-in duration-300">
+                                <p className="text-[11px] font-bold text-blue-600 mb-3 text-center italic">
+                                  {isMR ? '✅ ऑर्डर स्वीकारली! पॅकिंग सुरू करण्यासाठी अ‍ॅडव्हान्स भरा.' : '✅ Order accepted! Pay advance to start packing.'}
+                                </p>
+                                <button 
+                                  onClick={(e) => { e.stopPropagation(); payAdvance(order._id); }}
+                                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                >
+                                  💰 {isMR ? `₹${order.advanceAmount} अ‍ॅडव्हान्स भरा` : `Pay ₹${order.advanceAmount} Advance`}
+                                </button>
+                              </div>
+                            )}
+
+                            {order.advancePaid && !order.balancePaid && (
+                              <div className="space-y-4">
+                                <div className="flex items-center justify-center gap-2 text-emerald-600 font-black text-[10px] uppercase tracking-widest bg-emerald-50 py-3 rounded-xl border border-emerald-100">
+                                  <CheckCircle size={14} /> {isMR ? 'अ‍ॅडव्हान्स यशस्वीरित्या भरला आहे' : 'Advance Payment Successful'}
+                                </div>
+                                
+                                {['out_for_delivery', 'delivered'].includes(order.status) ? (
+                                  <div className="animate-in slide-in-from-bottom-2 duration-500">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 text-center">{isMR ? 'डिलिव्हरी पूर्ण झाल्यावर उर्वरित पैसे भरा' : 'Pay remaining amount upon delivery'}</p>
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); payBalance(order._id); }}
+                                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                    >
+                                      💰 {isMR ? `उर्वरित ₹${order.finalAmount - order.advanceAmount} भरा` : `Pay Balance ₹${order.finalAmount - order.advanceAmount}`}
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <div className="text-center py-2">
+                                     <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest animate-pulse italic">
+                                       ⏳ {isMR ? 'पॅकिंग आणि डिलिव्हरीची प्रतीक्षा करत आहे' : 'Waiting for packing & delivery'}
+                                     </p>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {order.balancePaid && (
+                              <div className="flex flex-col items-center gap-3 bg-emerald-50 p-6 rounded-3xl border-2 border-dashed border-emerald-200 animate-in zoom-in duration-500">
+                                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-emerald-500 shadow-sm border border-emerald-50">
+                                   <ShieldCheck size={24} fill="currentColor" className="opacity-20" />
+                                   <CheckCircle size={16} className="absolute" />
+                                </div>
+                                <div className="text-center">
+                                  <p className="font-black text-emerald-700 text-sm">{isMR ? 'पूर्ण पेमेंट यशस्वी!' : 'Full Payment Received!'}</p>
+                                  <p className="text-[10px] font-bold text-emerald-600/70 uppercase tracking-widest mt-1">{isMR ? 'व्यवहार पूर्ण झाला आहे' : 'Transaction completed successfully'}</p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
 
                       <div className="flex gap-2 flex-wrap">
-                        {order.status === 'delivered' && (
+                         {order.status === 'delivered' && (
                           <>
-                            <button onClick={() => toast.success(t('reviewSubmitted'))} className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-2 rounded-xl text-sm font-medium hover:shadow-sm transition"><Star size={14} /> {t('writeReview')}</button>
+                            <button onClick={() => { setRatingOrder(order); setIsRatingModalOpen(true); }} className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-2 rounded-xl text-sm font-medium hover:shadow-sm transition"><Star size={14} /> {isMR ? 'रेटिंग द्या' : 'Rate Items'}</button>
                             <button onClick={() => navigate('/shop')} className="flex items-center gap-1.5 bg-primary-50 border border-primary-200 text-primary-700 px-4 py-2 rounded-xl text-sm font-medium hover:shadow-sm transition"><RotateCcw size={14} /> {t('orderAgain')}</button>
+                            {!order.returnRequested && (
+                              <button onClick={() => { setReturnOrderId(order._id); setIsReturnModalOpen(true); }} className="flex items-center gap-1.5 bg-red-50 border border-red-100 text-red-600 px-4 py-2 rounded-xl text-sm font-medium hover:bg-red-100 transition">
+                                🔄 {isMR ? 'परतावा / एक्सचेंज' : 'Return / Exchange'}
+                              </button>
+                            )}
                           </>
                         )}
-                        {order.billGenerated && (
+                        {order.billGenerated && order.balancePaid ? (
                           <button 
                             onClick={() => generateInvoice(order, null)} 
                             className="flex items-center gap-1.5 bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
                           >
                             📄 {isMR ? 'बिल डाऊनलोड करा' : 'Download Invoice'}
                           </button>
-                        )}
-                        {!order.billGenerated && order.status === 'delivered' && (
+                        ) : order.billGenerated && !order.balancePaid ? (
+                          <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 text-[10px] text-amber-700 font-bold italic">
+                            ⚠️ {isMR ? 'पावतीसाठी उर्वरित पेमेंट पूर्ण करा' : 'Complete balance payment to get invoice'}
+                          </div>
+                        ) : order.status === 'delivered' && (
                           <div className="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-2 text-[10px] text-emerald-700 font-bold italic animate-pulse">
                             ⏳ {isMR ? "मालकाकडून बिल तयार होत आहे..." : "Owner is generating your bill..."}
+                          </div>
+                        )}
+                        {order.returnRequested && (
+                          <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-2 rounded-xl text-xs font-bold italic animate-pulse flex items-center gap-2">
+                             ⏳ {isMR ? "परतावा विनंती प्रक्रियेत आहे..." : "Return request in progress..."}
+                             <span className="text-[10px] font-normal">({order.returnReason})</span>
                           </div>
                         )}
                         {['pending', 'accepted', 'packing'].includes(order.status) && (

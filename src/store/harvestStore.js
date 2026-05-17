@@ -30,7 +30,7 @@ const useHarvestStore = create((set, get) => ({
       return res.data._id
     } catch (err) {
       set({ loading: false })
-      toast.error(err.response?.data?.message || 'Request pathvali nahi!')
+      toast.error(err.response?.data?.message || 'Failed to send request!')
       return null
     }
   },
@@ -80,7 +80,7 @@ const useHarvestStore = create((set, get) => ({
           r._id === requestId ? { ...r, status: 'cancelled' } : r
         )
       }))
-      toast('Request cancel keli.', { icon: '❌' })
+      toast('Request cancelled successfully.', { icon: '❌' })
     } catch (err) {
       toast.error(err.response?.data?.message || 'Cancel failed!')
     }

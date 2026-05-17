@@ -124,13 +124,17 @@ const useBookingStore = create((set, get) => ({
 
   handleRealPayment: async (booking, type = 'advance') => {
     try {
-      toast.loading(type === 'advance' ? 'DUMMY: Advance payment processing...' : 'DUMMY: Full payment processing...', { id: 'dummy-pay' })
+      const loadingMsg = type === 'advance' ? 'Advance payment processing...' : 'Full payment processing...'
+      toast.loading(loadingMsg, { id: 'dummy-pay' })
       
-      // Simulate a small delay for "Real" feel
-      await new Promise(resolve => setTimeout(resolve, 800))
+      await new Promise(resolve => setTimeout(resolve, 1000))
 
-      // Directly confirm the booking in backend
-      const res = await bookingAPI.confirmAdvance(booking._id)
+      let res;
+      if (type === 'advance') {
+        res = await bookingAPI.confirmAdvance(booking._id)
+      } else {
+        res = await bookingAPI.updatePaymentStatus(booking._id, 'paid')
+      }
       
       set({ 
         bookings: get().bookings.map(b => b._id === booking._id ? res.data : b),
@@ -138,7 +142,7 @@ const useBookingStore = create((set, get) => ({
       })
 
       toast.dismiss('dummy-pay')
-      toast.success(type === 'advance' ? '🎉 Advance Paid (Dummy)! Booking Confirmed.' : '🎉 Full Payment Received (Dummy)!')
+      toast.success(type === 'advance' ? '🎉 Advance Paid! Booking Confirmed.' : '🎉 Full Payment Received! Booking Completed.')
 
       // Auto WhatsApp to Owner
       try {
@@ -148,7 +152,7 @@ const useBookingStore = create((set, get) => ({
         
         const msg = type === 'advance' 
           ? WA_TEMPLATES.ADVANCE_PAID(booking.farmerName || 'Farmer', booking.equipmentName, amount)
-          : `\u2705 *पूर्ण पेमेंट मिळाले (Dummy)*\n\nनमस्ते, मी ${booking.farmerName || 'Farmer'}. तुमच्या *${booking.equipmentName}* साठीचे उर्वरित \u20B9${amount} पेमेंट पूर्ण केले आहे. धन्यवाद! \uD83D\uDE4F`
+          : `\u2705 *पूर्ण पेमेंट मिळाले*\n\nनमस्ते, मी ${booking.farmerName || 'Farmer'}. तुमच्या *${booking.equipmentName}* साठीचे उर्वरित \u20B9${amount} पेमेंट पूर्ण केले आहे. धन्यवाद! \uD83D\uDE4F`
         
         sendWhatsAppMessage(booking.ownerPhone, msg)
       } catch (e) {
@@ -157,7 +161,7 @@ const useBookingStore = create((set, get) => ({
 
     } catch (error) {
       toast.dismiss('dummy-pay')
-      toast.error('Dummy payment failed!')
+      toast.error('Payment failed!')
       console.error(error)
     }
   },

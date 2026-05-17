@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
-import { useLocation, useNavigate, Link } from 'react-router-dom'
+import { useState, useEffect, useMemo, memo, useRef } from 'react'
+import { useLocation, useNavigate, Link, useSearchParams } from 'react-router-dom'
 import {
   Clock, LogOut, Star, Leaf, AlertCircle, Tractor, MapPin, Calendar, Hash, TrendingUp,
-  Sprout, ChevronRight
+  Sprout, ChevronRight, LayoutDashboard, Package, ShoppingBag, Bell, Download,
+  User, Eye, Edit2, Trash2, X, Check, Plus, ChevronDown, FileText, Home
 } from 'lucide-react'
 import { io } from 'socket.io-client'
 import useAuthStore from '../../store/authStore'
@@ -11,7 +12,7 @@ import useBookingStore from '../../store/bookingStore'
 import useLanguageStore from '../../store/languageStore'
 import axios from 'axios'
 import { maharashtraData } from '../../utils/locationData'
-import { productAPI, notificationAPI, equipmentAPI, complaintAPI, harvestAPI } from '../../api'
+import { productAPI, notificationAPI, equipmentAPI, complaintAPI, harvestAPI, bookingAPI, orderAPI } from '../../api'
 import { sendWhatsAppMessage, WA_TEMPLATES } from '../../utils/whatsapp'
 import toast from 'react-hot-toast'
 import useNotificationStore from '../../store/notificationStore'
@@ -161,7 +162,7 @@ function FarmerProfileModal({ farmerName, orders, bookings, role, onClose }) {
   )
 }
 
-function OrderDetailModal({ order, onClose, onUpdateStatus, user, language }) {
+function OrderDetailModal({ order, onClose, onUpdateStatus, user, language, onDownloadBill }) {
   const isMR = language === 'mr'
   const status = statusConfig[order.status] || statusConfig.pending
 
@@ -204,9 +205,41 @@ function OrderDetailModal({ order, onClose, onUpdateStatus, user, language }) {
                 <p className="font-black text-gray-900" style={{ fontSize: '13px' }}>₹{( (item.price || 0) * (item.qty || item.quantity || 0) ).toLocaleString()}</p>
               </div>
             ))}
-            <div className="bg-emerald-50/50 p-5 flex justify-between items-center">
-              <p className="font-black text-gray-500 text-xs uppercase tracking-widest">{isMR ? 'एकूण रक्कम' : 'Total Amount'}</p>
-              <p className="text-2xl font-black text-emerald-600">₹{(order.finalAmount || 0).toLocaleString()}</p>
+            <div className="bg-emerald-50/50 p-6 space-y-3">
+              <div className="space-y-1 text-xs">
+                 <div className="flex justify-between text-gray-500 font-bold uppercase tracking-widest text-[9px]">
+                    <span>{isMR ? 'एकूण वस्तू' : 'Items Total'}</span>
+                    <span>₹{order.totalAmount}</span>
+                 </div>
+                 {order.discount > 0 && (
+                   <div className="flex justify-between text-red-500 font-bold uppercase tracking-widest text-[9px]">
+                      <span>{isMR ? 'सवलत (-)' : 'Discount (-)'}</span>
+                      <span>-₹{order.discount}</span>
+                   </div>
+                 )}
+                 <div className="flex justify-between text-gray-500 font-bold uppercase tracking-widest text-[9px]">
+                    <span>{isMR ? 'डिलिव्हरी (+)' : 'Delivery (+)'}</span>
+                    <span>₹{order.deliveryCharge}</span>
+                 </div>
+              </div>
+              <div className="pt-2 border-t border-emerald-100 flex justify-between items-center">
+                <p className="font-black text-gray-500 text-xs uppercase tracking-widest">{isMR ? 'अंतिम रक्कम' : 'Final Amount'}</p>
+                <p className="text-2xl font-black text-emerald-600">₹{(order.finalAmount || 0).toLocaleString()}</p>
+              </div>
+              
+              {/* Advance vs Balance Breakdown */}
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                 <div className={`p-3 rounded-2xl border-2 ${order.advancePaid ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-white text-gray-400 border-gray-100'} transition-all`}>
+                    <p className="text-[8px] font-black uppercase tracking-widest opacity-80 mb-1">{isMR ? 'अ‍ॅडव्हान्स (१०%)' : 'Advance (10%)'}</p>
+                    <p className="font-black text-sm">₹{order.advanceAmount}</p>
+                    <p className="text-[8px] font-bold mt-1">{order.advancePaid ? (isMR ? 'प्राप्त ✓' : 'Received ✓') : (isMR ? 'बाकी' : 'Pending')}</p>
+                 </div>
+                 <div className={`p-3 rounded-2xl border-2 ${order.balancePaid ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-white text-gray-400 border-gray-100'} transition-all`}>
+                    <p className="text-[8px] font-black uppercase tracking-widest opacity-80 mb-1">{isMR ? 'उर्वरित (९०%)' : 'Balance (90%)'}</p>
+                    <p className="font-black text-sm">₹{order.finalAmount - order.advanceAmount}</p>
+                    <p className="text-[8px] font-bold mt-1">{order.balancePaid ? (isMR ? 'प्राप्त ✓' : 'Received ✓') : (isMR ? 'बाकी' : 'Pending')}</p>
+                 </div>
+              </div>
             </div>
           </div>
 
@@ -216,10 +249,12 @@ function OrderDetailModal({ order, onClose, onUpdateStatus, user, language }) {
           </div>
 
           <div className="flex gap-4 pt-2">
-            <button onClick={() => generatePDFBill(order, user, language)} 
-              className="flex-1 bg-white border-2 border-emerald-100 text-emerald-600 hover:bg-emerald-50 py-4 rounded-[24px] font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-lg shadow-emerald-500/5">
-              <Download size={18} /> {isMR ? 'बिल डाऊनलोड' : 'Bill'}
-            </button>
+             {order.status === 'delivered' && (
+              <button onClick={() => onDownloadBill(order)} 
+                className="flex-1 bg-white border-2 border-emerald-100 text-emerald-600 hover:bg-emerald-50 py-4 rounded-[24px] font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-lg shadow-emerald-500/5">
+                <Download size={18} /> {isMR ? 'बिल डाऊनलोड' : 'Bill'}
+              </button>
+            )}
             {order.status === 'pending' && (
               <button onClick={() => { onUpdateStatus(order._id, 'accepted'); onClose(); }} 
                 className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-[24px] font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20">
@@ -244,7 +279,7 @@ function OverviewTab({ orders, products, bookings, role, onStatClick }) {
   const pendingBookings = bookings.filter(b => b.status === 'pending').length
 
   const successItems = (role === 'equipment_owner' ? bookings : orders)
-    .filter(x => ['completed', 'accepted', 'delivered', 'confirmed', 'out_for_delivery'].includes(x.status))
+    .filter(x => ['completed', 'accepted', 'delivered', 'confirmed', 'out_for_delivery', 'arrived', 'in_progress', 'pending_final_payment'].includes(x.status))
   
   const avgOrderValue = successItems.length 
     ? Math.round((role === 'equipment_owner' ? bookingEarnings : totalRevenue) / successItems.length) 
@@ -346,7 +381,7 @@ function OverviewTab({ orders, products, bookings, role, onStatClick }) {
         <div className="bg-white/80 backdrop-blur-md rounded-[32px] border border-gray-100 p-6 shadow-sm">
           <h3 className="font-black text-gray-900 mb-6 flex items-center gap-2">📊 {role === 'equipment_owner' ? (isMR ? 'बुकिंग स्टेटस' : 'Booking Status') : 'Order Status'}</h3>
           <div className="space-y-5">
-            {(role === 'equipment_owner' ? ['pending','accepted','completed','rejected'] : ['delivered','accepted','packing','out_for_delivery','pending','rejected']).map((s) => {
+            {(role === 'equipment_owner' ? ['pending','accepted','confirmed','arrived','in_progress','pending_final_payment','completed','rejected'] : ['delivered','accepted','packing','out_for_delivery','pending','rejected']).map((s) => {
               const count = role === 'equipment_owner' 
                 ? bookings.filter(b => b.status === s).length
                 : orders.filter(o => o.status === s).length
@@ -358,7 +393,16 @@ function OverviewTab({ orders, products, bookings, role, onStatClick }) {
                     <span className="text-gray-900">{count}</span>
                   </div>
                   <div className="h-2 bg-gray-50 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full transition-all duration-1000 ${s==='delivered' || s==='completed' ?'bg-emerald-500':s==='accepted'?'bg-blue-500':s==='packing'?'bg-purple-500':s==='out_for_delivery'?'bg-orange-500':s==='pending'?'bg-amber-500':'bg-red-500'}`}
+                    <div className={`h-full rounded-full transition-all duration-1000 ${
+                      (s==='delivered' || s==='completed') ? 'bg-emerald-500' :
+                      (s==='accepted' || s==='confirmed') ? 'bg-blue-500' :
+                      s==='arrived' ? 'bg-cyan-500' :
+                      s==='in_progress' ? 'bg-violet-500' :
+                      s==='pending_final_payment' ? 'bg-indigo-500' :
+                      s==='packing' ? 'bg-purple-500' :
+                      s==='out_for_delivery' ? 'bg-orange-500' :
+                      s==='pending' ? 'bg-amber-500' : 'bg-red-500'
+                    }`}
                       style={{ width: totalCount ? `${(count/totalCount)*100}%` : '0%' }} />
                   </div>
                 </div>
@@ -391,7 +435,7 @@ function OverviewTab({ orders, products, bookings, role, onStatClick }) {
   )
 }
 
-function OrdersTab({ orders, onUpdateStatus, initialFilter = 'all', onFarmerClick }) {
+function OrdersTab({ orders, onUpdateStatus, onDownloadBill, onUpdateReturnStatus, isUpdatingReturn, initialFilter = 'all', onFarmerClick }) {
   const { language } = useLanguageStore()
   const { user } = useAuthStore()
   const isMR = language === 'mr'
@@ -494,15 +538,60 @@ function OrdersTab({ orders, onUpdateStatus, initialFilter = 'all', onFarmerClic
                   {order.items?.map((item, i) => (
                     <div key={i} className="flex items-center justify-between py-1.5 first:pt-0 last:pb-0">
                       <span className="text-xs font-bold text-gray-700 flex items-center gap-2"><span>{item.icon}</span>{item.name} <span className="text-gray-400">× {item.qty}</span></span>
-                      <span className="text-xs font-black text-gray-950">₹{( (item.price || 0) * (item.qty || item.quantity || 0) ).toLocaleString()}</span>
+                      <span className="text-[10px] font-bold text-gray-400">₹{( (item.price || 0) * (item.qty || item.quantity || 0) ).toLocaleString()}</span>
                     </div>
                   ))}
-                  <div className="border-t border-gray-200 mt-3 pt-3 flex justify-between items-center">
-                    <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-3">
-                      <span>💳 {order.payment?.toUpperCase()}</span>
-                      <span>🚚 {order.distance} KM</span>
+                  <div className="border-t border-gray-200 mt-3 pt-3">
+                    <div className="flex justify-between items-center mb-3">
+                      <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-3">
+                        <span>💳 {order.payment?.toUpperCase()}</span>
+                        <span>🚚 {order.distance} KM</span>
+                      </div>
+                      <div className="text-right space-y-1">
+                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">
+                          {isMR ? 'एकूण वस्तू' : 'Items Total'}: ₹{order.totalAmount}
+                        </p>
+                        {order.discount > 0 && (
+                          <p className="text-[10px] font-black text-red-500 uppercase tracking-widest leading-none">
+                            {isMR ? 'सवलत (-)' : 'Discount (-)'}: ₹{order.discount}
+                          </p>
+                        )}
+                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">
+                          {isMR ? 'डिलिव्हरी (+)' : 'Delivery (+)'}: ₹{order.deliveryCharge}
+                        </p>
+                        <div className="pt-1 mt-1 border-t border-gray-100">
+                          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">{isMR ? 'अंतिम बिल' : 'Final Bill'}</p>
+                          <p className="font-black text-emerald-600 text-lg leading-none">₹{(order.finalAmount || 0).toLocaleString()}</p>
+                        </div>
+                      </div>
                     </div>
-                    <p className="font-black text-emerald-600 text-lg">₹{(order.finalAmount || 0).toLocaleString()}</p>
+
+                    {/* Payment Status Bar for Owner */}
+                    <div className="bg-gray-100/50 rounded-xl p-3 flex items-center justify-between gap-4">
+                       <div className="flex-1 flex items-center gap-2">
+                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-black ${order.advancePaid ? 'bg-emerald-500 text-white' : 'bg-gray-200 text-gray-400'}`}>
+                             {order.advancePaid ? '✓' : '1'}
+                          </div>
+                          <div>
+                             <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Advance (10%)</p>
+                             <p className={`text-[10px] font-bold leading-none ${order.advancePaid ? 'text-emerald-600' : 'text-gray-400'}`}>
+                               ₹{order.advanceAmount} {order.advancePaid ? 'Received' : 'Pending'}
+                             </p>
+                          </div>
+                       </div>
+                       <div className="w-px h-6 bg-gray-200" />
+                       <div className="flex-1 flex items-center gap-2">
+                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-black ${order.balancePaid ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-200 text-gray-400'}`}>
+                             {order.balancePaid ? '✓' : '2'}
+                          </div>
+                          <div>
+                             <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Balance (90%)</p>
+                             <p className={`text-[10px] font-bold leading-none ${order.balancePaid ? 'text-emerald-600' : 'text-gray-400'}`}>
+                               ₹{order.finalAmount - order.advanceAmount} {order.balancePaid ? 'Received' : 'Pending'}
+                             </p>
+                          </div>
+                       </div>
+                    </div>
                   </div>
                 </div>
                 
@@ -511,14 +600,41 @@ function OrdersTab({ orders, onUpdateStatus, initialFilter = 'all', onFarmerClic
                       className="flex-1 bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 py-4 rounded-[28px] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all border border-transparent hover:border-emerald-100">
                       <Eye size={16} /> {isMR ? 'सविस्तर पहा' : 'View Details'}
                     </button>
-                   {(order.status === 'delivered' || order.status === 'out_for_delivery') && (
-                    <button onClick={() => generateInvoice(order, user)} 
+                   {order.status === 'delivered' && (
+                    <button onClick={() => onDownloadBill(order)} 
                       className="flex-1 bg-white border-2 border-emerald-100 text-emerald-600 hover:bg-emerald-50 py-4 rounded-[28px] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all">
                       <Download size={16} /> {isMR ? 'बिल डाऊनलोड' : 'Bill'}
                     </button>
                   )}
                 </div>
                 <div className="w-full">
+                  {order.returnRequested && (
+                    <div className="mb-4 p-5 bg-red-50 border border-red-100 rounded-[32px] animate-pulse">
+                      <div className="flex items-center justify-between mb-3">
+                         <p className="text-[10px] font-black text-red-600 uppercase tracking-widest flex items-center gap-2">⚠️ {isMR ? 'परतावा विनंती' : 'Return Request'}</p>
+                         <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-[9px] font-black uppercase">{order.returnStatus || 'Pending'}</span>
+                      </div>
+                      <p className="text-sm font-bold text-gray-700 italic mb-4">"{order.returnReason}"</p>
+                      {(order.returnStatus === 'pending' || !order.returnStatus) && (
+                        <div className="flex gap-2">
+                           <button 
+                             disabled={isUpdatingReturn}
+                             onClick={(e) => { e.stopPropagation(); onUpdateReturnStatus(order._id, 'approved'); }} 
+                             className="flex-1 bg-red-600 text-white py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-500/20 active:scale-95 transition-all disabled:opacity-50"
+                           >
+                             {isMR ? 'मंजूर करा' : 'Approve'}
+                           </button>
+                           <button 
+                             disabled={isUpdatingReturn}
+                             onClick={(e) => { e.stopPropagation(); onUpdateReturnStatus(order._id, 'rejected'); }} 
+                             className="flex-1 bg-white text-red-600 border border-red-100 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest active:scale-95 transition-all disabled:opacity-50"
+                           >
+                             {isMR ? 'नाकारा' : 'Reject'}
+                           </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {order.status === 'pending' && (
                     <div className="flex gap-3">
                       <button onClick={() => onUpdateStatus(order._id, 'accepted')} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 active:scale-95">Accept Order</button>
@@ -542,17 +658,35 @@ function OrdersTab({ orders, onUpdateStatus, initialFilter = 'all', onFarmerClic
                     </div>
                   )}
                   {order.status === 'packing' && (
-                    <button onClick={() => onUpdateStatus(order._id, 'out_for_delivery')} className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg shadow-orange-500/20 active:scale-95">Send for Delivery</button>
+                    <button 
+                      onClick={() => {
+                        onUpdateStatus(order._id, 'out_for_delivery');
+                        if (!activeTrackingIds.includes(order._id)) {
+                          setActiveTrackingIds(prev => [...prev, order._id]);
+                        }
+                      }} 
+                      className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg shadow-orange-500/20 active:scale-95"
+                    >
+                      {isMR ? 'डिलिव्हरीसाठी पाठवा 🚚' : 'Send for Delivery 🚚'}
+                    </button>
                   )}
                   {order.status === 'out_for_delivery' && (
                     <div className="space-y-3">
+                      <div className="w-full py-4 bg-emerald-50 text-emerald-600 rounded-2xl font-black text-[10px] uppercase tracking-widest border border-emerald-100 flex items-center justify-center gap-2 animate-pulse shadow-inner">
+                        <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
+                        {isMR ? '📡 ट्रॅकिंग सक्रिय आहे' : '📡 Tracking is Active'}
+                      </div>
                       <button 
-                         onClick={() => toggleTracking(order._id)}
-                         className={`w-full py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2 active:scale-95 ${activeTrackingIds.includes(order._id) ? 'bg-red-600 text-white shadow-red-500/20' : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'}`}
+                        onClick={() => {
+                          onUpdateStatus(order._id, 'delivered');
+                          if (activeTrackingIds.includes(order._id)) {
+                            setActiveTrackingIds(prev => prev.filter(id => id !== order._id));
+                          }
+                        }} 
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 active:scale-95"
                       >
-                         {activeTrackingIds.includes(order._id) ? (isMR ? '⏹ GPS बंद करा' : '⏹ Stop GPS') : (isMR ? '📡 लाईव्ह ट्रॅकिंग सुरू करा' : '📡 Start Real GPS')}
+                        {isMR ? 'पोहोचली ✅' : 'Pohachli ✅'}
                       </button>
-                      <button onClick={() => onUpdateStatus(order._id, 'delivered')} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 active:scale-95">{isMR ? 'पोहोचली ✅' : 'Pohachli ✅'}</button>
                     </div>
                   )}
                 </div>
@@ -565,16 +699,17 @@ function OrdersTab({ orders, onUpdateStatus, initialFilter = 'all', onFarmerClic
         <OrderDetailModal 
           order={selectedOrder} 
           onClose={() => setSelectedOrder(null)} 
-          onUpdateStatus={onUpdateStatus}
+          onUpdateStatus={handleUpdateOrderStatus}
           user={user}
           language={language}
+          onDownloadBill={handleDownloadBill}
         />
       )}
     </div>
   )
 }
 
-function ProductsTab({ products, setProducts }) {
+const ProductsTab = memo(({ products, setProducts }) => {
   const { language } = useLanguageStore()
   const isMR = language === 'mr'
   const [showModal, setShowModal] = useState(false)
@@ -588,15 +723,15 @@ function ProductsTab({ products, setProducts }) {
   ]
 
   const [filter, setFilter] = useState('all')
-  const [form, setForm] = useState({ name:'', icon:'🌱', category:'seeds', price:'', mrp:'', stock:'', weight: '', unit: 'kg', customCategory: '' })
-  const openAdd = () => { setForm({ name:'', icon:'🌱', category:'seeds', price:'', mrp:'', stock:'', weight: '', unit: 'kg', customCategory: '' }); setEditProduct(null); setShowModal(true) }
+  const [form, setForm] = useState({ name:'', brand:'', icon:'🌱', category:'seeds', price:'', mrp:'', stock:'', weight: '', unit: 'kg', customCategory: '' })
+  const openAdd = () => { setForm({ name:'', brand:'', icon:'🌱', category:'seeds', price:'', mrp:'', stock:'', weight: '', unit: 'kg', customCategory: '' }); setEditProduct(null); setShowModal(true) }
   const openEdit = (p) => { setForm({ ...p }); setEditProduct(p._id); setShowModal(true) }
   
   const filteredProducts = products.filter(p => filter === 'all' || p.category === filter)
 
   const handleSave = async () => {
-    if (!form.name || !form.price || !form.mrp || !form.stock || !form.weight) { 
-      toast.error(isMR ? 'कृपया सर्व माहिती भरा!' : 'Please fill all fields!')
+    if (!form.name || !form.brand || !form.price || !form.mrp || !form.stock || !form.weight) { 
+      toast.error(isMR ? 'कृपया सर्व माहिती भरा! (ब्रँड नाव अनिवार्य आहे)' : 'Please fill all fields! (Brand is mandatory)')
       return 
     }
     if (form.category === 'other' && !form.customCategory) {
@@ -667,6 +802,7 @@ function ProductsTab({ products, setProducts }) {
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div className="pr-2">
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{product.brand || 'No Brand'}</p>
                     <p className="font-black text-gray-900 text-xl leading-tight line-clamp-2">{product.name}</p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest px-3 py-1 bg-emerald-50 rounded-lg flex items-center gap-1 opacity-70">
@@ -725,9 +861,14 @@ function ProductsTab({ products, setProducts }) {
                    </select>
                 </div>
                 <div>
-                  <label className="text-[11px] font-black text-emerald-600 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'उत्पादनाचे ब्रँड/नाव *' : 'Product Brand/Name *'}</label>
-                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder={isMR ? "उदा. महाबीज सोयाबीन" : "e.g. Mahabeej Soybean"} className="w-full px-6 py-4 border-2 border-gray-50 focus:border-emerald-600 bg-gray-50 rounded-[24px] outline-none transition-all font-black" />
+                  <label className="text-[11px] font-black text-emerald-600 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'उत्पादनाचे नाव *' : 'Product Name *'}</label>
+                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder={isMR ? "उदा. सोयाबीन ३३५" : "e.g. Soybean 335"} className="w-full px-6 py-4 border-2 border-gray-50 focus:border-emerald-600 bg-gray-50 rounded-[24px] outline-none transition-all font-black" />
                 </div>
+              </div>
+
+              <div>
+                <label className="text-[11px] font-black text-emerald-600 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'कंपनी / ब्रँड नाव *' : 'Company / Brand Name *'}</label>
+                <input type="text" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} placeholder={isMR ? "उदा. महाबीज (Mahabeej)" : "e.g. Bayer, IFFCO, Mahabeej"} className="w-full px-6 py-4 border-2 border-gray-50 focus:border-emerald-600 bg-gray-50 rounded-[24px] outline-none transition-all font-black" />
               </div>
 
               {form.category === 'other' && (
@@ -740,7 +881,7 @@ function ProductsTab({ products, setProducts }) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'वजन / माप *' : 'Weight / Qty *'}</label>
-                  <input type="number" value={form.weight} onChange={(e) => setForm({ ...form, weight: e.target.value })} placeholder="उदा. 5" className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
+                  <input type="number" min="0" onWheel={(e) => e.target.blur()} value={form.weight} onChange={(e) => setForm({ ...form, weight: e.target.value === '' ? '' : Number(e.target.value) })} placeholder="उदा. 5" className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
                 </div>
                 <div>
                   <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'युनिट *' : 'Unit *'}</label>
@@ -757,17 +898,17 @@ function ProductsTab({ products, setProducts }) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'विक्री किंमत ₹ *' : 'Selling Price ₹ *'}</label>
-                  <input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
+                  <input type="number" min="0" onWheel={(e) => e.target.blur()} value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value === '' ? '' : Number(e.target.value) })} className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
                 </div>
                 <div>
                   <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'MRP ₹ *' : 'MRP ₹ *'}</label>
-                  <input type="number" value={form.mrp} onChange={(e) => setForm({ ...form, mrp: e.target.value })} className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
+                  <input type="number" min="0" onWheel={(e) => e.target.blur()} value={form.mrp} onChange={(e) => setForm({ ...form, mrp: e.target.value === '' ? '' : Number(e.target.value) })} className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
                 </div>
               </div>
 
               <div>
                 <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest block mb-2 ml-1">{isMR ? 'शिल्लक माल (Stock) *' : 'Initial Stock *'}</label>
-                <input type="number" value={form.stock} onChange={(e) => setForm({ ...form, stock: e.target.value })} className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
+                <input type="number" min="0" onWheel={(e) => e.target.blur()} value={form.stock} onChange={(e) => setForm({ ...form, stock: e.target.value === '' ? '' : Number(e.target.value) })} className="w-full px-5 py-4 border-2 border-gray-100 focus:border-emerald-600 bg-gray-50 rounded-2xl outline-none transition font-bold" />
               </div>
 
               <button onClick={handleSave} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-2xl font-black text-base uppercase tracking-widest shadow-xl shadow-emerald-500/30 transition-all mt-4">
@@ -779,7 +920,7 @@ function ProductsTab({ products, setProducts }) {
       )}
     </div>
   )
-}
+})
 
 function ComplaintsTab({ complaints, onUpdateStatus }) {
   const [filter, setFilter] = useState('all')
@@ -984,8 +1125,9 @@ function NotificationsTab({ notifications, onReadAll, onReadOne }) {
   )
 }
 
-function EquipmentTab({ equipments, setEquipments }) {
+const EquipmentTab = memo(({ equipments, setEquipments }) => {
   const { language } = useLanguageStore()
+  const isMR = language === 'mr'
   const [editId, setEditId] = useState(null)
   const [showModal, setShowModal] = useState(false)
   
@@ -1003,14 +1145,14 @@ function EquipmentTab({ equipments, setEquipments }) {
   useEffect(() => {
     if (!showModal) {
       setEditId(null)
-      setForm({ name: '', category: 'tractor', icon: '🚜', location: '', price: '', priceUnit: 'hour', experience: '', features: '', description: '', district: '', taluka: '', village: '', pincode: '', customCategory: '' })
+      setForm({ name: '', category: 'tractor', icon: '🚜', location: '', price: '', priceUnit: 'hour', experience: '', features: '', description: '', district: '', taluka: '', village: '', pincode: '', customCategory: '', isUnderMaintenance: false })
       setIsFetchingPin(false)
     }
   }, [showModal])
 
   const openAdd = () => {
     setEditId(null)
-    setForm({ name: '', category: 'tractor', icon: '🚜', location: '', price: '', priceUnit: 'hour', experience: '', features: '', description: '', district: '', taluka: '', village: '', pincode: '' })
+    setForm({ name: '', category: 'tractor', icon: '🚜', location: '', price: '', priceUnit: 'hour', experience: '', features: '', description: '', district: '', taluka: '', village: '', pincode: '', isUnderMaintenance: false })
     setShowModal(true)
   }
 
@@ -1021,7 +1163,8 @@ function EquipmentTab({ equipments, setEquipments }) {
       location: e.location, price: e.price || e.pricePerHour, priceUnit: e.priceUnit || 'hour', experience: e.experience,
       features: e.features, description: e.description,
       district: e.district, taluka: e.taluka, village: e.location?.split(',')[0]?.trim() || '',
-      pincode: e.pincode || ''
+      pincode: e.pincode || '',
+      isUnderMaintenance: e.isUnderMaintenance || false
     })
     setShowModal(true)
   }
@@ -1030,7 +1173,15 @@ function EquipmentTab({ equipments, setEquipments }) {
     try {
       const res = await equipmentAPI.update(id, { available: !current })
       setEquipments(prev => prev.map(e => e._id === id ? res.data : e))
-      toast.success(language === 'mr' ? 'स्थिती अपडेट झाली!' : 'Status updated!')
+      toast.success(isMR ? 'उपलब्धता अपडेट झाली!' : 'Availability updated!')
+    } catch (err) { toast.error('Error.') }
+  }
+
+  const toggleMaintenance = async (id, current) => {
+    try {
+      const res = await equipmentAPI.update(id, { isUnderMaintenance: !current })
+      setEquipments(prev => prev.map(e => e._id === id ? res.data : e))
+      toast.success(isMR ? 'दुरुस्ती/सर्व्हिसिंग स्टेटस अपडेट झाले!' : 'Maintenance status updated!')
     } catch (err) { toast.error('Error.') }
   }
 
@@ -1108,8 +1259,8 @@ function EquipmentTab({ equipments, setEquipments }) {
                   ...prev,
                   pincode: cleanVal,
                   district: matchedKey,
-                  taluka: foundTaluka?.en || '',
-                  village: ''
+                  taluka: foundTaluka?.en || prev.taluka,
+                  village: prev.village || ''
                 }))
               setVillageSuggestions(offices.map(o => o.Name))
               toast.success(language === 'mr' ? 'लोकेशन मिळाले! ✅' : 'Location ready!')
@@ -1165,12 +1316,28 @@ function EquipmentTab({ equipments, setEquipments }) {
     }
 
     try {
+      const numericPrice = Number(form.price)
+      if (!form.price || isNaN(numericPrice) || numericPrice <= 0) {
+        toast.error(language === 'mr' ? 'कृपया योग्य किंमत टाका! 💰' : 'Please enter a valid price! 💰')
+        return
+      }
+
       const payload = { 
-        ...form, 
+        name: form.name.trim(),
         category: form.category === 'other' ? form.customCategory : form.category,
-        location: `${form.village}, ${form.taluka}, ${form.district} - ${form.pincode}`,
-        price: Number(form.price),
-        pricePerHour: Number(form.price) // For backward compatibility if needed
+        icon: form.icon || '🚜',
+        price: numericPrice,
+        pricePerHour: numericPrice,
+        priceUnit: form.priceUnit || 'hour',
+        experience: form.experience || '',
+        features: form.features || '',
+        description: form.description || '',
+        district: form.district,
+        taluka: form.taluka,
+        village: form.village,
+        pincode: form.pincode,
+        isUnderMaintenance: form.isUnderMaintenance || false,
+        location: `${form.village}, ${form.taluka}, ${form.district} - ${form.pincode}`
       }
 
       if (editId) {
@@ -1217,50 +1384,58 @@ function EquipmentTab({ equipments, setEquipments }) {
           <div key={e._id} className="bg-white rounded-[48px] border border-gray-100 shadow-sm p-8 hover:shadow-2xl hover:border-emerald-200 transition-all duration-700 group relative overflow-hidden flex flex-col h-full">
             <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-50 rounded-full -mr-20 -mt-20 group-hover:scale-150 transition-transform duration-1000 ease-out" />
             
-            <div className="relative z-10 flex-1">
-              <div className="flex gap-6 items-start">
-                <div className="w-24 h-24 bg-white rounded-[32px] shadow-2xl shadow-emerald-500/10 border border-emerald-50 flex items-center justify-center text-5xl flex-shrink-0 group-hover:rotate-6 transition-all duration-500 group-hover:scale-110">{e.icon}</div>
-                <div className="flex-1 min-w-0 pt-2">
-                  <div className="flex justify-between items-start">
-                    <p className="font-black text-gray-900 text-xl leading-tight group-hover:text-emerald-700 transition-colors line-clamp-2">{e.name}</p>
-                    <div className="flex gap-2">
-                      <button onClick={() => openEdit(e)} className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-all"><Edit2 size={14} /></button>
-                      <button onClick={() => handleDelete(e._id)} className="p-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all"><Trash2 size={14} /></button>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    <span className="text-[10px] font-black uppercase bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-xl border border-emerald-100/50">{e.category}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 flex items-center justify-between bg-gray-50/80 backdrop-blur-sm p-6 rounded-[32px] border border-gray-100">
-                <div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Rate (दर)</p>
-                  <p className="font-black text-gray-900 text-2xl tracking-tight">₹{e.price || e.pricePerHour}<span className="text-xs text-gray-400 font-bold ml-1">/{e.priceUnit === 'acre' ? (language === 'mr' ? 'एकर' : 'Acre') : (language === 'mr' ? 'तास' : 'Hour')}</span></p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Status</p>
-                  <button onClick={() => toggleAvailability(e._id, e.available)}
-                    className={`text-[10px] font-black px-4 py-2 rounded-2xl border flex items-center gap-1.5 transition-all ${e.available ? 'bg-green-50 text-green-700 border-green-100 hover:bg-green-100' : 'bg-red-50 text-red-700 border-red-100 hover:bg-red-100'}`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${e.available ? 'bg-green-500' : 'bg-red-500'} animate-pulse`} />
-                    {e.available ? (language === 'mr' ? 'उपलब्ध' : 'Available') : (language === 'mr' ? 'बंद' : 'Not Avail')}
+            <div className="relative z-10 flex flex-col h-full">
+              <div className="flex justify-between items-start gap-4">
+                <div className="w-20 h-20 bg-white rounded-3xl shadow-xl shadow-emerald-500/10 border border-emerald-50 flex items-center justify-center text-4xl flex-shrink-0 group-hover:rotate-3 transition-all duration-500">{e.icon}</div>
+                <div className="flex gap-2">
+                  <button onClick={() => openEdit(e)} className="p-2.5 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm border border-blue-100 flex items-center gap-1.5 font-bold text-[10px] uppercase">
+                    <Edit2 size={14} /> {isMR ? 'सुधार' : 'Edit'}
+                  </button>
+                  <button onClick={() => handleDelete(e._id)} className="p-2.5 bg-red-50 text-red-600 rounded-xl hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-100">
+                    <Trash2 size={14} />
                   </button>
                 </div>
               </div>
 
-                  <div className="flex items-center gap-2 text-gray-500 mt-4">
-                    <MapPin size={14} className="text-emerald-500" />
-                    <p className="text-[11px] font-bold uppercase tracking-wide truncate">
-                      {e.location}, {maharashtraData[e.district]?.[language] || e.district}
+              <div className="mt-6 flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-black uppercase bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full border border-emerald-100/50">{e.category}</span>
+                </div>
+                <h4 className="font-black text-gray-900 text-xl leading-tight line-clamp-1">{e.name}</h4>
+                
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  <div className="bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
+                    <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">{isMR ? 'दर (Rate)' : 'Rate'}</p>
+                    <p className="font-black text-gray-900 text-lg">₹{e.price || e.pricePerHour || 0}<span className="text-[10px] text-gray-400 ml-1">/{e.priceUnit === 'acre' ? (isMR ? 'एकर' : 'Acre') : (isMR ? 'तास' : 'Hr')}</span></p>
+                  </div>
+                  <div className="bg-gray-50/50 p-4 rounded-2xl border border-gray-100 flex flex-col justify-center gap-2">
+                    <button onClick={() => toggleAvailability(e._id, e.available)}
+                      className={`text-[9px] font-black px-2 py-1.5 rounded-xl border flex items-center justify-center gap-1.5 transition-all ${e.available ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${e.available ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'}`} />
+                      {e.available ? (isMR ? 'उपलब्ध' : 'Avail') : (isMR ? 'बंद' : 'Off')}
+                    </button>
+                    <button onClick={() => toggleMaintenance(e._id, e.isUnderMaintenance)}
+                      className={`text-[9px] font-black px-2 py-1.5 rounded-xl border flex items-center justify-center gap-1.5 transition-all ${e.isUnderMaintenance ? 'bg-amber-100 text-amber-700 border-amber-200 shadow-sm' : 'bg-white text-gray-300 border-gray-100'}`}>
+                      {e.isUnderMaintenance ? '🛠️ ' + (isMR ? 'दुरुस्ती' : 'Repair') : (isMR ? 'सर्व्हिसिंग' : 'Service')}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-col gap-1.5 border-t border-gray-50 pt-4">
+                  <div className="flex items-center gap-2 text-gray-400">
+                    <MapPin size={12} className="text-emerald-500" />
+                    <p className="text-[10px] font-bold uppercase tracking-tight truncate">
+                      {e.location}, {maharashtraData[e.district]?.[language] || maharashtraData[e.district]?.mr || e.district}
                     </p>
                   </div>
                   {e.experience && (
-                    <div className="flex items-center gap-2 text-gray-500">
-                       <Star size={14} className="text-amber-500" />
-                       <p className="text-[11px] font-bold uppercase tracking-wide">{e.experience} {language === 'mr' ? 'अनुभव' : 'Experience'}</p>
+                    <div className="flex items-center gap-2 text-gray-400">
+                       <Star size={12} className="text-amber-500" />
+                       <p className="text-[10px] font-bold uppercase tracking-tight">{e.experience} {isMR ? 'अनुभव' : 'Experience'}</p>
                     </div>
                   )}
+                </div>
+              </div>
             </div>
           </div>
         ))}
@@ -1283,10 +1458,14 @@ function EquipmentTab({ equipments, setEquipments }) {
             
             <div className="p-10 pb-6 flex justify-between items-center shrink-0">
               <div>
-                <h2 className="font-black text-4xl text-gray-900 tracking-tight leading-none italic">{editId ? (language === 'mr' ? 'सुधार करा' : 'Edit') : (language === 'mr' ? 'नवीन' : 'Apply')} <span className="text-emerald-600">{editId ? '' : 'Now'}</span></h2>
+                <h2 className="font-black text-4xl text-gray-900 tracking-tight leading-none italic">
+                  {editId 
+                    ? (language === 'mr' ? 'सुधार करा' : language === 'hi' ? 'संशोधन' : 'Edit Info') 
+                    : (language === 'mr' ? 'नवीन नोंदणी' : language === 'hi' ? 'नई जानकारी' : 'Add New')}
+                </h2>
                 <div className="flex items-center gap-2 mt-4">
                   <span className="w-8 h-1 bg-emerald-500 rounded-full" />
-                  <p className="text-[11px] font-black uppercase tracking-[0.3em] text-gray-400">{language === 'mr' ? 'माहिती भरा' : 'Fill Details'}</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.3em] text-gray-400">{language === 'mr' ? 'माहिती भरा' : language === 'hi' ? 'जानकारी भरें' : 'Fill Details'}</p>
                 </div>
               </div>
               <button onClick={() => setShowModal(false)} className="w-16 h-16 bg-gray-50 hover:bg-red-50 hover:text-red-500 text-gray-400 rounded-[24px] flex items-center justify-center transition-all duration-300 group shadow-sm border border-gray-100">
@@ -1298,14 +1477,14 @@ function EquipmentTab({ equipments, setEquipments }) {
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                      अवजाराचे नाव <span className="text-red-500 font-bold">*</span>
+                      {language === 'mr' ? 'अवजाराचे नाव' : language === 'hi' ? 'उपकरण का नाम' : 'Equipment Name'} <span className="text-red-500 font-bold">*</span>
                     </label>
                     <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} 
                       className="w-full px-7 py-5 bg-gray-50 border-2 border-transparent rounded-[28px] outline-none focus:border-emerald-600 focus:bg-white focus:shadow-2xl focus:shadow-emerald-500/10 transition-all font-black text-gray-800 placeholder:text-gray-300" placeholder="उदा. MAHINDRA ARJUN 555" />
                   </div>
                   <div className="space-y-3">
                     <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                      प्रकार निवडा <span className="text-red-500 font-bold">*</span>
+                      {language === 'mr' ? 'प्रकार निवडा' : language === 'hi' ? 'श्रेणी चुनें' : 'Select Type'} <span className="text-red-500 font-bold">*</span>
                     </label>
                     <div className="relative">
                       <select value={form.category} onChange={e => {
@@ -1324,7 +1503,7 @@ function EquipmentTab({ equipments, setEquipments }) {
                {form.category === 'other' && (
                  <div className="space-y-3 animate-in zoom-in duration-300">
                     <label className="text-[11px] font-black text-amber-600 uppercase tracking-[0.2em] block ml-1">
-                      या नवीन विभागाचे नाव द्या (Category Type)
+                      {language === 'mr' ? 'या नवीन विभागाचे नाव द्या' : language === 'hi' ? 'इस नई श्रेणी का नाम दें' : 'Give name to this new category'}
                     </label>
                     <input type="text" value={form.customCategory} onChange={e => setForm({...form, customCategory: e.target.value})} 
                       className="w-full px-7 py-5 bg-amber-50 border-2 border-amber-200 rounded-[28px] outline-none focus:border-amber-600 focus:bg-white transition-all font-black text-gray-800" placeholder={language === 'mr' ? "उदा. रोटर, लेवलर इ." : "e.g. Rotor, Leveler etc."} />
@@ -1334,21 +1513,42 @@ function EquipmentTab({ equipments, setEquipments }) {
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                      भाडे प्रति तास (₹) <span className="text-red-500 font-bold">*</span>
+                      {language === 'mr' ? 'भाडे प्रति तास (₹)' : language === 'hi' ? 'किराया प्रति घंटा (₹)' : 'Rate per Hour (₹)'} <span className="text-red-500 font-bold">*</span>
                     </label>
                     <div className="relative">
-                      <input type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} 
+                      <input type="number" min="0" onWheel={(e) => e.target.blur()} value={form.price} onChange={e => setForm({...form, price: e.target.value === '' ? '' : Number(e.target.value)})} 
                         className="w-full px-14 py-5 bg-gray-50 border-2 border-transparent rounded-[28px] outline-none focus:border-emerald-600 focus:bg-white focus:shadow-2xl focus:shadow-emerald-500/10 transition-all font-black text-gray-800 placeholder:text-gray-300" placeholder="६००" />
                       <div className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-black">₹</div>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1">भाड्याचा प्रकार (Unit)</label>
+                    <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1">
+                      {language === 'mr' ? 'भाड्याचा प्रकार' : language === 'hi' ? 'किराये का प्रकार' : 'Rental Unit'}
+                    </label>
                     <div className="flex bg-gray-50 p-1 rounded-2xl">
                       <button onClick={(e) => { e.preventDefault(); setForm({...form, priceUnit: 'hour'}) }} className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase transition-all ${form.priceUnit === 'hour' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-400'}`}>{language === 'mr' ? 'प्रति तास' : 'Per Hour'}</button>
                       <button onClick={(e) => { e.preventDefault(); setForm({...form, priceUnit: 'acre'}) }} className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase transition-all ${form.priceUnit === 'acre' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-400'}`}>{language === 'mr' ? 'प्रति एकर' : 'Per Acre'}</button>
                     </div>
                   </div>
+               </div>
+
+               <div className="space-y-3 bg-amber-50/50 p-6 rounded-[32px] border border-amber-100">
+                  <label className="text-[11px] font-black text-amber-600 uppercase tracking-[0.2em] block ml-1">
+                    🛠️ {language === 'mr' ? 'सर्व्हिसिंग / मेंटेनन्स मोड' : 'Maintenance Mode'}
+                  </label>
+                  <div className="flex gap-3">
+                    <button onClick={(e) => { e.preventDefault(); setForm({...form, isUnderMaintenance: false}) }} 
+                      className={`flex-1 py-4 rounded-2xl font-black text-[10px] uppercase transition-all border-2 ${!form.isUnderMaintenance ? 'bg-white border-emerald-500 text-emerald-600 shadow-sm' : 'bg-gray-50 border-transparent text-gray-400'}`}>
+                      {language === 'mr' ? 'उपलब्ध (Active)' : 'Active'}
+                    </button>
+                    <button onClick={(e) => { e.preventDefault(); setForm({...form, isUnderMaintenance: true}) }} 
+                      className={`flex-1 py-4 rounded-2xl font-black text-[10px] uppercase transition-all border-2 ${form.isUnderMaintenance ? 'bg-amber-100 border-amber-500 text-amber-700 shadow-sm' : 'bg-gray-50 border-transparent text-gray-400'}`}>
+                      {language === 'mr' ? 'दुरुस्तीमध्ये (In Service)' : 'In Service'}
+                    </button>
+                  </div>
+                  <p className="text-[9px] font-bold text-amber-600/60 mt-1 px-1 italic">
+                    * {language === 'mr' ? 'यंत्र दुरुस्तीसाठी गेले असल्यास हा मोड चालू करा.' : 'Enable this if machine is under repair or servicing.'}
+                  </p>
                </div>
 
                 <div className="space-y-6 pt-4 border-t border-gray-100">
@@ -1359,7 +1559,7 @@ function EquipmentTab({ equipments, setEquipments }) {
 
                   <div className="space-y-3">
                     <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                      पिनकोड (Pincode) <span className="text-red-500 font-bold">*</span>
+                      {language === 'mr' ? 'पिनकोड (Pincode)' : language === 'hi' ? 'पिनकोड (Pincode)' : 'Pincode'} <span className="text-red-500 font-bold">*</span>
                     </label>
                     <div className="relative">
                       <input type="text" maxLength={15} value={form.pincode} onChange={e => handlePincodeChange(e.target.value)} 
@@ -1380,14 +1580,14 @@ function EquipmentTab({ equipments, setEquipments }) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                       <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                        {language === 'mr' ? 'जिल्हा (District)' : 'District'} <span className="text-red-500 font-bold">*</span>
+                        {language === 'mr' ? 'जिल्हा (District)' : language === 'hi' ? 'जिला (District)' : 'District'} <span className="text-red-500 font-bold">*</span>
                       </label>
                       <div className="flex gap-3">
                         <div className="relative flex-1">
                             <select value={form.district} onChange={e => setForm({...form, district: e.target.value, taluka: '', village: ''})} 
                               className="w-full px-7 py-5 bg-gray-50 border-2 border-transparent rounded-[28px] outline-none focus:border-emerald-600 focus:bg-white transition-all font-black text-gray-800 appearance-none">
-                              <option value="">{language === 'mr' ? 'निवडा...' : 'Select...'}</option>
-                              {districts.map(d => <option key={d} value={d}>{maharashtraData[d][language]}</option>)}
+                              <option value="">{language === 'mr' ? 'निवडा...' : language === 'hi' ? 'चुनें...' : 'Select...'}</option>
+                              {districts.map(d => <option key={d} value={d}>{maharashtraData[d][language] || maharashtraData[d].mr || maharashtraData[d].en}</option>)}
                             </select>
                           <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-emerald-500 opacity-30">
                             <MapPin size={18} />
@@ -1400,14 +1600,14 @@ function EquipmentTab({ equipments, setEquipments }) {
                     </div>
                     <div className="space-y-3">
                       <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                        {language === 'mr' ? 'तालुका (Taluka)' : 'Taluka'} <span className="text-red-500 font-bold">*</span>
+                        {language === 'mr' ? 'तालुका (Taluka)' : language === 'hi' ? 'तालुका (Taluka)' : 'Taluka'} <span className="text-red-500 font-bold">*</span>
                       </label>
                       <div className="relative">
                           <select value={form.taluka} onChange={e => setForm({...form, taluka: e.target.value, village: ''})} 
                             disabled={!form.district}
                             className="w-full px-7 py-5 bg-gray-50 border-2 border-transparent rounded-[28px] outline-none focus:border-emerald-600 focus:bg-white transition-all font-black text-gray-800 appearance-none disabled:opacity-30">
-                            <option value="">{language === 'mr' ? 'निवडा...' : 'Select...'}</option>
-                            {availableTalukas.map(t => <option key={t.en} value={t.en}>{t[language]}</option>)}
+                            <option value="">{language === 'mr' ? 'निवडा...' : language === 'hi' ? 'चुनें...' : 'Select...'}</option>
+                            {availableTalukas.map(t => <option key={t.en} value={t.en}>{t[language] || t.mr || t.en}</option>)}
                           </select>
                         <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-emerald-500 opacity-20">
                           <MapPin size={16} />
@@ -1419,7 +1619,7 @@ function EquipmentTab({ equipments, setEquipments }) {
 
                <div className="relative space-y-3">
                   <label className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] block ml-1 flex items-center gap-1.5">
-                    {language === 'mr' ? 'गाव (Village)' : 'Village'} <span className="text-red-500 font-bold">*</span>
+                    {language === 'mr' ? 'गाव (Village)' : language === 'hi' ? 'गाँव (Village)' : 'Village'} <span className="text-red-500 font-bold">*</span>
                   </label>
                   <div className="relative group">
                     {villageSuggestions.length > 0 ? (
@@ -1435,9 +1635,9 @@ function EquipmentTab({ equipments, setEquipments }) {
                             }
                           }}
                           className="w-full px-8 py-6 bg-gray-50 border-2 border-transparent rounded-[32px] outline-none focus:border-emerald-600 focus:bg-white focus:shadow-2xl focus:shadow-emerald-500/15 transition-all font-black text-xl text-gray-800 appearance-none">
-                          <option value="">{language === 'mr' ? 'गाव निवडा...' : 'Select Village...'}</option>
+                          <option value="">{language === 'mr' ? 'गाव निवडा...' : language === 'hi' ? 'गाँव चुनें...' : 'Select Village...'}</option>
                           {villageSuggestions.map(v => <option key={v} value={v}>{v}</option>)}
-                          <option value="other">{language === 'mr' ? '-- दुसरे गाव --' : '-- Other --'}</option>
+                          <option value="other">{language === 'mr' ? '-- दुसरे गाव --' : language === 'hi' ? '-- दूसरा गाँव --' : '-- Other --'}</option>
                         </select>
                         <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-emerald-600">
                           <ChevronDown size={24} />
@@ -1447,7 +1647,7 @@ function EquipmentTab({ equipments, setEquipments }) {
                       <input value={form.village} onChange={e => { setIsOtherVillage(false); handleVillageSearch(e.target.value); }} 
                         disabled={!form.taluka}
                         className="w-full px-8 py-6 bg-gray-50 border-2 border-transparent rounded-[32px] outline-none focus:border-emerald-600 focus:bg-white focus:shadow-2xl focus:shadow-emerald-500/15 transition-all font-black text-xl text-gray-800 placeholder:text-gray-300 disabled:opacity-20" 
-                        placeholder={form.taluka ? (language === 'mr' ? "नाव टाईप करा..." : "Type village name...") : (language === 'mr' ? "पहिले तालुका निवडा..." : "Select Taluka first...")} />
+                        placeholder={form.taluka ? (language === 'mr' ? "नाव टाईप करा..." : language === 'hi' ? "नाम टाइप करें..." : "Type village name...") : (language === 'mr' ? "पहिले तालुका निवडा..." : language === 'hi' ? "पहले तालुका चुनें..." : "Select Taluka first...")} />
                     )}
                     
                     {(isOtherVillage || (form.village && !villageSuggestions.includes(form.village) && villageSuggestions.length > 0)) && (
@@ -1492,9 +1692,9 @@ function EquipmentTab({ equipments, setEquipments }) {
       )}
     </div>
   )
-}
+})
 
-function CalendarView({ bookings, user }) {
+function CalendarView({ bookings, user, statusLabels }) {
   const { language } = useLanguageStore()
   const isMR = language === 'mr'
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -1576,7 +1776,7 @@ function CalendarView({ bookings, user }) {
                     <span className={`text-base font-black ${isSel ? 'text-white' : 'text-gray-900'}`}>{d}</span>
                     <div className="mt-auto flex flex-wrap gap-1.5">
                       {bks.slice(0, 4).map((b, idx) => (
-                        <span key={idx} className={`w-2 h-2 rounded-full ${isSel ? 'bg-white' : b.status==='pending' ? 'bg-amber-400' : 'bg-emerald-500'} shadow-sm`} />
+                        <span key={idx} className={`w-2 h-2 rounded-full ${isSel ? 'bg-white' : b.status === 'completed' ? 'bg-emerald-500' : 'bg-red-500'} shadow-sm`} />
                       ))}
                       {bks.length > 4 && <span className={`text-[9px] font-black ${isSel ? 'text-white/50' : 'text-gray-300'}`}>+{bks.length-4}</span>}
                     </div>
@@ -1619,9 +1819,16 @@ function CalendarView({ bookings, user }) {
                         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">{b.farmerName} • <span className="text-emerald-600">{b.timeSlot}</span></p>
                      </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-black text-gray-900 text-base">₹{b.amount}</p>
-                    <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border mt-1 inline-block ${b.status==='pending'?'bg-amber-50 text-amber-700':'bg-emerald-50 text-emerald-700'}`}>{b.status}</span>
+                  <div className="text-right flex flex-col items-end gap-1">
+                    <p className="font-black text-gray-900 text-lg">₹{b.amount}</p>
+                    {(() => {
+                      const s = statusLabels[b.status] || { label: b.status, color: 'bg-gray-50 text-gray-500' };
+                      return (
+                        <span className={`text-[9px] font-black uppercase px-3 py-1 rounded-full border shadow-sm ${s.color}`}>
+                          {s.label}
+                        </span>
+                      );
+                    })()}
                   </div>
                </div>
              ))}
@@ -1696,7 +1903,10 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
   const statusLabels = {
     pending:   { label: isMR ? 'प्रतीक्षेत' : 'Pending',   color: 'bg-amber-50 text-amber-700 border-amber-100' },
     accepted:  { label: isMR ? 'अ‍ॅडव्हान्सची प्रतीक्षा ⏳' : 'Awaiting Advance',  color: 'bg-indigo-50 text-indigo-700 border-indigo-100' },
-    confirmed: { label: isMR ? 'काम चालू आहे 🚜' : 'In Progress',  color: 'bg-blue-50 text-blue-700 border-blue-100' },
+    confirmed: { label: isMR ? 'बुकिंग कन्फर्म ✅' : 'Confirmed',  color: 'bg-blue-50 text-blue-700 border-blue-100' },
+    arrived:   { label: isMR ? 'यंत्र पोहोचले 📍' : 'Arrived',  color: 'bg-cyan-50 text-cyan-700 border-cyan-100' },
+    in_progress: { label: isMR ? 'काम चालू आहे 🚜' : 'In Progress',  color: 'bg-violet-50 text-violet-700 border-violet-100' },
+    pending_final_payment: { label: isMR ? 'पेमेंटची प्रतीक्षा ⏳' : 'Awaiting Payment',  color: 'bg-indigo-50 text-indigo-700 border-indigo-100' },
     rejected:  { label: isMR ? 'नाकारले'   : 'Rejected',  color: 'bg-red-50 text-red-700 border-red-100' },
     completed: { label: isMR ? 'पूर्ण'     : 'Completed', color: 'bg-emerald-50 text-emerald-700 border-emerald-100' },
     cancelled: { label: isMR ? 'रद्द'      : 'Cancelled', color: 'bg-gray-50 text-gray-500 border-gray-100' }
@@ -1723,7 +1933,7 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
             <button onClick={() => setViewMode('list')} className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${viewMode === 'list' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-400'}`}>📋 {isMR ? 'यादी' : 'List'}</button>
             <button onClick={() => setViewMode('calendar')} className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${viewMode === 'calendar' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-400'}`}>📅 {isMR ? 'कॅलेंडर' : 'Calendar'}</button>
           </div>
-          {viewMode === 'list' && ['all','pending','accepted','completed','rejected','cancelled'].map(f => (
+          {viewMode === 'list' && ['all','pending','accepted','confirmed','arrived','in_progress','completed'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all ${filter === f ? 'bg-emerald-600 text-white shadow' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
               {f === 'completed' ? (isMR ? 'इतिहास' : 'History') : f}
@@ -1734,12 +1944,12 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
       </div>
 
       {viewMode === 'calendar' ? (
-        <CalendarView bookings={bookings} user={user} />
+        <CalendarView bookings={bookings} user={user} statusLabels={statusLabels} />
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {filtered.map((b) => (
             <div key={b._id} className="bg-white rounded-[40px] border border-gray-100 p-8 shadow-xl shadow-gray-500/5 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 group relative overflow-hidden">
-              <div className={`absolute top-0 left-0 w-2 h-full ${b.status === 'pending' ? 'bg-amber-400' : b.status === 'accepted' ? 'bg-blue-500' : b.status === 'rejected' ? 'bg-red-500' : b.status === 'cancelled' ? 'bg-gray-300' : 'bg-emerald-500'}`} />
+              <div className={`absolute top-0 left-0 w-2 h-full ${b.status === 'pending' ? 'bg-amber-400' : b.status === 'accepted' ? 'bg-blue-500' : b.status === 'confirmed' ? 'bg-emerald-600' : b.status === 'rejected' ? 'bg-red-500' : b.status === 'cancelled' ? 'bg-gray-300' : 'bg-indigo-500'}`} />
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                 <div className="flex items-start gap-6">
                   <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center text-4xl shadow-inner border border-gray-100 group-hover:scale-110 transition-transform duration-500">
@@ -1759,18 +1969,6 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
                           <Clock size={14} className="text-emerald-500" /> {new Date(b.date).toLocaleDateString()} • {b.timeSlot}
                         </span>
                     </div>
-                    <div className="mt-4 flex flex-wrap items-center gap-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs">👤</div>
-                        <p className="text-xs font-black text-gray-700">{b.farmerName} <span className="text-gray-400 font-bold">• {b.farmerPhone}</span></p>
-                      </div>
-                      {b.note && (
-                        <div className="flex items-center gap-2 bg-amber-50 px-3 py-1 rounded-xl border border-amber-100">
-                          <span className="text-[10px]">📝</span>
-                          <p className="text-[10px] font-bold text-amber-700 italic">"{b.note}"</p>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
                 <div className="flex flex-col md:items-end gap-3 min-w-[180px]">
@@ -1785,50 +1983,87 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
                     <span className={`w-2 h-2 rounded-full ${
                       b.status==='pending' ? 'bg-amber-500 animate-pulse' :
                       b.status==='accepted' ? 'bg-indigo-500 animate-bounce' :
-                      b.status==='confirmed' ? 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]' :
+                      b.status==='confirmed' ? 'bg-emerald-500' :
+                      b.status==='arrived' ? 'bg-cyan-500' :
+                      b.status==='in_progress' ? 'bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.5)]' :
                       b.status==='rejected' ? 'bg-red-500' :
                       b.status==='cancelled' ? 'bg-gray-400' : 'bg-emerald-500'
                     }`} />
                     {b.status === 'completed' && b.paymentStatus !== 'paid' ? (isMR ? 'पैसे येणे बाकी ⏳' : 'Payment Pending ⏳') : (statusLabels[b.status]?.label || b.status)}
                   </span>
-                  <div className="flex gap-2 w-full md:w-auto">
-                    {b.farmerPhone && (
-                      <>
-                        <a href={`tel:${b.farmerPhone}`}
-                          className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 shadow-lg">
-                          <span>📞</span> {isMR ? 'कॉल' : 'Call'}
-                        </a>
-                        <a href={makeWhatsAppMsg(b)} target="_blank" rel="noreferrer"
-                          className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white px-4 py-2 rounded-2xl text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 shadow-lg">
-                          <span>📱</span> WhatsApp
-                        </a>
-                      </>
-                    )}
-                  </div>
                 </div>
               </div>
 
               {/* Action Buttons based on status */}
-              {b.status === 'pending' && (
-                <div className="mt-8 pt-8 border-t border-gray-50 flex gap-4">
-                  <button onClick={() => onUpdateStatus(b._id, 'accepted')}
-                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 active:scale-95 transition-all">
-                    {isMR ? 'स्वीकारा ✅' : 'Accept Request ✅'}
-                  </button>
-                  <button onClick={() => onUpdateStatus(b._id, 'rejected')}
-                    className="flex-1 bg-white hover:bg-red-50 text-red-500 border-2 border-red-50 py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] active:scale-95 transition-all">
-                    {isMR ? 'नाकारा ❌' : 'Reject ❌'}
-                  </button>
-                </div>
-              )}
+              <div className="mt-8 pt-8 border-t border-gray-50 flex gap-4 flex-wrap">
+                {b.status === 'pending' && (
+                  <>
+                    <button onClick={() => onUpdateStatus(b._id, 'accepted')}
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 active:scale-95 transition-all">
+                      {isMR ? 'स्वीकारा ✅' : 'Accept Request ✅'}
+                    </button>
+                    <button onClick={() => onUpdateStatus(b._id, 'rejected')}
+                      className="flex-1 bg-white hover:bg-red-50 text-red-500 border-2 border-red-50 py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] active:scale-95 transition-all">
+                      {isMR ? 'नाकारा ❌' : 'Reject ❌'}
+                    </button>
+                  </>
+                )}
 
-              {b.status === 'accepted' && (
-                <div className="mt-6 pt-6 border-t border-gray-50 flex items-center justify-center py-4 bg-indigo-50/30 rounded-[28px] border border-dashed border-indigo-100">
-                  <p className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] animate-pulse">
-                    ⏳ {isMR ? 'शेतकरी अ‍ॅडव्हान्स भरण्याची प्रतीक्षा करत आहे' : 'Waiting for farmer to pay advance'}
-                  </p>
-                </div>
-              )}
+                {b.status === 'accepted' && (
+                  <div className="w-full flex flex-col items-center gap-3">
+                    <div className="w-full py-4 bg-indigo-50/30 rounded-[28px] border border-dashed border-indigo-100 flex items-center justify-center">
+                       <p className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] animate-pulse">
+                         ⏳ {language === 'mr' ? 'शेतकरी अ‍ॅडव्हान्स भरण्याची प्रतीक्षा करत आहे' : language === 'hi' ? 'किसान एडवांस भुगतान की प्रतीक्षा कर रहा है' : 'Waiting for farmer to pay advance'}
+                       </p>
+                    </div>
+                    <button onClick={() => onUpdateStatus(b._id, 'confirmed')} 
+                      className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg">
+                      {isMR ? 'मॅन्युअली कन्फर्म करा (पेमेंट मिळाले असल्यास)' : 'Manually Confirm Payment'}
+                    </button>
+                  </div>
+                )}
+
+                {b.status === 'confirmed' && (
+                  <>
+                    <button onClick={() => onUpdateStatus(b._id, 'arrived')}
+                      className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-cyan-500/20 active:scale-95 transition-all">
+                      {isMR ? 'मी पोहोचलो 📍' : 'I Have Arrived 📍'}
+                    </button>
+                    <button onClick={() => startMachineryTracking(b._id)}
+                      className={`flex-1 py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl ${activeTrackingId === b._id ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-500'}`}>
+                      {activeTrackingId === b._id ? (isMR ? 'GPS बंद करा ⏹' : 'Stop GPS ⏹') : (isMR ? 'Live GPS सुरू करा 📡' : 'Start Live GPS 📡')}
+                    </button>
+                  </>
+                )}
+
+                {b.status === 'arrived' && (
+                  <button onClick={() => onUpdateStatus(b._id, 'in_progress')}
+                    className="flex-1 bg-violet-600 hover:bg-violet-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-violet-500/20 active:scale-95 transition-all">
+                    {isMR ? 'काम सुरू करा 🚜' : 'Start Work 🚜'}
+                  </button>
+                )}
+
+                {b.status === 'in_progress' && (
+                  <button onClick={() => onUpdateStatus(b._id, 'pending_final_payment')}
+                    className="flex-1 bg-violet-600 hover:bg-violet-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-violet-500/20 active:scale-95 transition-all">
+                    {isMR ? 'काम पूर्ण झाले ✅' : 'Work Done ✅'}
+                  </button>
+                )}
+
+                {b.status === 'pending_final_payment' && (
+                  <button onClick={() => onUpdateStatus(b._id, 'completed')}
+                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 active:scale-95 transition-all">
+                    {isMR ? 'पेमेंट मिळाले (Confirm Payment) 💰' : 'Confirm Payment Received 💰'}
+                  </button>
+                )}
+
+                {b.farmerPhone && (
+                  <div className="flex gap-2 w-full mt-2">
+                    <a href={`tel:${b.farmerPhone}`} className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white p-3 rounded-2xl text-[11px] font-black uppercase tracking-wider">📞 {isMR ? 'कॉल' : 'Call'}</a>
+                    <a href={makeWhatsAppMsg(b)} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white p-3 rounded-2xl text-[11px] font-black uppercase tracking-wider">📱 WhatsApp</a>
+                  </div>
+                )}
+              </div>
 
               {b.status === 'confirmed' && (
                 <div className="mt-8 pt-8 border-t border-gray-50 flex flex-col gap-3">
@@ -1837,7 +2072,9 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
                       onClick={() => startMachineryTracking(b._id)}
                       className={`flex-1 py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 ${activeTrackingId === b._id ? 'bg-red-600 text-white shadow-red-500/20' : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'}`}
                     >
-                       {activeTrackingId === b._id ? '⏹ STOP GPS' : '📡 START REAL GPS'}
+                       {activeTrackingId === b._id 
+                         ? (language === 'mr' ? '⏹ ट्रॅकिंग थांबवा' : language === 'hi' ? '⏹ ट्रैकिंग रोकें' : '⏹ STOP GPS') 
+                         : (language === 'mr' ? '📡 ट्रॅकिंग सुरू करा' : language === 'hi' ? '📡 ट्रैकिंग शुरू करें' : '📡 START REAL GPS')}
                     </button>
                     <button onClick={() => {
                         onUpdateStatus(b._id, 'completed')
@@ -1846,274 +2083,257 @@ function BookingsTab({ bookings, onUpdateStatus, updatePaymentStatus, initialFil
                         }
                       }}
                       className="flex-[1.5] bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] active:scale-95 transition-all shadow-lg shadow-blue-500/20 px-8">
-                      {isMR ? 'काम पूर्ण झाले ✅' : 'Work Done ✅'}
+                      {isMR ? 'पूर्ण' : 'Complete'}
                     </button>
                   </div>
-                  <button onClick={() => updatePaymentStatus(b._id, b.paymentStatus === 'paid' ? 'pending' : 'paid')}
-                    className={`w-full py-5 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] active:scale-95 transition-all shadow-lg px-6 border-2 ${
-                      b.paymentStatus === 'paid' 
-                        ? 'bg-emerald-50 text-emerald-600 border-emerald-100 shadow-emerald-500/10' 
-                        : 'bg-white text-gray-400 border-gray-100 shadow-gray-500/5 hover:border-emerald-500 hover:text-emerald-500'
-                    }`}>
-                    {b.paymentStatus === 'paid' ? (isMR ? '💰 पैसे मिळाले' : '💰 Paid') : (isMR ? '💵 पैसे मिळाले?' : '💵 Mark Paid?')}
-                  </button>
-                </div>
-              )}
-
-              {b.status === 'confirmed' && b.paymentStatus === 'pending' && !b.isDisputed && (
-                <button onClick={() => window.confirm(isMR ? 'या शेतकऱ्याबद्दल तक्रार करायची आहे का? (Strike System)' : 'Report this farmer for non-payment?') && reportFarmer(b._id)}
-                  className="mt-3 w-full text-[9px] font-black text-red-400 hover:text-red-600 uppercase tracking-widest transition-colors flex items-center justify-center gap-1">
-                  ⚠️ {isMR ? 'पैसे मिळाले नाहीत? (तक्रार करा)' : 'Haven\'t received payment? (Report)'}
-                </button>
-              )}
-
-              {b.status === 'completed' && (
-                <div className="mt-6 pt-6 border-t border-gray-50 flex gap-4">
-                  <button onClick={() => generatePDFBill(b, user, language)} 
-                    className="flex-1 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 py-4 rounded-[24px] font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all">
-                    <FileText size={18} /> {isMR ? 'बिल डाऊनलोड करा' : 'Bill'}
-                  </button>
-                  <button onClick={() => updatePaymentStatus(b._id, b.paymentStatus === 'paid' ? 'pending' : 'paid')}
-                    className={`py-4 px-10 rounded-[22px] font-black text-xs uppercase tracking-widest border-2 transition-all shadow-lg ${
-                      b.paymentStatus === 'paid' 
-                        ? 'bg-emerald-50 text-emerald-600 border-emerald-100 shadow-emerald-500/10' 
-                        : 'bg-white text-gray-400 border-gray-100 shadow-gray-500/5 hover:border-emerald-500 hover:text-emerald-500 font-black'
-                    }`}>
-                    {b.paymentStatus === 'paid' ? (isMR ? '💰 पैसे मिळाले' : '💰 Paid') : (isMR ? '💵 पैसे मिळाले?' : '💵 Mark Paid?')}
-                  </button>
                 </div>
               )}
             </div>
           ))}
-          {filtered.length === 0 && (
-            <div className="py-20 text-center bg-gray-50/50 rounded-[40px] border border-dashed border-gray-200">
-              <div className="text-6xl mb-4 opacity-20">📭</div>
-              <p className="text-xl font-black text-gray-900">{isMR ? 'अजून कोणतेही बुकिंग आले नाही' : 'No bookings found'}</p>
-            </div>
-          )}
         </div>
       )}
     </div>
   )
 }
 
-
 function StoreOwnerDashboard() {
+  const { user } = useAuthStore()
   const { language } = useLanguageStore()
   const isMR = language === 'mr'
-  const [activeTab,     setActiveTab]     = useState('overview')
-  const [bookingFilter, setBookingFilter] = useState('all')
-  const [orderFilter,   setOrderFilter]   = useState('all')
-  const [products,      setProducts]      = useState([])
-  const [equipments,    setEquipments]    = useState([])
-  const [complaints,    setComplaints]    = useState([])
-  const [selectedFarmer, setSelectedFarmer] = useState(null)
-  const [selectedOrder, setSelectedOrder] = useState(null)
-  const [harvestRequests, setHarvestRequests] = useState([])
-  const [showSlipModal,   setShowSlipModal]   = useState(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab = searchParams.get('tab') || 'overview'
   
-  const { notifications, unreadCount, fetchNotifications, markAsRead, markAllRead } = useNotificationStore()
-  const { user, logout } = useAuthStore()
-  const liveOrders = useOrderStore(state => state.allOrders)
-  const { fetchAllOrders, updateOrderStatus, updateLiveLocation, markBillGenerated } = useOrderStore()
-  const { allBookings, fetchAllBookings, updateBookingStatus, updatePaymentStatus, reportFarmer } = useBookingStore()
-  const navigate = useNavigate()
-  const location                                               = useLocation()
-
-  const fetchRealData = () => {
-    // Fetch data based on any business role
-    if (user?.role === 'admin' || user?.role === 'mart_owner' || user?.role === 'equipment_owner' || user?.role === 'factory_owner') {
-      if (user?.role === 'mart_owner') {
-        fetchAllOrders()
-        fetchOwnerProducts()
-        fetchComplaints()
-      }
-      if (user?.role === 'equipment_owner') {
-        fetchAllBookings()
-        fetchOwnerEquipments()
-        fetchComplaints()
-      }
-      if (user?.role === 'factory_owner') {
-        fetchHarvestRequests()
-        fetchComplaints()
-      }
-    }
-    fetchNotifications()
+  const setActiveTab = (tab) => {
+    setSearchParams({ tab })
   }
 
-  const fetchComplaints = async () => {
-    try {
-      // Fetch complaints targeted at THIS business owner
-      const res = await complaintAPI.getFactoryComplaints() 
-      setComplaints(res.data)
-    } catch (e) { }
-  }
+  const [selectedFarmer, setSelectedFarmer] = useState(null)
+  
+  // Data States
+  const [orders, setOrders] = useState([])
+  const [bookings, setBookings] = useState([])
+  const [products, setProducts] = useState([])
+  const [complaints, setComplaints] = useState([])
+  const { notifications, fetchNotifications, markAllRead, markAsRead } = useNotificationStore()
 
-  const fetchHarvestRequests = async () => {
-    try {
-      const res = await harvestAPI.getForFactory()
-      setHarvestRequests(res.data || [])
-    } catch (e) { }
-  }
+  const [equipments, setEquipments] = useState([])
+  const [harvestRequests, setHarvestRequests] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isUpdatingReturn, setIsUpdatingReturn] = useState(false)
 
-  const fetchOwnerProducts = async () => {
-    try {
-      const res = await productAPI.getForOwner()
-      setProducts(res.data || [])
-    } catch (e) { console.error('Product fetch failed', e) }
-  }
+  const role = user?.role || 'mart_owner'
 
-  const fetchOwnerEquipments = async () => {
-    try {
-      const res = await equipmentAPI.getMy()
-      setEquipments(res.data)
-    } catch (e) { }
-  }
-
+  // Initial Fetch & Auto-Refresh
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const tab = params.get('tab')
-    if (tab && ALL_TABS.find(t => t.id === tab)) {
-      setActiveTab(tab)
+    const fetchData = async (isInitial = false) => {
+      if (isInitial) setIsLoading(true)
+      try {
+        if (role === 'mart_owner') {
+          const [oRes, pRes] = await Promise.all([orderAPI.getAllOrders(), productAPI.getForOwner()])
+          setOrders(oRes.data)
+          setProducts(pRes.data)
+        }
+        if (role === 'equipment_owner' || role === 'owner') {
+          const [bRes, eRes] = await Promise.all([bookingAPI.getAllBookings(), equipmentAPI.getMy()])
+          setBookings(bRes.data)
+          setEquipments(eRes.data)
+        }
+        if (role === 'factory_owner') {
+          const hRes = await harvestAPI.getFactoryRequests()
+          setHarvestRequests(hRes.data)
+        }
+        
+        const cRes = await (role === 'admin' ? complaintAPI.getAll() : complaintAPI.getBusinessComplaints())
+        await fetchNotifications()
+        setComplaints(cRes.data)
+
+      } catch (err) {
+        console.error('Fetch error', err)
+      } finally {
+        if (isInitial) setIsLoading(false)
+      }
     }
-    fetchRealData()
-  }, [location.search])
 
-  const handleReadAll = () => markAllRead()
-  const handleReadOne = (id) => markAsRead(id)
-  const totalEarnings  = liveOrders.filter(o => o.status === 'delivered').reduce((s, o) => s + (o.finalAmount || 0), 0) + allBookings.filter(o => o.status === 'completed').reduce((s, o) => s + (o.amount || 0), 0)
+    fetchData(true)
+    
+    // Auto-sync every 30 seconds without manual refresh
+    const interval = setInterval(() => fetchData(false), 30000)
+    return () => clearInterval(interval)
+  }, [role])
 
-  const handleUpdateStatus = async (orderId, status) => { await updateOrderStatus(orderId, status) }
-  const handleUpdateBooking = async (id, status) => { await updateBookingStatus(id, status) }
-  const [isUpdatingComplaint, setIsUpdatingComplaint] = useState(false)
-  const handleUpdateComplaint = async (id, status) => {
-    if (isUpdatingComplaint) return
-    let waitToast;
+  // Socket.io Real-time Updates
+  useEffect(() => {
+    const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000')
+    
+    socket.on('newOrder', (order) => {
+      if (role === 'mart_owner' || role === 'owner') {
+        setOrders(prev => [order, ...prev])
+        toast.success(isMR ? 'नवीन ऑर्डर आली आहे! 📦' : 'New order received! 📦')
+      }
+    })
+
+    socket.on('newBooking', (booking) => {
+      if (role === 'equipment_owner') {
+        setBookings(prev => [booking, ...prev])
+        toast.success(isMR ? 'नवीन बुकिंग विनंती आली आहे! 🚜' : 'New booking request! 🚜')
+      }
+    })
+
+    socket.on('orderStatusUpdated', ({ orderId, status }) => {
+      setOrders(prev => prev.map(o => o._id === orderId ? { ...o, status } : o))
+    })
+
+    socket.on('bookingStatusUpdated', ({ bookingId, status }) => {
+      setBookings(prev => prev.map(b => b._id === bookingId ? { ...b, status } : b))
+    })
+
+    return () => socket.disconnect()
+  }, [role, isMR])
+
+  const handleUpdateOrderStatus = async (id, status) => {
     try {
-      setIsUpdatingComplaint(true)
-      waitToast = toast.loading('स्टेटस अपडेट होत आहे...')
+      await orderAPI.updateStatus(id, { status })
+      setOrders(prev => prev.map(o => o._id === id ? { ...o, status } : o))
+      const msg = language === 'mr' ? 'स्टेटस अपडेट झाले!' : language === 'hi' ? 'स्टेटस अपडेट हुआ!' : 'Status updated!'
+      toast.success(msg)
+    } catch (err) { toast.error('Error.') }
+  }
+
+  const handleUpdateBookingStatus = async (id, status) => {
+    try {
+      await bookingAPI.updateStatus(id, status)
+      setBookings(prev => prev.map(b => b._id === id ? { ...b, status } : b))
+      const msg = language === 'mr' ? 'बुकिंग अपडेट झाले!' : language === 'hi' ? 'बुकिंग अपडेट हुआ!' : 'Booking updated!'
+      toast.success(msg)
+    } catch (err) { toast.error('Error.') }
+  }
+
+  const handleUpdateComplaintStatus = async (id, status) => {
+    try {
       await complaintAPI.updateStatus(id, status)
-      await fetchComplaints()
-      fetchRealData() 
-      toast.success(status === 'resolved' ? 'तक्रार निवारण पूर्ण झाले! ✅' : 'तक्रारीवर कार्यवाही सुरू झाली! 🚀', { id: waitToast })
-    } catch (e) { 
-      toast.error('अपडेट अयशस्वी!', { id: waitToast })
-    } finally {
-      setIsUpdatingComplaint(false)
+      setComplaints(prev => prev.map(c => c._id === id ? { ...c, status } : c))
+      const msg = language === 'mr' ? 'तक्रार अपडेट झाली!' : language === 'hi' ? 'शिकायत अपडेट हुई!' : 'Complaint updated!'
+      toast.success(msg)
+    } catch (err) { toast.error('Error.') }
+  }
+
+  const handleReadAllNotifications = async () => {
+    await markAllRead()
+  }
+
+  const handleReadOneNotification = async (id) => {
+    await markAsRead(id)
+  }
+
+
+  const handleDownloadBill = async (order) => {
+    try {
+      generateInvoice(order, user)
+      if (!order.billGenerated) {
+        await orderAPI.generateBill(order._id)
+        setOrders(prev => prev.map(o => o._id === order._id ? { ...o, billGenerated: true } : o))
+      }
+    } catch (err) {
+      console.error('Bill generation error', err)
+      toast.error('Could not sync bill status')
     }
   }
-  const handleLogout = () => { logout(); toast.success('Logout successful!'); navigate('/login') }
 
-  const pendingCount   = liveOrders.filter(o => o.status === 'pending').length
+  const handleUpdateReturnStatus = async (id, status) => {
+    if (isUpdatingReturn) return;
+    setIsUpdatingReturn(true);
+    try {
+      await orderAPI.updateReturnStatus(id, status)
+      toast.success(isMR ? 'रिटर्न स्टेटस अपडेट झाले! ✅' : 'Return status updated! ✅')
+      fetchOrders()
+    } catch (err) {
+      console.error('Return Update Error:', err);
+      toast.error(isMR ? 'स्टेटस अपडेट करताना चूक झाली!' : 'Failed to update return status.')
+    } finally {
+      setIsUpdatingReturn(false);
+    }
+  }
 
-  const ALL_TABS = [
-    { id:'overview',      icon:LayoutDashboard, label:'Dashboard', roles:['mart_owner', 'equipment_owner', 'factory_owner'] },
-    { id:'orders',        icon:Package,         label:'Orders',    badge:pendingCount, roles:['mart_owner'] },
-    { id:'products',      icon:ShoppingBag,     label:'Inventory', roles:['mart_owner'] },
-    { id:'analytics',     icon:TrendingUp,      label:'Analytics', roles:['mart_owner', 'equipment_owner'] },
-    { id:'bookings',      icon:Calendar,        label:'Bookings',  badge:allBookings.filter(b=>b.status==='pending').length, roles:['equipment_owner'] },
-    { id:'equipments',    icon:Tractor,        label:'Equipments', roles:['equipment_owner'] },
-    { id:'map',           icon:MapPin,         label: isMR ? 'नकाशा' : 'Map View', roles:['mart_owner', 'equipment_owner'] },
-    { id:'harvest',       icon:Sprout,          label:'Harvest',   badge:harvestRequests.filter(r=>r.status==='pending').length, roles:['factory_owner'] },
-    { id:'complaints',    icon:AlertCircle,     label:'Complaints', badge:complaints.filter(c=>c.status==='pending').length, roles:['factory_owner', 'mart_owner', 'equipment_owner'], hidden: true },
-    { id:'notifications', icon:Bell,            label:'Alerts',    badge:unreadCount, roles:['mart_owner', 'equipment_owner', 'factory_owner'], hidden: true },
-  ]
-
-  const tabs = ALL_TABS.filter(t => t.roles.includes(user?.role) && !t.hidden)
-  const roleInfo = {
-    mart_owner:      { icon: '🛒', type: 'Krishi Mart' },
-    equipment_owner: { icon: '🚜', type: 'Equipment Agency' },
-    factory_owner:   { icon: '🏭', type: 'Sugar Factory' }
-  }[user?.role] || { icon: '🏢', type: 'Business' }
+  if (isLoading) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+       <div className="flex flex-col items-center gap-6">
+          <div className="w-20 h-20 border-8 border-emerald-100 border-t-emerald-600 rounded-full animate-spin shadow-2xl shadow-emerald-500/20" />
+          <p className="text-sm font-black text-emerald-600 uppercase tracking-[0.3em] animate-pulse italic">
+            {language === 'mr' ? 'डॅशबोर्ड लोड होत आहे...' : language === 'hi' ? 'डैशबोर्ड लोड हो रहा है...' : 'Loading Dashboard...'}
+          </p>
+       </div>
+    </div>
+  )
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] font-outfit relative">
-      <img src="/assets/full_auth_bg.png" alt="bg" className="absolute inset-0 w-full h-[400px] object-cover opacity-10 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-emerald-50/50 via-transparent to-transparent pointer-events-none" />
+    <div className="min-h-screen bg-[#fafafa] flex flex-col font-outfit">
+      {/* Main Content Area (Navbar is now handled globally in App.jsx) */}
+      <div className="flex-1 p-4 md:p-10 lg:p-16 max-w-[1600px] mx-auto w-full">
+        <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
+           <div>
+              <div className="flex items-center gap-3 text-emerald-600 font-black uppercase tracking-[0.3em] text-[10px] mb-3">
+                 <span className="w-12 h-0.5 bg-emerald-600/30 rounded-full" />
+                 {isMR ? 'स्वागत आहे!' : 'Welcome Back!'}
+              </div>
+              <h2 className="text-5xl font-black text-gray-900 tracking-tighter leading-tight italic">
+                {isMR ? 'नमस्कार, ' : 'Welcome, '} <span className="text-emerald-600">{user?.name || (isMR ? 'दुकानदार' : 'Owner')}!</span>
+              </h2>
+           </div>
+           
+           <div className="flex items-center gap-5">
+              <div className="text-right hidden md:block">
+                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">
+                    {language === 'mr' ? 'सद्यस्थिती' : language === 'hi' ? 'वर्तमान स्थिति' : 'Current Status'}
+                 </p>
+                 <div className="flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                    <span className="text-[10px] font-black text-emerald-700 uppercase tracking-widest">
+                       {language === 'mr' ? 'लाईव्ह आणि ऑनलाईन' : language === 'hi' ? 'लाइव और ऑनलाइन' : 'Live & Online'}
+                    </span>
+                 </div>
+              </div>
+              <div className="w-16 h-16 bg-white rounded-[24px] shadow-xl border border-gray-100 flex items-center justify-center text-2xl animate-in zoom-in-50 duration-700">👨‍🌾</div>
+           </div>
+        </header>
 
-      {/* Header */}
-      <div className="relative z-10 pt-10 pb-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <Link to="/profile" className="flex items-center gap-6 group">
-              <div className="w-24 h-24 bg-white rounded-[32px] shadow-2xl shadow-emerald-900/10 flex items-center justify-center text-5xl border border-emerald-100 animate-in zoom-in duration-500 group-hover:scale-105 transition-transform">
-                {roleInfo.icon}
-              </div>
-              <div className="animate-in slide-in-from-left-4 duration-500">
-                <h1 className="text-4xl font-black text-gray-900 tracking-tight leading-none group-hover:text-emerald-600 transition-colors uppercase">{user?.businessName || user?.name}</h1>
-                <div className="flex items-center gap-4 mt-3">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">{roleInfo.type}</span>
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 group-hover:text-emerald-400">📍 {user?.location || 'Maharashtra'}</span>
-                </div>
-              </div>
-            </Link>
-            
-            <div className="flex items-center gap-4 animate-in slide-in-from-right-4 duration-500">
-              <div className="bg-white px-8 py-4 rounded-[28px] shadow-lg shadow-emerald-900/5 border border-emerald-50 text-right">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{isMR ? 'एकूण शिल्लक' : 'Net Balance'}</p>
-                <p className="text-3xl font-black text-gray-900">₹{Math.floor(totalEarnings * 0.9).toLocaleString()}</p>
-              </div>
-              <button onClick={handleLogout} className="w-16 h-16 bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-[28px] shadow-lg border border-gray-100 flex items-center justify-center transition-all duration-300 group">
-                <LogOut size={24} className="group-hover:-translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          {user && activeTab === 'overview' && <OverviewTab orders={orders} products={products} bookings={bookings} role={role} onStatClick={setActiveTab} />}
+          {user && activeTab === 'orders' && (
+            <OrdersTab 
+              orders={orders} 
+              onUpdateStatus={handleUpdateOrderStatus} 
+              onDownloadBill={handleDownloadBill} 
+              onUpdateReturnStatus={handleUpdateReturnStatus}
+              isUpdatingReturn={isUpdatingReturn}
+              onFarmerClick={setSelectedFarmer} 
+            />
+          )}
+          {user && activeTab === 'bookings' && <BookingsTab bookings={bookings} onUpdateStatus={handleUpdateBookingStatus} onFarmerClick={setSelectedFarmer} />}
+          {user && activeTab === 'inventory' && (
+            (role === 'equipment_owner' || role === 'owner') 
+              ? <EquipmentTab equipments={equipments} setEquipments={setEquipments} /> 
+              : <ProductsTab products={products} setProducts={setProducts} />
+          )}
+          {user && activeTab === 'analytics' && <AnalyticsTab orders={orders} products={products} equipments={equipments} role={role} />}
+          {user && activeTab === 'complaints' && <ComplaintsTab complaints={complaints} onUpdateStatus={handleUpdateComplaintStatus} />}
+          {user && activeTab === 'notifications' && <NotificationsTab notifications={notifications} onReadAll={handleReadAllNotifications} onReadOne={handleReadOneNotification} />}
+          {activeTab === 'harvest' && <HarvestTab requests={harvestRequests} onUpdate={() => harvestAPI.getAll().then(res => setHarvestRequests(res.data))} />}
         </div>
-      </div>
-
-      {/* Navigation */}
-      <div className="max-w-6xl mx-auto px-6 -mt-8 relative z-20">
-        <div className="bg-white/80 backdrop-blur-xl p-2 rounded-[32px] shadow-xl border border-white/50 flex gap-2 overflow-x-auto scrollbar-hide">
-          {tabs.map((tab) => {
-            const Icon = tab.icon
-            return (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-[24px] text-[11px] font-black uppercase tracking-widest transition-all duration-500 relative min-w-fit ${activeTab === tab.id ? 'bg-emerald-600 text-white shadow-xl shadow-emerald-600/20' : 'text-gray-400 hover:text-emerald-600 hover:bg-emerald-50'}`}>
-                <Icon size={18} />
-                <span className="hidden sm:inline">{tab.label}</span>
-                {tab.badge > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border-4 border-white shadow-lg animate-bounce">{tab.badge}</span>}
-              </button>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-10 relative z-30 min-h-[500px]">
-        {activeTab === 'overview'      && <OverviewTab      orders={liveOrders} products={products} bookings={allBookings} role={user?.role} roleInfo={roleInfo} onStatClick={(tab, filter) => { setActiveTab(tab); if (tab === 'bookings') setBookingFilter(filter); if (tab === 'orders') setOrderFilter(filter); }} />}
-        {activeTab === 'orders'        && <OrdersTab        orders={liveOrders} onUpdateStatus={handleUpdateStatus} initialFilter={orderFilter} onFarmerClick={setSelectedFarmer} />}
-        {activeTab === 'products'      && <ProductsTab      products={products} setProducts={setProducts} />}
-        {activeTab === 'bookings'      && <BookingsTab      bookings={allBookings} onUpdateStatus={handleUpdateBooking} updatePaymentStatus={updatePaymentStatus} initialFilter={bookingFilter} onFarmerClick={setSelectedFarmer} />}
-        {activeTab === 'equipments'    && <EquipmentTab     equipments={equipments} setEquipments={setEquipments} />}
-        {activeTab === 'map'           && <OrderMap         items={user?.role === 'equipment_owner' ? allBookings : liveOrders} role={user?.role} />}
-        {activeTab === 'analytics'     && <AnalyticsTab     orders={liveOrders} products={products} equipments={equipments} role={user?.role} />}
-        {activeTab === 'complaints'    && <ComplaintsTab    complaints={complaints} onUpdateStatus={handleUpdateComplaint} />}
-        {activeTab === 'harvest'      && <HarvestTab       requests={harvestRequests} onUpdate={fetchHarvestRequests} onShowSlip={setShowSlipModal} />}
-        {activeTab === 'notifications' && <NotificationsTab notifications={notifications} onReadAll={handleReadAll} onReadOne={handleReadOne} />}
       </div>
 
       {selectedFarmer && (
         <FarmerProfileModal 
           farmerName={selectedFarmer} 
-          orders={liveOrders} 
-          bookings={allBookings} 
-          role={user?.role} 
+          orders={orders} 
+          bookings={bookings} 
+          role={role} 
           onClose={() => setSelectedFarmer(null)} 
-        />
-      )}
-
-      {selectedOrder && (
-        <OrderDetailModal 
-          order={liveOrders.find(o => o._id === (selectedOrder._id || selectedOrder)) || selectedOrder} 
-          onClose={() => setSelectedOrder(null)} 
-          onUpdateStatus={handleUpdateStatus} 
-          user={user}
-          language={language}
         />
       )}
     </div>
   )
 }
+
 
 function AnalyticsTab({ orders, products, equipments, role }) {
   const { language } = useLanguageStore()
@@ -2186,13 +2406,13 @@ function AnalyticsTab({ orders, products, equipments, role }) {
       {/* Header Cards */}
       <div className="flex justify-between items-center bg-white p-8 rounded-[40px] border border-gray-100 shadow-xl shadow-emerald-900/5">
         <div>
-          <h2 className="text-3xl font-black text-gray-900 tracking-tight italic">{isMR ? 'विक्री विश्लेषण' : 'Sales Analytics'}</h2>
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight italic">{language === 'mr' ? 'विक्री विश्लेषण' : language === 'hi' ? 'बिक्री विश्लेषण' : 'Sales Analytics'}</h2>
           <p className="text-[11px] font-black text-emerald-600 uppercase tracking-widest mt-1">
-            {isMR ? 'तुमच्या व्यवसायाची प्रगती आलेखामध्ये पहा' : 'Visualize your business growth & stock health'}
+            {language === 'mr' ? 'तुमच्या व्यवसायाची प्रगती आलेखामध्ये पहा' : language === 'hi' ? 'अपने व्यवसाय की प्रगति ग्राफ में देखें' : 'Visualize your business growth & stock health'}
           </p>
         </div>
         <button onClick={downloadReport} className="bg-gray-900 text-white px-8 py-4 rounded-[22px] font-black text-[11px] uppercase tracking-widest flex items-center gap-3 shadow-xl hover:-translate-y-1 transition-all active:scale-95">
-          <Download size={18} /> {isMR ? 'Excel रिपोर्ट' : 'Export Excel'}
+          <Download size={18} /> {language === 'mr' ? 'Excel रिपोर्ट' : language === 'hi' ? 'Excel रिपोर्ट' : 'Export Excel'}
         </button>
       </div>
 
@@ -2212,8 +2432,8 @@ function AnalyticsTab({ orders, products, equipments, role }) {
                </div>
              </div>
              
-             <div className="h-64 mt-auto">
-               <ResponsiveContainer width="100%" height="100%">
+             <div className="h-[400px] mt-auto">
+               <ResponsiveContainer width="100%" height="100%" minHeight={300}>
                  <AreaChart data={salesData}>
                    <defs>
                      <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
@@ -2244,8 +2464,8 @@ function AnalyticsTab({ orders, products, equipments, role }) {
                {isMR ? 'माल उपलब्धता (वर्गानुसार)' : 'Inventory Analysis'}
              </h3>
              
-             <div className="h-64 flex items-center justify-center">
-               <ResponsiveContainer width="100%" height="100%">
+             <div className="h-[300px] flex items-center justify-center">
+               <ResponsiveContainer width="100%" height="100%" minHeight={200}>
                  <PieChart>
                    <Pie
                      data={categoryData.length > 0 ? categoryData : [{name: 'Products', value: products.length}]}
@@ -2302,7 +2522,9 @@ function AnalyticsTab({ orders, products, equipments, role }) {
             ))}
             {products.filter(p => p.stock < 10).length === 0 && (
               <div className="col-span-full text-center py-10 opacity-30">
-                 <p className="font-black uppercase tracking-[0.3em]">All Good! Stock is Full ✅</p>
+                 <p className="font-black uppercase tracking-[0.3em]">
+                   {language === 'mr' ? 'सर्व काही ठीक आहे! स्टॉक पूर्ण आहे ✅' : language === 'hi' ? 'सब ठीक है! स्टॉक पूरा है ✅' : 'All Good! Stock is Full ✅'}
+                 </p>
               </div>
             )}
           </div>
@@ -2322,7 +2544,8 @@ function HarvestTab({ requests, onUpdate, onShowSlip }) {
   const handleUpdateStatus = async (id, status, extra = {}) => {
     try {
       await harvestAPI.updateStatus(id, { status, ...extra })
-      toast.success(isMR ? 'स्टेटस अपडेट झाले! ✅' : 'Status updated! ✅')
+      const successMsg = language === 'mr' ? 'स्टेटस अपडेट झाले! ✅' : language === 'hi' ? 'स्टेटस अपडेट हुआ! ✅' : 'Status updated! ✅'
+      toast.success(successMsg)
       onUpdate()
     } catch (e) { toast.error('Error.') }
   }
@@ -2339,7 +2562,9 @@ function HarvestTab({ requests, onUpdate, onShowSlip }) {
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h3 className="font-black text-gray-900 text-2xl tracking-tight flex items-center gap-2"><Sprout className="text-emerald-500" /> {isMR ? 'तोडणी मॉनिटरिंग' : 'Harvest Monitoring'}</h3>
-          <p className="text-[10px] font-black uppercase text-emerald-600 tracking-widest mt-1 italic">Manage farmer field requests</p>
+          <p className="text-[10px] font-black uppercase text-emerald-600 tracking-widest mt-1 italic">
+            {language === 'mr' ? 'शेतकऱ्यांच्या तोडणी विनंत्या व्यवस्थापित करा' : language === 'hi' ? 'किसानों के कटाई अनुरोधों को प्रबंधित करें' : 'Manage farmer field requests'}
+          </p>
         </div>
         <div className="flex gap-2">
           {['all', 'pending', 'scheduled', 'completed'].map(f => (
@@ -2382,14 +2607,14 @@ function HarvestTab({ requests, onUpdate, onShowSlip }) {
               {r.status === 'pending' && (
                 <>
                   <button onClick={() => {
-                    const toli = window.prompt(isMR ? 'टोळीचे नाव टाका:' : 'Enter Toli Name:')
-                    const date = window.prompt(isMR ? 'तारीख निवडा (YYYY-MM-DD):' : 'Select Date (YYYY-MM-DD):')
+                    const toli = window.prompt(language === 'mr' ? 'टोळीचे नाव टाका:' : language === 'hi' ? 'टोली का नाम डालें:' : 'Enter Toli Name:')
+                    const date = window.prompt(language === 'mr' ? 'तारीख निवडा (YYYY-MM-DD):' : language === 'hi' ? 'तारीख चुनें (YYYY-MM-DD):' : 'Select Date (YYYY-MM-DD):')
                     if (toli && date) handleUpdateStatus(r._id, 'scheduled', { toliName: toli, scheduledDate: date })
                   }} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-[24px] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
-                    <Check size={16} /> {isMR ? 'नियोजित (Schedule)' : 'Schedule Extraction'}
+                    <Check size={16} /> {language === 'mr' ? 'नियोजित (Schedule)' : language === 'hi' ? 'निर्धारित (Schedule)' : 'Schedule Extraction'}
                   </button>
                   <button onClick={() => handleUpdateStatus(r._id, 'rejected')} className="px-8 border-2 border-red-50 text-red-500 hover:bg-red-50 rounded-[24px] font-black text-xs uppercase tracking-widest transition-all">
-                    Reject
+                    {language === 'mr' ? 'रद्द' : language === 'hi' ? 'रद्द' : 'Reject'}
                   </button>
                 </>
               )}
@@ -2400,12 +2625,12 @@ function HarvestTab({ requests, onUpdate, onShowSlip }) {
                       <div className="flex items-center gap-6">
                         <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg text-emerald-600"><User size={20} /></div>
                         <div>
-                          <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">Assigned Toli</p>
-                          <p className="font-black text-gray-900">{r.toliName || 'Not Assigned'}</p>
+                          <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">{language === 'mr' ? 'नेमलेली टोळी' : language === 'hi' ? 'नियुक्त टोली' : 'Assigned Toli'}</p>
+                          <p className="font-black text-gray-900">{r.toliName || (language === 'mr' ? 'नेमणूक केलेली नाही' : language === 'hi' ? 'नियुक्त नहीं' : 'Not Assigned')}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">Scheduled Date</p>
+                        <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">{language === 'mr' ? 'नियोजित तारीख' : language === 'hi' ? 'निर्धारित तिथि' : 'Scheduled Date'}</p>
                         <p className="font-black text-gray-900">{new Date(r.scheduledDate).toLocaleDateString()}</p>
                       </div>
                    </div>
@@ -2431,7 +2656,7 @@ function HarvestTab({ requests, onUpdate, onShowSlip }) {
                 <div className="w-full bg-gray-50 p-6 rounded-[32px] flex items-center justify-between">
                    <div className="flex items-center gap-4">
                      <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600"><Check size={18} /></div>
-                     <p className="text-sm font-black text-gray-900 uppercase tracking-tight">{isMR ? 'ऊस तोडणी पूर्ण झाली' : 'Harvesting Completed'}</p>
+                     <p className="text-sm font-black text-gray-900 uppercase tracking-tight">{language === 'mr' ? 'ऊस तोडणी पूर्ण झाली' : language === 'hi' ? 'गन्ने की कटाई पूरी हुई' : 'Harvesting Completed'}</p>
                    </div>
                    <p className="text-lg font-black text-emerald-600 tracking-tight">{r.actualTons} Tons Net</p>
                 </div>

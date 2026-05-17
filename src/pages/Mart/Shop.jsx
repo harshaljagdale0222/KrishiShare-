@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Search, ShoppingCart, Star, Plus, Minus } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useCartStore from '../../store/cartStore'
 import useLanguageStore from '../../store/languageStore'
 import useProductStore from '../../store/productStore'
@@ -16,7 +16,9 @@ const categories = [
 ]
 
 function ProductDetailModal({ product, onClose, onAddToCart }) {
-  const { t } = useLanguageStore()
+  const { t, language } = useLanguageStore()
+  const [qty, setQty] = useState(1)
+  
   if (!product) return null
 
   return (
@@ -27,15 +29,31 @@ function ProductDetailModal({ product, onClose, onAddToCart }) {
           <button onClick={onClose} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center transition">×</button>
         </div>
         
-        <div className="p-6 overflow-y-auto space-y-4">
+        <div className="p-8 overflow-y-auto space-y-6">
           <div className="flex justify-between items-start">
-            <div>
-              <h2 className="text-2xl font-black text-gray-800">{product.name}</h2>
-              <p className="text-gray-500 font-medium">{product.weight > 0 ? `${product.weight} ${product.unit}` : product.unit}</p>
+            <div className="space-y-1.5">
+              {/* 1. Shop Name */}
+              <div className="flex items-center gap-2">
+                 <span className="w-1 h-3 bg-gray-300 rounded-full" />
+                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] leading-none">
+                   🏪 {product.ownerId?.businessName || product.ownerId?.name}
+                 </p>
+              </div>
+              
+              {/* 2. Company/Brand Name */}
+              {product.brand && (
+                <p className="text-[11px] font-black text-emerald-600 uppercase tracking-[0.3em] leading-none ml-3">
+                  🏷️ {product.brand}
+                </p>
+              )}
+
+              {/* 3. Product Name */}
+              <h2 className="text-3xl font-black text-gray-900 tracking-tight">{product.name}</h2>
+              <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">{product.weight > 0 ? `${product.weight} ${product.unit}` : product.unit}</p>
             </div>
             <div className="text-right">
-              <span className="text-2xl font-black text-primary-600">₹{product.price}</span>
-              <p className="text-sm text-gray-400 line-through">₹{product.mrp}</p>
+              <span className="text-3xl font-black text-emerald-600">₹{product.price}</span>
+              <p className="text-xs text-gray-400 font-bold line-through tracking-widest">MRP ₹{product.mrp}</p>
             </div>
           </div>
 
@@ -64,11 +82,57 @@ function ProductDetailModal({ product, onClose, onAddToCart }) {
               <p className="text-sm font-bold text-gray-700">{product.weight > 0 ? `${product.weight} ${product.unit}` : product.unit}</p>
             </div>
           </div>
+
+          <div className="flex items-center justify-between bg-gray-50 p-4 rounded-2xl border border-gray-100 mt-4">
+            <p className="text-sm font-bold text-gray-700">{t('quantity') || 'Quantity'}</p>
+            <div className="flex items-center border-2 border-primary-500 rounded-xl overflow-hidden h-10 bg-white">
+              <button 
+                onClick={() => setQty(Math.max(1, qty - 1))}
+                className="px-4 h-full text-primary-600 hover:bg-primary-50 transition border-r-2 border-primary-500"
+              >
+                <Minus size={16} />
+              </button>
+              <input 
+                type="number"
+                min="1"
+                value={qty || ''}
+                placeholder="0"
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                  if (val > (product.stock || 999)) {
+                    toast.error(`Fakt ${product.stock} stock shillak aahe!`);
+                    setQty(product.stock);
+                  } else {
+                    setQty(Math.max(0, val));
+                  }
+                }}
+                className="w-16 h-full text-center font-black text-primary-700 outline-none bg-gray-50/50 focus:bg-white transition-colors placeholder-gray-300"
+              />
+              <button 
+                onClick={() => {
+                  const nextQty = qty + 1;
+                  if (nextQty > (product.stock || 999)) {
+                    toast.error(language === 'mr' ? `फक्त ${product.stock} स्टॉक शिल्लक आहे!` : `Only ${product.stock} stock available!`);
+                    setQty(product.stock);
+                  } else {
+                    setQty(nextQty);
+                  }
+                }}
+                className="px-4 h-full text-primary-600 hover:bg-primary-50 transition border-l-2 border-primary-500"
+              >
+                <Plus size={16} />
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="p-6 border-t border-gray-100">
           <button
-            onClick={() => { onAddToCart(product); onClose() }}
+            onClick={() => { 
+              onAddToCart(product, qty); 
+              onClose();
+              toast.success(`${qty} items added to cart!`);
+            }}
             disabled={product.stock <= 0}
             className="w-full bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-primary-600/30 transition disabled:opacity-50 flex items-center justify-center gap-3"
           >
@@ -81,6 +145,8 @@ function ProductDetailModal({ product, onClose, onAddToCart }) {
 }
 
 function ProductCard({ product, onOpenDetail }) {
+  const { language } = useLanguageStore()
+  const isMR = language === 'mr'
   const { items, addItem, updateQuantity } = useCartStore()
   const { t } = useLanguageStore()
   const cartItem = items.find(i => i._id === product._id)
@@ -124,7 +190,20 @@ function ProductCard({ product, onOpenDetail }) {
 
       <div className="p-4 flex flex-col flex-1">
         <div className="cursor-pointer mb-2" onClick={() => onOpenDetail(product)}>
-          <p className="font-bold text-gray-800 text-sm leading-tight line-clamp-1">{product.name}</p>
+          {/* 1. Shop Name */}
+          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5 opacity-60">
+            🏪 {product.ownerId?.businessName || product.ownerId?.name}
+          </p>
+          
+          {/* 2. Brand Name */}
+          {product.brand && (
+            <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">
+              {product.brand}
+            </p>
+          )}
+          
+          {/* 3. Product Name */}
+          <p className="font-bold text-gray-900 text-sm leading-tight line-clamp-1">{product.name}</p>
           <p className="text-gray-400 text-[10px] mt-0.5">
             {product.weight > 0 ? `${product.weight} ${product.unit}` : product.unit}
           </p>
@@ -154,12 +233,38 @@ function ProductCard({ product, onOpenDetail }) {
             ) : (
               <div className="flex items-center justify-between bg-primary-50 border border-primary-500 rounded-xl overflow-hidden h-[34px]">
                 <button onClick={() => updateQuantity(product._id, cartItem.quantity - 1)}
-                  className="px-3 h-full text-primary-600 hover:bg-primary-100 transition font-bold">
+                  className="px-3 h-full text-primary-600 hover:bg-primary-100 transition font-bold border-r border-primary-200">
                   <Minus size={12} />
                 </button>
-                <span className="font-bold text-primary-700 text-xs">{cartItem.quantity}</span>
-                <button onClick={() => updateQuantity(product._id, cartItem.quantity + 1)}
-                  className="px-3 h-full text-primary-600 hover:bg-primary-100 transition font-bold">
+                <input 
+                  type="number"
+                  min="0"
+                  value={cartItem.quantity || ''}
+                  placeholder="0"
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => {
+                    const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                    if (val > (product.stock || 999)) {
+                       toast.error(`Fakt ${product.stock} stock shillak aahe!`);
+                       updateQuantity(product._id, product.stock);
+                    } else if (val >= 0) {
+                       updateQuantity(product._id, val);
+                    }
+                  }}
+                  className="w-12 h-full bg-white/50 text-center font-black text-primary-700 text-xs outline-none focus:bg-white transition-colors placeholder-gray-300"
+                />
+                <button 
+                  onClick={() => {
+                    const nextQty = cartItem.quantity + 1;
+                    if (nextQty > (product.stock || 999)) {
+                      toast.error(language === 'mr' ? `फक्त ${product.stock} स्टॉक शिल्लक आहे!` : `Only ${product.stock} stock available!`);
+                      updateQuantity(product._id, product.stock);
+                    } else {
+                      updateQuantity(product._id, nextQty);
+                    }
+                  }}
+                  className="px-3 h-full text-primary-600 hover:bg-primary-100 transition font-bold border-l border-primary-200"
+                >
                   <Plus size={12} />
                 </button>
               </div>
@@ -174,7 +279,9 @@ function ProductCard({ product, onOpenDetail }) {
 export default function Shop() {
   const { products, fetchProducts } = useProductStore()
   const { addItem, getTotalItems } = useCartStore()
-  const { t } = useLanguageStore()
+  const { t, language } = useLanguageStore()
+  const navigate = useNavigate()
+  const isMR = language === 'mr'
 
   const [activeCategory, setActiveCategory] = useState('all')
   const [search,         setSearch]         = useState('')
@@ -204,14 +311,23 @@ export default function Shop() {
               <h1 className="text-xl font-bold text-gray-800">🛒 {t('shopTitle')}</h1>
               <p className="text-xs text-gray-400">{t('deliveryTime')} • {filtered.length} products</p>
             </div>
-            <Link to="/cart" className="relative bg-primary-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium text-sm hover:bg-primary-700 transition">
+            <button 
+              onClick={() => {
+                if (getTotalItems() > 0) {
+                  navigate('/cart')
+                } else {
+                  toast.error(isMR ? 'आधी कार्टमध्ये वस्तू भरा!' : 'Add items to cart first!')
+                }
+              }}
+              className={`relative px-4 py-2 rounded-xl flex items-center gap-2 font-medium text-sm transition ${getTotalItems() > 0 ? 'bg-primary-600 text-white hover:bg-primary-700' : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
+            >
               <ShoppingCart size={16} /> Cart
               {getTotalItems() > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                   {getTotalItems()}
                 </span>
               )}
-            </Link>
+            </button>
           </div>
 
           <div className="flex gap-2 mb-3">

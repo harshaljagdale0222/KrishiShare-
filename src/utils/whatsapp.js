@@ -25,5 +25,6 @@ export const sendWhatsAppMessage = (phone, message) => {
 export const WA_TEMPLATES = {
   ORDER_CONFIRMED: (orderId) => `नमस्ते! तुमची ऑर्डर #${orderId} यशस्वीरित्या नोंदवली गेली आहे. 🚜`,
   EQUIPMENT_BOOKED: (name) => `नमस्ते! तुमचं ${name} बुकिंग कन्फर्म झालं आहे. 🌾`,
+  WORK_COMPLETED: (owner, equip, farmer) => `नमस्ते ${farmer}! ${owner} कडून तुमचं ${equip} चं काम पूर्ण झालं आहे. ✅\n\nकृपया अ‍ॅपवर जाऊन बिल भरा. धन्यवाद! 🚜`,
   ADMIN_NOTICE: (msg) => `⚠️ *KrishiShare महत्त्वाची सूचना:* \n${msg}`
 };

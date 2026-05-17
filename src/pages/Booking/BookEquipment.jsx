@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 
 // ─────────────────────────── Equipment Detail Modal ───────────────────────────
 function EquipmentDetailModal({ equipment, onClose, onOpenBooking }) {
-  const { t } = useLanguageStore()
+  const { t, language } = useLanguageStore()
   if (!equipment) return null
 
   return (
@@ -30,24 +30,31 @@ function EquipmentDetailModal({ equipment, onClose, onOpenBooking }) {
               <p className="text-gray-500 font-medium flex items-center gap-1 mt-1 text-sm"><MapPin size={14} /> {equipment.location}</p>
             </div>
             <div className="text-right">
-              <span className="text-2xl font-black text-primary-600">₹{equipment.pricePerHour}</span>
-              <p className="text-xs text-gray-400">{t('perHour')}</p>
+              <span className="text-2xl font-black text-primary-600">₹{equipment.price || equipment.pricePerHour || 0}</span>
+              <p className="text-xs text-gray-400">{equipment.priceUnit === 'acre' ? (language === 'mr' ? 'एकर' : 'Acre') : (language === 'mr' ? 'तास' : 'Hour')}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-              <p className="text-[10px] text-gray-400 font-bold uppercase mb-1">Owner</p>
-              <p className="font-bold text-gray-800">{equipment.ownerName || 'Krishi Owner'}</p>
-              <p className="text-xs text-gray-400">{equipment.experience ? `${equipment.experience} Exp.` : 'New Owner'}</p>
+              <p className="text-[10px] text-gray-400 font-bold uppercase mb-1">{language === 'mr' ? 'मालक' : 'Owner'}</p>
+              <p className="font-bold text-gray-800 text-base">{equipment.ownerName || 'Verified Partner'}</p>
+              <p className="text-sm font-black text-primary-700 mt-0.5">{equipment.shopName || equipment.ownerName}</p>
+              <p className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-tighter">{language === 'mr' ? 'वेरिफाईड पार्टनर' : 'Verified Partner'}</p>
             </div>
             <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
               <p className="text-[10px] text-gray-400 font-bold uppercase mb-1">Rating</p>
               <div className="flex items-center gap-1">
                 <Star size={16} className="text-amber-400 fill-amber-400" />
-                <p className="font-bold text-gray-800">{equipment.rating || 0}</p>
+                {equipment.reviews > 0 ? (
+                  <>
+                    <p className="font-bold text-gray-800">{equipment.rating}</p>
+                    <p className="text-xs text-gray-400">{equipment.reviews} reviews</p>
+                  </>
+                ) : (
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{language === 'mr' ? 'नवीन' : 'New Equipment'}</p>
+                )}
               </div>
-              <p className="text-xs text-gray-400">{equipment.reviews || 0} reviews</p>
             </div>
           </div>
 
@@ -78,10 +85,11 @@ function EquipmentDetailModal({ equipment, onClose, onOpenBooking }) {
           </a>
           <button
             onClick={() => { onOpenBooking(equipment); onClose() }}
-            disabled={!equipment.available}
+            disabled={!equipment.available || equipment.isUnderMaintenance}
             className="flex-1 bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-primary-600/30 transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {t('bookNow')} <ChevronRight size={20} />
+            {equipment.isUnderMaintenance ? (language === 'mr' ? 'दुरुस्तीमध्ये आहे 🛠️' : 'Under Maintenance 🛠️') : (t('bookNow') + ' ')}
+            {!equipment.isUnderMaintenance && <ChevronRight size={20} />}
           </button>
         </div>
       </div>
@@ -275,7 +283,7 @@ function BookingModal({ equipment, onClose, onConfirm }) {
             <div>
               <span className="bg-white/20 text-xs font-bold px-3 py-1 rounded-full">{equipment.category?.toUpperCase()}</span>
               <h2 className="font-bold text-xl mt-2 flex items-center gap-2">{equipment.icon} {equipment.name}</h2>
-              <p className="text-green-100 text-sm mt-0.5">{equipment.ownerName || 'Krishi Owner'} • ₹{equipment.pricePerHour}/hr</p>
+              <p className="text-green-100 text-sm mt-0.5">{equipment.ownerName || 'Verified Partner'} • ₹{equipment.price || equipment.pricePerHour || 0}/{equipment.priceUnit === 'acre' ? (language === 'mr' ? 'एकर' : 'Acre') : (language === 'mr' ? 'तास' : 'Hour')}</p>
             </div>
             <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition text-lg font-bold">×</button>
           </div>
@@ -665,16 +673,17 @@ export default function BookEquipment() {
         equipmentId:   bookingData.equipment._id,
         equipmentName: bookingData.equipment.name,
         category:      bookingData.equipment.category,
-        owner:         bookingData.equipment.ownerName || bookingData.equipment.owner,
-        ownerId:       bookingData.equipment.ownerId || bookingData.equipment.owner,
+        owner:         bookingData.equipment.ownerName || bookingData.equipment.owner?.name || bookingData.equipment.owner,
+        ownerId:       bookingData.equipment.owner?._id || bookingData.equipment.ownerId || bookingData.equipment.owner,
         ownerPhone:    bookingData.equipment.ownerPhone || '',
         location:      bookingData.address || bookingData.equipment.location,
         date:          bookingData.date,
-        hours:         Number(bookingData.hours) || 0,
+        quantity:      Number(bookingData.quantity) || 0,
+        unit:          bookingData.unit || 'hour',
         timeSlot:      bookingData.timeSlot,
-        pricePerHour:  Number(bookingData.equipment.pricePerHour) || 0,
+        price:         Number(bookingData.equipment.price || bookingData.equipment.pricePerHour) || 0,
         amount:        Number(bookingData.totalPrice) || 0,
-        advanceAmount: 0, 
+        advanceAmount: Number(bookingData.advanceAmount) || 0,
         landmark:      bookingData.landmark || '',
         note:          bookingData.note || '',
         multiDates:    bookingData.multiDates
@@ -683,13 +692,17 @@ export default function BookEquipment() {
       const res = await bookingAPI.create(payload)
       toast.success(isMR ? 'बुकिंग यशस्वी झाले!' : 'Booking Successful!')
 
-      const message = WA_TEMPLATES.NEW_BOOKING(
-        user?.name || 'Farmer', 
-        bookingData.equipment.name, 
-        new Date(bookingData.date).toLocaleDateString(), 
-        bookingData.address
-      );
-      sendWhatsAppMessage(bookingData.equipment.ownerPhone, message);
+      try {
+        const message = WA_TEMPLATES.NEW_BOOKING(
+          user?.name || 'Farmer', 
+          bookingData.equipment.name, 
+          new Date(bookingData.date).toLocaleDateString(), 
+          bookingData.address
+        );
+        sendWhatsAppMessage(bookingData.equipment.ownerPhone, message);
+      } catch (waErr) {
+        console.error('WhatsApp Notification Failed:', waErr.message);
+      }
 
       setSelectedEquipment(null)
       navigate('/my-bookings')
@@ -772,11 +785,20 @@ export default function BookEquipment() {
                     </div>
                     <p className="text-gray-500 text-sm flex items-center gap-1 mt-0.5"><MapPin size={12} /> {equipment.location}</p>
                     <div className="flex items-center gap-3 mt-1.5">
-                      <span className="text-sm text-gray-600">👤 {equipment.ownerName || 'Krishi Owner'}</span>
+                      <div className="mt-1.5">
+                        <p className="text-sm text-gray-600 font-bold flex items-center gap-1">👤 {equipment.ownerName || 'Verified Owner'}</p>
+                        <p className="text-[10px] text-emerald-600 font-black uppercase tracking-widest ml-5">{equipment.shopName || 'Krishi Mart'}</p>
+                      </div>
                       <span className="flex items-center gap-1 text-sm">
                         <Star size={12} className="text-amber-400 fill-amber-400" />
-                        <span className="font-medium text-gray-700">{equipment.rating || 0}</span>
-                        <span className="text-gray-400">({equipment.reviews || 0})</span>
+                        {equipment.reviews > 0 ? (
+                          <>
+                            <span className="font-medium text-gray-700">{equipment.rating}</span>
+                            <span className="text-gray-400">({equipment.reviews})</span>
+                          </>
+                        ) : (
+                          <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">{language === 'mr' ? 'नवीन' : 'New'}</span>
+                        )}
                       </span>
                     </div>
                     {equipment.features?.length > 0 && (
@@ -791,15 +813,19 @@ export default function BookEquipment() {
 
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                   <div>
-                    <span className="text-xl font-bold text-gray-900">₹{equipment.pricePerHour}</span>
-                    <span className="text-gray-400 text-sm">/hr</span>
+                    <span className="text-xl font-bold text-gray-900">₹{equipment.price || equipment.pricePerHour || 0}</span>
+                    <span className="text-gray-400 text-sm">/{equipment.priceUnit === 'acre' ? (language === 'mr' ? 'एकर' : 'Acre') : (language === 'mr' ? 'तास' : 'Hour')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <a href={`tel:${equipment.ownerPhone || ''}`} onClick={e => e.stopPropagation()}
                       className="p-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition">
                       <Phone size={16} className="text-gray-600" />
                     </a>
-                    {equipment.available ? (
+                    {equipment.isUnderMaintenance ? (
+                      <span className="bg-amber-50 text-amber-600 px-5 py-2.5 rounded-xl font-black text-xs border border-amber-200 uppercase tracking-widest flex items-center gap-2">
+                        🛠️ {isMR ? 'दुरुस्ती सुरू' : 'In Servicing'}
+                      </span>
+                    ) : equipment.available ? (
                       <button
                         onClick={e => { e.stopPropagation(); setSelectedEquipment(equipment) }}
                         className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md transition flex items-center gap-1 active:scale-95"

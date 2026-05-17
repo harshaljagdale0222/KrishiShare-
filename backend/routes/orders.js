@@ -188,6 +188,31 @@ router.put('/:id', protect, ownerOnly, async (req, res) => {
 
       // Notify Owner
       req.io.to(order.ownerId.toString()).emit('order_status_updated', order)
+
+      // ─── AUTO TRACKING ACTIVATION (MOCK SIMULATOR) ───
+      if (status === 'out_for_delivery' && order.origin && order.destination) {
+        let currentLat = order.origin.lat
+        let currentLng = order.origin.lng
+        const destLat = order.destination.lat
+        const destLng = order.destination.lng
+        
+        // Simulate movement every 5 seconds
+        let steps = 0
+        const interval = setInterval(async () => {
+          steps++
+          currentLat += (destLat - currentLat) * 0.2
+          currentLng += (destLng - currentLng) * 0.2
+          
+          if (req.io) {
+            req.io.emit('order_location_update', { orderId: order._id, lat: currentLat, lng: currentLng })
+          }
+
+          if (steps >= 10) {
+             clearInterval(interval)
+             // Auto mark as delivered after simulation? No, let owner do it.
+          }
+        }, 5000)
+      }
     }
 
     res.json(order)
@@ -236,6 +261,35 @@ router.patch('/:id/pay-advance', protect, async (req, res) => {
       user: order.ownerId,
       title: 'Advance Received! 💰',
       message: `${order.farmerName} ne ₹${order.advanceAmount} advance bharla aahe. Packing suru kara!`,
+      type: 'order',
+      link: '/store-dashboard'
+    })
+
+    if (req.io) {
+      req.io.to(order.ownerId.toString()).emit('notification', { id: dbNotif._id, title: dbNotif.title, message: dbNotif.message, type: 'order' })
+      req.io.to(order.ownerId.toString()).emit('order_status_updated', order)
+    }
+
+    res.json(order)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// @route   PATCH /api/orders/:id/pay-balance
+router.patch('/:id/pay-balance', protect, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id)
+    if (!order) return res.status(404).json({ message: 'Order sapdala nahi!' })
+    
+    order.balancePaid = true
+    await order.save()
+
+    // Notify Owner
+    const dbNotif = await Notification.create({
+      user: order.ownerId,
+      title: 'Full Payment Received! 💰',
+      message: `${order.farmerName} ne उरलेले पूर्ण पैसे भरले आहेत. व्यवहार पूर्ण झाला!`,
       type: 'order',
       link: '/store-dashboard'
     })
@@ -315,6 +369,88 @@ router.patch('/:id/bill-generated', protect, ownerOnly, async (req, res) => {
 
     res.json(order)
   } catch (err) { res.status(500).json({ message: err.message }) }
+})
+
+// @route   POST /api/orders/:id/return
+// @desc    Request a return/exchange
+router.post('/:id/return', protect, async (req, res) => {
+  try {
+    const { reason } = req.body
+    const order = await Order.findById(req.params.id)
+    if (!order) return res.status(404).json({ message: 'Order sapdala nahi!' })
+
+    // Only farmer who ordered can return
+    if (order.farmerId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Tu mazi order return nahi karu shakt!' })
+    }
+
+    order.returnRequested = true
+    order.returnReason = reason
+    order.returnStatus = 'pending'
+    await order.save()
+
+    // Notify Owner
+    const dbNotif = await Notification.create({
+      user: order.ownerId,
+      title: 'Return Requested! 🔄',
+      message: `${order.farmerName} ne tyanchya order sathi return request pathavli aahe. Karan: ${reason}`,
+      type: 'order',
+      link: '/store-dashboard'
+    })
+
+    if (req.io) {
+      req.io.to(order.ownerId.toString()).emit('notification', { id: dbNotif._id, title: 'Return Request!', message: `${order.farmerName} ne return request keli.`, type: 'order' })
+      req.io.to(order.ownerId.toString()).emit('order_status_updated', order)
+      req.io.to(order.farmerId.toString()).emit('order_status_updated', order)
+    }
+
+    res.json(order)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+// @route   PATCH /api/orders/:id/return-status
+// @desc    Update return status (approve/reject)
+router.patch('/:id/return-status', protect, ownerOnly, async (req, res) => {
+  try {
+    const { status } = req.body
+    const order = await Order.findById(req.params.id)
+    if (!order) return res.status(404).json({ message: 'Order sapdala nahi!' })
+
+    order.returnStatus = status
+    await order.save()
+
+    // Notify Farmer
+    let notifTitle = 'Return Status Update'
+    let notifMsg = `Tumchi return request ${status} zali aahe.`
+
+    if (status === 'approved') {
+      notifTitle = 'Return Approved! ✅'
+      notifMsg = 'Tumchi return request swikarli aahe. Aamchi team sampark karel.'
+    } else if (status === 'rejected') {
+      notifTitle = 'Return Rejected! ❌'
+      notifMsg = 'Tumchi return request nakarli aahe. Adhik mahiti sathi sampark kara.'
+    }
+
+    const dbNotif = await Notification.create({
+      user: order.farmerId,
+      title: notifTitle,
+      message: notifMsg,
+      type: 'order',
+      link: '/mart/orders'
+    })
+
+    if (req.io) {
+      req.io.to(order.farmerId.toString()).emit('notification', { id: dbNotif._id, title: notifTitle, message: notifMsg, type: 'order' })
+      req.io.to(order.farmerId.toString()).emit('order_status_updated', order)
+      req.io.to(order.ownerId.toString()).emit('order_status_updated', order)
+    }
+
+    res.json(order)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
 })
 
 module.exports = router

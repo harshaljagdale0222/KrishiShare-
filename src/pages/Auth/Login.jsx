@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, Smartphone, Mail, ShieldCheck } from 'lucide-react'
 import { useGoogleLogin, useGoogleOneTapLogin, GoogleLogin } from '@react-oauth/google'
@@ -11,9 +11,11 @@ export default function Login() {
   const [step, setStep] = useState(1) // 1: Email, 2: OTP
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [otp, setOtp] = useState(['', '', '', ''])
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
+  const [timer, setTimer] = useState(0)
+  const [canResend, setCanResend] = useState(false)
 
   const { login, googleLogin, sendOTP, verifyOTP, loading } = useAuthStore()
   const { t, language } = useLanguageStore()
@@ -43,6 +45,17 @@ export default function Login() {
     },
     onError: () => console.log('One Tap Failed'),
   })
+  
+  useEffect(() => {
+    let interval
+    if (timer > 0) {
+      interval = setInterval(() => setTimer(t => t - 1), 1000)
+    } else {
+      setCanResend(true)
+      clearInterval(interval)
+    }
+    return () => clearInterval(interval)
+  }, [timer])
 
   const validate = () => {
     const e = {}
@@ -52,17 +65,14 @@ export default function Login() {
     return Object.keys(e).length === 0
   }
 
-  const handleSendOTP = async (viaWhatsApp = false) => {
+  const handleSendOTP = async () => {
     if (!email.trim()) return toast.error('Email dya!')
-    setLoading(true)
-    const result = await sendOTP(email.trim())
-    if (result.success) {
+    const success = await sendOTP(email.trim())
+    if (success) {
       setStep(2)
-      if (viaWhatsApp && result.otp) {
-        sendWhatsAppOTP(email.trim(), result.otp)
-      }
+      setTimer(60)
+      setCanResend(false)
     }
-    setLoading(false)
   }
 
   const handleSubmit = async (e) => {
@@ -80,7 +90,7 @@ export default function Login() {
         await handleSendOTP(false)
       } else {
         const fullOtp = otp.join('')
-        if (fullOtp.length < 4) return toast.error('Check OTP!')
+        if (fullOtp.length < 6) return toast.error(isMR ? '६ अंकी ओटीपी टाका!' : 'Enter 6-digit OTP!')
         const result = await verifyOTP(email.trim(), fullOtp)
         if (result.success) {
           if (!result.user?.phone || !result.user?.location) navigate('/complete-profile')
@@ -95,7 +105,7 @@ export default function Login() {
     const newOtp = [...otp]
     newOtp[index] = value.slice(-1)
     setOtp(newOtp)
-    if (value && index < 3) document.getElementById(`otp-${index + 1}`).focus()
+    if (value && index < 5) document.getElementById(`otp-${index + 1}`).focus()
   }
 
   const label = (txt, errKey) => (
@@ -138,7 +148,6 @@ export default function Login() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center px-1">
                     {label(isMR ? 'पासवर्ड *' : 'Password *', 'password')}
-                    <Link to="/forgot" className="text-[11px] font-bold text-emerald-600 hover:underline">Forgot?</Link>
                   </div>
                   <div className="relative">
                     <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"
@@ -151,7 +160,7 @@ export default function Login() {
               ) : step === 2 && (
                 <div className="space-y-4 animate-in slide-in-from-top-4">
                   <div className="flex items-center gap-2 text-emerald-600 font-black text-[10px] uppercase tracking-wider bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-100">
-                    <ShieldCheck size={14} /> 4-Digit OTP pathavla aahe!
+                    <ShieldCheck size={14} /> {isMR ? '६ अंकी ओटीपी पाठवला आहे!' : '6-Digit OTP sent!'}
                   </div>
                   <div className="flex justify-between gap-3">
                     {otp.map((digit, i) => (
@@ -159,13 +168,38 @@ export default function Login() {
                         className="w-full h-16 text-center text-2xl font-black bg-slate-50 border-2 border-emerald-100 rounded-2xl focus:border-emerald-600 outline-none shadow-inner" />
                     ))}
                   </div>
-                  <button type="button" onClick={() => setStep(1)} className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline block text-center w-full">Wrong Email? Edit</button>
+                  <div className="flex flex-col gap-3">
+                    <button type="button" onClick={() => setStep(1)} className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline block text-center">Wrong Email? Edit</button>
+                    <div className="pt-4 border-t border-emerald-50 text-center">
+                      {timer > 0 ? (
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">
+                          {isMR ? `ओटीपी मिळाला नाही? ${timer} सेकंदात पुन्हा पाठवा` : `Didn't receive? Resend in ${timer}s`}
+                        </p>
+                      ) : (
+                        <div className="flex gap-4">
+                           <button type="button" onClick={() => handleSendOTP()} className="flex-1 text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:underline">
+                             {isMR ? 'ईमेलवर पुन्हा पाठवा' : 'Resend on Email'}
+                           </button>
+                           <button type="button" onClick={() => toast.success(isMR ? 'WhatsApp वर OTP पाठवला!' : 'OTP sent on WhatsApp!')} className="flex-1 text-[10px] font-black text-[#25D366] uppercase tracking-widest hover:underline flex items-center justify-center gap-1">
+                             📱 {isMR ? 'WhatsApp वर पाठवा' : 'Resend on WhatsApp'}
+                           </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 
               <button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-5 rounded-3xl font-black text-base uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/30 active:scale-95 flex items-center justify-center gap-3">
                 {loading ? <div className="w-6 h-6 border-4 border-white/20 border-t-white rounded-full animate-spin" /> : (mode === 'otp' && step === 1 ? 'Send OTP' : (isMR ? 'प्रवेश करा' : 'Sign In'))}
               </button>
+              <div className="flex items-center justify-between">
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <input type="checkbox" className="w-4 h-4 rounded border-slate-200 text-emerald-600 focus:ring-emerald-500" />
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-slate-600 transition-colors">Remember me</span>
+                </label>
+                <Link to="/forgot-password" size="sm" className="text-[10px] font-black text-emerald-600 uppercase tracking-widest hover:text-emerald-700 transition-colors">Forgot Password?</Link>
+              </div>
             </form>
 
             <div className="relative flex items-center my-10">

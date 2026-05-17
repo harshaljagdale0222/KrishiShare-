@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'https://krishishare.onrender.com/api'
+const BASE_URL = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : 'http://localhost:5000/api'
 
 // ─── Axios Instance ───────────────────────────────────────
 const api = axios.create({
@@ -14,7 +14,21 @@ api.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
-
+// ─── Response Interceptor ──────────────────────────────────
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const isAuthPath = window.location.pathname.includes('/login') || window.location.pathname.includes('/register')
+    
+    if (error.response && (error.response.status === 401 || error.response.status === 403) && !isAuthPath) {
+      console.error('Session expired or unauthorized access')
+      localStorage.removeItem('krishi-token')
+      // Instead of wiping everything, just redirect to login if not already there
+      window.location.href = '/login?expired=true'
+    }
+    return Promise.reject(error)
+  }
+)
 // ─── Auth APIs ────────────────────────────────────────────
 export const authAPI = {
   register: (data) => api.post('/auth/register', data),
@@ -28,6 +42,8 @@ export const authAPI = {
   getByRole: (role) => api.get(`/auth/role/${role}`),
   getAllUsers: () => api.get('/auth/all-users'),
   updateUserRole: (id, role) => api.patch(`/auth/update-role/${id}`, { role }),
+  resetPassword: (data) => api.post('/auth/reset-password', data),
+  deleteUser: (id) => api.delete(`/auth/users/${id}`),
 }
 
 // ─── Harvest APIs ─────────────────────────────────────────
@@ -53,8 +69,11 @@ export const orderAPI = {
   updateStatus:  (id, data) => api.put(`/orders/${id}`, data),
   updateLocation:(id, data) => api.put(`/orders/${id}/location`, data),
   payAdvance:    (id) => api.patch(`/orders/${id}/pay-advance`),
+  payBalance:    (id) => api.patch(`/orders/${id}/pay-balance`),
   cancelOrder:   (id) => api.patch(`/orders/${id}/cancel`),
   generateBill:  (id) => api.patch(`/orders/${id}/bill-generated`),
+  requestReturn: (id, data) => api.post(`/orders/${id}/return`, data),
+  updateReturnStatus: (id, status) => api.patch(`/orders/${id}/return-status`, { status }),
 }
 
 // ─── Factory APIs ─────────────────────────────────────────
@@ -74,6 +93,7 @@ export const productAPI = {
   create:      (data) => api.post('/products', data),
   update:      (id, data) => api.put(`/products/${id}`, data),
   remove:      (id) => api.delete(`/products/${id}`),
+  rate:        (id, data) => api.post(`/products/${id}/rate`, data),
 }
 
 // ─── Complaint APIs ───────────────────────────────────────

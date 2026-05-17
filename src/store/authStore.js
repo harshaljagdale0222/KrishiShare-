@@ -15,11 +15,13 @@ const useAuthStore = create(
         set({ loading: true })
         try {
           const res = await authAPI.register(data)
-          const { token, ...user } = res.data
+          const { token, ...backendUser } = res.data
+          // Merge input data with backend response to ensure local state is complete
+          const user = { ...data, ...backendUser }
           localStorage.setItem('krishi-token', token)
           set({ user, token, isAuthenticated: true, loading: false })
           toast.success('Registration successful! 🎉')
-          return { success: true, role: user.role }
+          return { success: true, role: user.role, user }
         } catch (err) {
           set({ loading: false })
           toast.error(err.response?.data?.message || 'Registration failed!')
@@ -35,7 +37,7 @@ const useAuthStore = create(
           localStorage.setItem('krishi-token', token)
           set({ user, token, isAuthenticated: true, loading: false })
           toast.success(`Welcome back, ${user.name}! 🌾`)
-          return { success: true, role: user.role }
+          return { success: true, role: user.role, user }
         } catch (err) {
           set({ loading: false })
           toast.error(err.response?.data?.message || 'Login failed!')
@@ -51,7 +53,7 @@ const useAuthStore = create(
           localStorage.setItem('krishi-token', token)
           set({ user, token, isAuthenticated: true, loading: false })
           toast.success(`Google login successful!`)
-          return { success: true, role: user.role }
+          return { success: true, role: user.role, user }
         } catch (err) {
           set({ loading: false })
           toast.error(err.response?.data?.message || 'Google Auth failed!')
@@ -81,7 +83,7 @@ const useAuthStore = create(
           localStorage.setItem('krishi-token', token)
           set({ user, token, isAuthenticated: true, loading: false })
           toast.success('OTP Verified!')
-          return { success: true, role: user.role }
+          return { success: true, role: user.role, user }
         } catch (err) {
           set({ loading: false })
           toast.error(err.response?.data?.message || 'Invalid or expired OTP')

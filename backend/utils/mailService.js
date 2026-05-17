@@ -3,8 +3,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER || 'harshaljagdale40@gmail.com',
-    pass: process.env.EMAIL_PASS || 'your-app-password'
+    user: process.env.SMTP_USER || 'harshaljagdale40@gmail.com',
+    pass: process.env.SMTP_PASS || 'ipobukfqeptugwyx'
   }
 });
 
@@ -12,7 +12,7 @@ const sendWelcomeEmail = async (userEmail, userName, role) => {
   const roleName = role === 'farmer' ? 'शेतकरी' : (role === 'mart_owner' ? 'मार्ट मालक' : 'कृषी अवजारे मालक');
   
   const mailOptions = {
-    from: '"KrishiShare" <noreply@krishishare.com>',
+    from: `"KrishiShare" <${process.env.SMTP_USER || 'harshaljagdale40@gmail.com'}>`,
     to: userEmail,
     subject: "KrishiShare मध्ये तुमचे स्वागत आहे! 🌾",
     html: `
@@ -34,15 +34,7 @@ const sendWelcomeEmail = async (userEmail, userName, role) => {
             <p style="color: #059669; font-size: 22px; font-weight: 900; margin: 0;">${roleName}</p>
           </div>
           
-          <p style="color: #94a3b8; font-size: 14px; font-weight: 500; margin-bottom: 40px;">
-            आता तुम्ही शेतीसाठी लागणारी सर्व सेवांचा लाभ घेऊ शकता. चला, एक नवी सुरुवात करूया!
-          </p>
-          
           <a href="http://localhost:5173" style="display: inline-block; background-color: #059669; color: #ffffff; padding: 20px 45px; border-radius: 20px; text-decoration: none; font-weight: 900; font-size: 15px; box-shadow: 0 15px 30px rgba(5, 150, 105, 0.25);">डॅशबोर्ड सुरू करा →</a>
-        </div>
-        
-        <div style="padding: 25px; text-align: center; background-color: #f8fafc; color: #94a3b8; font-size: 12px; font-weight: 600; border-top: 1px solid #f1f5f9;">
-          © 2026 KrishiShare Platform | डिजिटल शेतीचा कणा.
         </div>
       </div>
     `
@@ -58,7 +50,7 @@ const sendWelcomeEmail = async (userEmail, userName, role) => {
 
 const sendOTPEmail = async (email, otp) => {
   const mailOptions = {
-    from: '"KrishiShare" <noreply@krishishare.com>',
+    from: `"KrishiShare" <${process.env.SMTP_USER || 'harshaljagdale40@gmail.com'}>`,
     to: email,
     subject: "KrishiShare लॉगिन ओटीपी 🌾",
     html: `
@@ -76,12 +68,18 @@ const sendOTPEmail = async (email, otp) => {
           </div>
           <p style="color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 15px;">हा ओटीपी ५ मिनिटांसाठी वैध आहे. कोणाशीही शेअर करू नका.</p>
         </div>
-        
-        <p style="color: #94a3b8; font-size: 11px; margin-top: 40px; font-weight: 500;">© 2026 KrishiShare Platform. All rights reserved.</p>
       </div>
     `
   };
-  return transporter.sendMail(mailOptions);
+  
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('✅ OTP Email Sent:', info.response);
+    return info;
+  } catch (error) {
+    console.error('❌ OTP Email FAILED Error:', error.message);
+    throw error;
+  }
 };
 
 module.exports = { sendWelcomeEmail, sendOTPEmail };

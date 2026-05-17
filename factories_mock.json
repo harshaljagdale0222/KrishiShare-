@@ -1,0 +1,6804 @@
+[
+  {
+    "name": "Akole Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Akole",
+    "fullAddress": "Main Road, Akole, Ahmednagar, Maharashtra",
+    "contact": "020-4556475",
+    "isOpen": true,
+    "frpRate": 2899,
+    "capacity": "5256 T/D",
+    "rating": "3.3",
+    "established": 2009,
+    "coordinates": {
+      "lat": 17.213842802100892,
+      "lng": 73.8857729125104
+    },
+    "role": "factory_owner",
+    "email": "factory1@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jamkhed Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Jamkhed",
+    "fullAddress": "Main Road, Jamkhed, Ahmednagar, Maharashtra",
+    "contact": "020-2354515",
+    "isOpen": true,
+    "frpRate": 2963,
+    "capacity": "5187 T/D",
+    "rating": "4.1",
+    "established": 2001,
+    "coordinates": {
+      "lat": 19.903053959152327,
+      "lng": 73.53872371626218
+    },
+    "role": "factory_owner",
+    "email": "factory2@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karjat Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Karjat",
+    "fullAddress": "Main Road, Karjat, Ahmednagar, Maharashtra",
+    "contact": "020-8939684",
+    "isOpen": true,
+    "frpRate": 2618,
+    "capacity": "3984 T/D",
+    "rating": "3.1",
+    "established": 1990,
+    "coordinates": {
+      "lat": 18.742025385280257,
+      "lng": 73.51866035242323
+    },
+    "role": "factory_owner",
+    "email": "factory3@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kopargaon Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Kopargaon",
+    "fullAddress": "Main Road, Kopargaon, Ahmednagar, Maharashtra",
+    "contact": "020-1668220",
+    "isOpen": true,
+    "frpRate": 2734,
+    "capacity": "3443 T/D",
+    "rating": "3.2",
+    "established": 1990,
+    "coordinates": {
+      "lat": 20.401102722207312,
+      "lng": 74.06952191940692
+    },
+    "role": "factory_owner",
+    "email": "factory4@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nagar Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Nagar",
+    "fullAddress": "Main Road, Nagar, Ahmednagar, Maharashtra",
+    "contact": "020-8316760",
+    "isOpen": true,
+    "frpRate": 2600,
+    "capacity": "3171 T/D",
+    "rating": "3.5",
+    "established": 1964,
+    "coordinates": {
+      "lat": 19.15535088813057,
+      "lng": 74.8486958168898
+    },
+    "role": "factory_owner",
+    "email": "factory5@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nevasa Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Nevasa",
+    "fullAddress": "Main Road, Nevasa, Ahmednagar, Maharashtra",
+    "contact": "020-3757920",
+    "isOpen": true,
+    "frpRate": 3105,
+    "capacity": "2044 T/D",
+    "rating": "3.4",
+    "established": 1991,
+    "coordinates": {
+      "lat": 18.396511952208044,
+      "lng": 72.26806682314734
+    },
+    "role": "factory_owner",
+    "email": "factory6@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Parner Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Parner",
+    "fullAddress": "Main Road, Parner, Ahmednagar, Maharashtra",
+    "contact": "020-7166801",
+    "isOpen": true,
+    "frpRate": 2693,
+    "capacity": "2192 T/D",
+    "rating": "4.0",
+    "established": 1978,
+    "coordinates": {
+      "lat": 19.220370586397518,
+      "lng": 74.377447389328
+    },
+    "role": "factory_owner",
+    "email": "factory7@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pathardi Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Pathardi",
+    "fullAddress": "Main Road, Pathardi, Ahmednagar, Maharashtra",
+    "contact": "020-8052120",
+    "isOpen": true,
+    "frpRate": 3130,
+    "capacity": "4064 T/D",
+    "rating": "3.8",
+    "established": 1968,
+    "coordinates": {
+      "lat": 17.538947548293727,
+      "lng": 72.57698887778983
+    },
+    "role": "factory_owner",
+    "email": "factory8@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Rahata Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Rahata",
+    "fullAddress": "Main Road, Rahata, Ahmednagar, Maharashtra",
+    "contact": "020-3918676",
+    "isOpen": false,
+    "frpRate": 2511,
+    "capacity": "4494 T/D",
+    "rating": "4.8",
+    "established": 1986,
+    "coordinates": {
+      "lat": 16.598580978439376,
+      "lng": 71.91240626869262
+    },
+    "role": "factory_owner",
+    "email": "factory9@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Rahuri Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Rahuri",
+    "fullAddress": "Main Road, Rahuri, Ahmednagar, Maharashtra",
+    "contact": "020-8948952",
+    "isOpen": true,
+    "frpRate": 3017,
+    "capacity": "5375 T/D",
+    "rating": "4.1",
+    "established": 2008,
+    "coordinates": {
+      "lat": 19.487180092639697,
+      "lng": 74.02899357000335
+    },
+    "role": "factory_owner",
+    "email": "factory10@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sangamner Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Sangamner",
+    "fullAddress": "Main Road, Sangamner, Ahmednagar, Maharashtra",
+    "contact": "020-2856234",
+    "isOpen": true,
+    "frpRate": 3435,
+    "capacity": "6639 T/D",
+    "rating": "4.5",
+    "established": 1981,
+    "coordinates": {
+      "lat": 19.188717071669245,
+      "lng": 74.9374676337674
+    },
+    "role": "factory_owner",
+    "email": "factory11@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shevgaon Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Shevgaon",
+    "fullAddress": "Main Road, Shevgaon, Ahmednagar, Maharashtra",
+    "contact": "020-7065344",
+    "isOpen": false,
+    "frpRate": 3016,
+    "capacity": "5793 T/D",
+    "rating": "4.2",
+    "established": 1982,
+    "coordinates": {
+      "lat": 17.9739039490784,
+      "lng": 75.58593601903206
+    },
+    "role": "factory_owner",
+    "email": "factory12@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shrigonda Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Shrigonda",
+    "fullAddress": "Main Road, Shrigonda, Ahmednagar, Maharashtra",
+    "contact": "020-7289810",
+    "isOpen": false,
+    "frpRate": 3070,
+    "capacity": "2550 T/D",
+    "rating": "3.8",
+    "established": 1984,
+    "coordinates": {
+      "lat": 19.748880739791414,
+      "lng": 72.94005731441709
+    },
+    "role": "factory_owner",
+    "email": "factory13@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shrirampur Cooperative Sugar Factory Ltd.",
+    "district": "Ahmednagar",
+    "taluka": "Shrirampur",
+    "fullAddress": "Main Road, Shrirampur, Ahmednagar, Maharashtra",
+    "contact": "020-7412892",
+    "isOpen": true,
+    "frpRate": 2979,
+    "capacity": "5464 T/D",
+    "rating": "4.7",
+    "established": 1990,
+    "coordinates": {
+      "lat": 16.727912047655796,
+      "lng": 75.7322986372677
+    },
+    "role": "factory_owner",
+    "email": "factory14@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Akola Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Akola",
+    "fullAddress": "Main Road, Akola, Akola, Maharashtra",
+    "contact": "020-4835350",
+    "isOpen": true,
+    "frpRate": 2670,
+    "capacity": "2791 T/D",
+    "rating": "3.4",
+    "established": 1962,
+    "coordinates": {
+      "lat": 17.521811189677578,
+      "lng": 72.62135486797311
+    },
+    "role": "factory_owner",
+    "email": "factory15@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Akot Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Akot",
+    "fullAddress": "Main Road, Akot, Akola, Maharashtra",
+    "contact": "020-4769539",
+    "isOpen": true,
+    "frpRate": 2591,
+    "capacity": "3353 T/D",
+    "rating": "3.2",
+    "established": 1977,
+    "coordinates": {
+      "lat": 17.655252904641326,
+      "lng": 73.21214742312746
+    },
+    "role": "factory_owner",
+    "email": "factory16@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Balapur Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Balapur",
+    "fullAddress": "Main Road, Balapur, Akola, Maharashtra",
+    "contact": "020-6273162",
+    "isOpen": true,
+    "frpRate": 2640,
+    "capacity": "5673 T/D",
+    "rating": "4.8",
+    "established": 2002,
+    "coordinates": {
+      "lat": 19.848466790862943,
+      "lng": 74.64744084512182
+    },
+    "role": "factory_owner",
+    "email": "factory17@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Barshitakli Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Barshitakli",
+    "fullAddress": "Main Road, Barshitakli, Akola, Maharashtra",
+    "contact": "020-7854715",
+    "isOpen": true,
+    "frpRate": 3042,
+    "capacity": "3421 T/D",
+    "rating": "4.5",
+    "established": 2005,
+    "coordinates": {
+      "lat": 18.369024383165147,
+      "lng": 72.53227417529263
+    },
+    "role": "factory_owner",
+    "email": "factory18@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Murtijapur Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Murtijapur",
+    "fullAddress": "Main Road, Murtijapur, Akola, Maharashtra",
+    "contact": "020-7775065",
+    "isOpen": true,
+    "frpRate": 2582,
+    "capacity": "6498 T/D",
+    "rating": "4.7",
+    "established": 1988,
+    "coordinates": {
+      "lat": 18.765050735179187,
+      "lng": 71.9000102231587
+    },
+    "role": "factory_owner",
+    "email": "factory19@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Patur Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Patur",
+    "fullAddress": "Main Road, Patur, Akola, Maharashtra",
+    "contact": "020-2601847",
+    "isOpen": false,
+    "frpRate": 3463,
+    "capacity": "5549 T/D",
+    "rating": "3.2",
+    "established": 1973,
+    "coordinates": {
+      "lat": 17.72276829504718,
+      "lng": 72.22387897158829
+    },
+    "role": "factory_owner",
+    "email": "factory20@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Telhara Cooperative Sugar Factory Ltd.",
+    "district": "Akola",
+    "taluka": "Telhara",
+    "fullAddress": "Main Road, Telhara, Akola, Maharashtra",
+    "contact": "020-7181432",
+    "isOpen": true,
+    "frpRate": 3223,
+    "capacity": "6149 T/D",
+    "rating": "4.4",
+    "established": 2006,
+    "coordinates": {
+      "lat": 19.088578646113113,
+      "lng": 74.24526498763422
+    },
+    "role": "factory_owner",
+    "email": "factory21@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Achalpur Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Achalpur",
+    "fullAddress": "Main Road, Achalpur, Amravati, Maharashtra",
+    "contact": "020-1357880",
+    "isOpen": true,
+    "frpRate": 3187,
+    "capacity": "6934 T/D",
+    "rating": "3.9",
+    "established": 1977,
+    "coordinates": {
+      "lat": 20.161022509753014,
+      "lng": 74.22848809436452
+    },
+    "role": "factory_owner",
+    "email": "factory22@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Amravati Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Amravati",
+    "fullAddress": "Main Road, Amravati, Amravati, Maharashtra",
+    "contact": "020-4730214",
+    "isOpen": true,
+    "frpRate": 2626,
+    "capacity": "5999 T/D",
+    "rating": "3.7",
+    "established": 1986,
+    "coordinates": {
+      "lat": 20.304047610202183,
+      "lng": 75.48466383475657
+    },
+    "role": "factory_owner",
+    "email": "factory23@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Anjangaon Surji Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Anjangaon Surji",
+    "fullAddress": "Main Road, Anjangaon Surji, Amravati, Maharashtra",
+    "contact": "020-4347702",
+    "isOpen": true,
+    "frpRate": 3439,
+    "capacity": "2066 T/D",
+    "rating": "4.0",
+    "established": 1966,
+    "coordinates": {
+      "lat": 19.840191581081754,
+      "lng": 73.37266383428191
+    },
+    "role": "factory_owner",
+    "email": "factory24@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhatkuli Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Bhatkuli",
+    "fullAddress": "Main Road, Bhatkuli, Amravati, Maharashtra",
+    "contact": "020-4171347",
+    "isOpen": false,
+    "frpRate": 3182,
+    "capacity": "3283 T/D",
+    "rating": "4.0",
+    "established": 1969,
+    "coordinates": {
+      "lat": 19.902431245369364,
+      "lng": 74.57547396994646
+    },
+    "role": "factory_owner",
+    "email": "factory25@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chandur Railway Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Chandur Railway",
+    "fullAddress": "Main Road, Chandur Railway, Amravati, Maharashtra",
+    "contact": "020-5129003",
+    "isOpen": true,
+    "frpRate": 3234,
+    "capacity": "2468 T/D",
+    "rating": "4.5",
+    "established": 1983,
+    "coordinates": {
+      "lat": 20.20748379319501,
+      "lng": 72.30250674533212
+    },
+    "role": "factory_owner",
+    "email": "factory26@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chandurbazar Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Chandurbazar",
+    "fullAddress": "Main Road, Chandurbazar, Amravati, Maharashtra",
+    "contact": "020-7238421",
+    "isOpen": false,
+    "frpRate": 3054,
+    "capacity": "3854 T/D",
+    "rating": "4.2",
+    "established": 1981,
+    "coordinates": {
+      "lat": 19.720232066365615,
+      "lng": 74.90898966860857
+    },
+    "role": "factory_owner",
+    "email": "factory27@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chikhaldara Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Chikhaldara",
+    "fullAddress": "Main Road, Chikhaldara, Amravati, Maharashtra",
+    "contact": "020-2660099",
+    "isOpen": true,
+    "frpRate": 3493,
+    "capacity": "3503 T/D",
+    "rating": "4.2",
+    "established": 1970,
+    "coordinates": {
+      "lat": 16.55862788391183,
+      "lng": 75.40285489580417
+    },
+    "role": "factory_owner",
+    "email": "factory28@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Daryapur Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Daryapur",
+    "fullAddress": "Main Road, Daryapur, Amravati, Maharashtra",
+    "contact": "020-2806367",
+    "isOpen": false,
+    "frpRate": 2877,
+    "capacity": "6681 T/D",
+    "rating": "3.9",
+    "established": 1968,
+    "coordinates": {
+      "lat": 17.507985259236385,
+      "lng": 75.13852448216264
+    },
+    "role": "factory_owner",
+    "email": "factory29@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dhamangaon Railway Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Dhamangaon Railway",
+    "fullAddress": "Main Road, Dhamangaon Railway, Amravati, Maharashtra",
+    "contact": "020-7703820",
+    "isOpen": false,
+    "frpRate": 3077,
+    "capacity": "6845 T/D",
+    "rating": "4.9",
+    "established": 1977,
+    "coordinates": {
+      "lat": 16.754323260149786,
+      "lng": 72.16643447411153
+    },
+    "role": "factory_owner",
+    "email": "factory30@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dharni Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Dharni",
+    "fullAddress": "Main Road, Dharni, Amravati, Maharashtra",
+    "contact": "020-1997188",
+    "isOpen": true,
+    "frpRate": 2798,
+    "capacity": "2991 T/D",
+    "rating": "4.0",
+    "established": 1987,
+    "coordinates": {
+      "lat": 20.498420172910194,
+      "lng": 74.83839126022261
+    },
+    "role": "factory_owner",
+    "email": "factory31@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Morshi Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Morshi",
+    "fullAddress": "Main Road, Morshi, Amravati, Maharashtra",
+    "contact": "020-8901990",
+    "isOpen": false,
+    "frpRate": 3362,
+    "capacity": "5803 T/D",
+    "rating": "4.1",
+    "established": 1960,
+    "coordinates": {
+      "lat": 16.900428999538793,
+      "lng": 75.46760849940833
+    },
+    "role": "factory_owner",
+    "email": "factory32@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nandgaon Khandeshwar Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Nandgaon Khandeshwar",
+    "fullAddress": "Main Road, Nandgaon Khandeshwar, Amravati, Maharashtra",
+    "contact": "020-3371225",
+    "isOpen": false,
+    "frpRate": 2949,
+    "capacity": "6327 T/D",
+    "rating": "4.8",
+    "established": 1968,
+    "coordinates": {
+      "lat": 19.90744636939054,
+      "lng": 72.53558730593642
+    },
+    "role": "factory_owner",
+    "email": "factory33@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Teosa Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Teosa",
+    "fullAddress": "Main Road, Teosa, Amravati, Maharashtra",
+    "contact": "020-7137574",
+    "isOpen": false,
+    "frpRate": 3404,
+    "capacity": "3143 T/D",
+    "rating": "3.4",
+    "established": 1996,
+    "coordinates": {
+      "lat": 19.500731033601703,
+      "lng": 75.40395546901262
+    },
+    "role": "factory_owner",
+    "email": "factory34@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Warud Cooperative Sugar Factory Ltd.",
+    "district": "Amravati",
+    "taluka": "Warud",
+    "fullAddress": "Main Road, Warud, Amravati, Maharashtra",
+    "contact": "020-5764224",
+    "isOpen": true,
+    "frpRate": 3372,
+    "capacity": "4789 T/D",
+    "rating": "4.9",
+    "established": 1972,
+    "coordinates": {
+      "lat": 20.05042134064153,
+      "lng": 72.09630908945898
+    },
+    "role": "factory_owner",
+    "email": "factory35@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Aurangabad Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Aurangabad",
+    "fullAddress": "Main Road, Aurangabad, Aurangabad, Maharashtra",
+    "contact": "020-5577212",
+    "isOpen": true,
+    "frpRate": 2959,
+    "capacity": "3643 T/D",
+    "rating": "3.0",
+    "established": 1969,
+    "coordinates": {
+      "lat": 17.53331772044232,
+      "lng": 73.0769459010445
+    },
+    "role": "factory_owner",
+    "email": "factory36@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gangapur Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Gangapur",
+    "fullAddress": "Main Road, Gangapur, Aurangabad, Maharashtra",
+    "contact": "020-6709363",
+    "isOpen": false,
+    "frpRate": 3261,
+    "capacity": "2618 T/D",
+    "rating": "3.6",
+    "established": 1990,
+    "coordinates": {
+      "lat": 16.881564463571806,
+      "lng": 75.70595627245386
+    },
+    "role": "factory_owner",
+    "email": "factory37@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kannad Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Kannad",
+    "fullAddress": "Main Road, Kannad, Aurangabad, Maharashtra",
+    "contact": "020-1716502",
+    "isOpen": true,
+    "frpRate": 3348,
+    "capacity": "5841 T/D",
+    "rating": "4.8",
+    "established": 1974,
+    "coordinates": {
+      "lat": 16.978392414924155,
+      "lng": 73.40791336784089
+    },
+    "role": "factory_owner",
+    "email": "factory38@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khultabad Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Khultabad",
+    "fullAddress": "Main Road, Khultabad, Aurangabad, Maharashtra",
+    "contact": "020-9037997",
+    "isOpen": false,
+    "frpRate": 3331,
+    "capacity": "6205 T/D",
+    "rating": "4.3",
+    "established": 1978,
+    "coordinates": {
+      "lat": 17.045710447817612,
+      "lng": 73.94799189518028
+    },
+    "role": "factory_owner",
+    "email": "factory39@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Paithan Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Paithan",
+    "fullAddress": "Main Road, Paithan, Aurangabad, Maharashtra",
+    "contact": "020-9010798",
+    "isOpen": true,
+    "frpRate": 2715,
+    "capacity": "5539 T/D",
+    "rating": "3.1",
+    "established": 1986,
+    "coordinates": {
+      "lat": 18.59015747508189,
+      "lng": 73.57961726590403
+    },
+    "role": "factory_owner",
+    "email": "factory40@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Phulambri Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Phulambri",
+    "fullAddress": "Main Road, Phulambri, Aurangabad, Maharashtra",
+    "contact": "020-2778062",
+    "isOpen": false,
+    "frpRate": 3040,
+    "capacity": "3225 T/D",
+    "rating": "3.7",
+    "established": 2006,
+    "coordinates": {
+      "lat": 16.54433565063102,
+      "lng": 75.50117689697191
+    },
+    "role": "factory_owner",
+    "email": "factory41@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sillod Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Sillod",
+    "fullAddress": "Main Road, Sillod, Aurangabad, Maharashtra",
+    "contact": "020-3664626",
+    "isOpen": true,
+    "frpRate": 3074,
+    "capacity": "4578 T/D",
+    "rating": "4.8",
+    "established": 1981,
+    "coordinates": {
+      "lat": 18.67398167367417,
+      "lng": 73.17950525026589
+    },
+    "role": "factory_owner",
+    "email": "factory42@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Soegaon Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Soegaon",
+    "fullAddress": "Main Road, Soegaon, Aurangabad, Maharashtra",
+    "contact": "020-3023351",
+    "isOpen": false,
+    "frpRate": 2915,
+    "capacity": "4578 T/D",
+    "rating": "4.8",
+    "established": 1983,
+    "coordinates": {
+      "lat": 18.92255731425522,
+      "lng": 73.73635135199429
+    },
+    "role": "factory_owner",
+    "email": "factory43@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Vaijapur Cooperative Sugar Factory Ltd.",
+    "district": "Aurangabad",
+    "taluka": "Vaijapur",
+    "fullAddress": "Main Road, Vaijapur, Aurangabad, Maharashtra",
+    "contact": "020-4701677",
+    "isOpen": false,
+    "frpRate": 2634,
+    "capacity": "4742 T/D",
+    "rating": "3.7",
+    "established": 1979,
+    "coordinates": {
+      "lat": 19.745641178364064,
+      "lng": 75.02958989056515
+    },
+    "role": "factory_owner",
+    "email": "factory44@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ambejogai Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Ambejogai",
+    "fullAddress": "Main Road, Ambejogai, Beed, Maharashtra",
+    "contact": "020-9661588",
+    "isOpen": true,
+    "frpRate": 2571,
+    "capacity": "3391 T/D",
+    "rating": "4.6",
+    "established": 1990,
+    "coordinates": {
+      "lat": 18.59869657419019,
+      "lng": 74.10216697791196
+    },
+    "role": "factory_owner",
+    "email": "factory45@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ashti Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Ashti",
+    "fullAddress": "Main Road, Ashti, Beed, Maharashtra",
+    "contact": "020-9247296",
+    "isOpen": false,
+    "frpRate": 3417,
+    "capacity": "5006 T/D",
+    "rating": "3.9",
+    "established": 1968,
+    "coordinates": {
+      "lat": 16.60040818136307,
+      "lng": 75.12725357651321
+    },
+    "role": "factory_owner",
+    "email": "factory46@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Beed Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Beed",
+    "fullAddress": "Main Road, Beed, Beed, Maharashtra",
+    "contact": "020-1177412",
+    "isOpen": true,
+    "frpRate": 3236,
+    "capacity": "5057 T/D",
+    "rating": "3.1",
+    "established": 1974,
+    "coordinates": {
+      "lat": 20.399201218911845,
+      "lng": 73.96853319061213
+    },
+    "role": "factory_owner",
+    "email": "factory47@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dharur Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Dharur",
+    "fullAddress": "Main Road, Dharur, Beed, Maharashtra",
+    "contact": "020-8362056",
+    "isOpen": true,
+    "frpRate": 3217,
+    "capacity": "6554 T/D",
+    "rating": "4.4",
+    "established": 1974,
+    "coordinates": {
+      "lat": 19.324905019361882,
+      "lng": 71.92606168328084
+    },
+    "role": "factory_owner",
+    "email": "factory48@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gevrai Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Gevrai",
+    "fullAddress": "Main Road, Gevrai, Beed, Maharashtra",
+    "contact": "020-7563136",
+    "isOpen": false,
+    "frpRate": 3459,
+    "capacity": "5597 T/D",
+    "rating": "3.2",
+    "established": 1968,
+    "coordinates": {
+      "lat": 20.24588237487209,
+      "lng": 74.26409791293878
+    },
+    "role": "factory_owner",
+    "email": "factory49@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kaij Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Kaij",
+    "fullAddress": "Main Road, Kaij, Beed, Maharashtra",
+    "contact": "020-1063285",
+    "isOpen": true,
+    "frpRate": 3045,
+    "capacity": "3237 T/D",
+    "rating": "3.8",
+    "established": 1994,
+    "coordinates": {
+      "lat": 19.87897825323034,
+      "lng": 72.47373604258678
+    },
+    "role": "factory_owner",
+    "email": "factory50@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Majalgaon Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Majalgaon",
+    "fullAddress": "Main Road, Majalgaon, Beed, Maharashtra",
+    "contact": "020-7466898",
+    "isOpen": false,
+    "frpRate": 3248,
+    "capacity": "6570 T/D",
+    "rating": "3.2",
+    "established": 1991,
+    "coordinates": {
+      "lat": 16.66890030042363,
+      "lng": 72.78489384089175
+    },
+    "role": "factory_owner",
+    "email": "factory51@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Parli Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Parli",
+    "fullAddress": "Main Road, Parli, Beed, Maharashtra",
+    "contact": "020-2002531",
+    "isOpen": true,
+    "frpRate": 3452,
+    "capacity": "3389 T/D",
+    "rating": "4.2",
+    "established": 1983,
+    "coordinates": {
+      "lat": 18.619115507486494,
+      "lng": 73.94164543043391
+    },
+    "role": "factory_owner",
+    "email": "factory52@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Patoda Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Patoda",
+    "fullAddress": "Main Road, Patoda, Beed, Maharashtra",
+    "contact": "020-4832649",
+    "isOpen": true,
+    "frpRate": 2949,
+    "capacity": "2996 T/D",
+    "rating": "3.7",
+    "established": 1986,
+    "coordinates": {
+      "lat": 17.655335179821527,
+      "lng": 75.38566698679848
+    },
+    "role": "factory_owner",
+    "email": "factory53@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shirur Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Shirur",
+    "fullAddress": "Main Road, Shirur, Beed, Maharashtra",
+    "contact": "020-2490542",
+    "isOpen": true,
+    "frpRate": 2661,
+    "capacity": "2481 T/D",
+    "rating": "4.6",
+    "established": 2002,
+    "coordinates": {
+      "lat": 18.535015816761927,
+      "lng": 72.3124668058851
+    },
+    "role": "factory_owner",
+    "email": "factory54@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Wadwani Cooperative Sugar Factory Ltd.",
+    "district": "Beed",
+    "taluka": "Wadwani",
+    "fullAddress": "Main Road, Wadwani, Beed, Maharashtra",
+    "contact": "020-8719536",
+    "isOpen": true,
+    "frpRate": 2744,
+    "capacity": "4015 T/D",
+    "rating": "3.8",
+    "established": 1989,
+    "coordinates": {
+      "lat": 19.74530846032375,
+      "lng": 73.581172622364
+    },
+    "role": "factory_owner",
+    "email": "factory55@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhandara Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Bhandara",
+    "fullAddress": "Main Road, Bhandara, Bhandara, Maharashtra",
+    "contact": "020-4624731",
+    "isOpen": false,
+    "frpRate": 2804,
+    "capacity": "5795 T/D",
+    "rating": "4.7",
+    "established": 1960,
+    "coordinates": {
+      "lat": 18.382932441539456,
+      "lng": 75.52074276431938
+    },
+    "role": "factory_owner",
+    "email": "factory56@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Lakhandur Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Lakhandur",
+    "fullAddress": "Main Road, Lakhandur, Bhandara, Maharashtra",
+    "contact": "020-1625710",
+    "isOpen": true,
+    "frpRate": 2871,
+    "capacity": "5136 T/D",
+    "rating": "4.7",
+    "established": 1972,
+    "coordinates": {
+      "lat": 17.864556146587308,
+      "lng": 72.36478392384522
+    },
+    "role": "factory_owner",
+    "email": "factory57@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Lakhani Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Lakhani",
+    "fullAddress": "Main Road, Lakhani, Bhandara, Maharashtra",
+    "contact": "020-6233079",
+    "isOpen": false,
+    "frpRate": 2827,
+    "capacity": "2790 T/D",
+    "rating": "3.2",
+    "established": 1969,
+    "coordinates": {
+      "lat": 19.939876474304043,
+      "lng": 71.98873858622501
+    },
+    "role": "factory_owner",
+    "email": "factory58@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mohadi Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Mohadi",
+    "fullAddress": "Main Road, Mohadi, Bhandara, Maharashtra",
+    "contact": "020-6851449",
+    "isOpen": false,
+    "frpRate": 3491,
+    "capacity": "4841 T/D",
+    "rating": "3.3",
+    "established": 1971,
+    "coordinates": {
+      "lat": 20.276979362120315,
+      "lng": 74.29330657090455
+    },
+    "role": "factory_owner",
+    "email": "factory59@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pauni Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Pauni",
+    "fullAddress": "Main Road, Pauni, Bhandara, Maharashtra",
+    "contact": "020-5461189",
+    "isOpen": true,
+    "frpRate": 3457,
+    "capacity": "5432 T/D",
+    "rating": "3.4",
+    "established": 2004,
+    "coordinates": {
+      "lat": 17.665738350449374,
+      "lng": 73.09631347360255
+    },
+    "role": "factory_owner",
+    "email": "factory60@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sakoli Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Sakoli",
+    "fullAddress": "Main Road, Sakoli, Bhandara, Maharashtra",
+    "contact": "020-2397019",
+    "isOpen": true,
+    "frpRate": 3157,
+    "capacity": "4866 T/D",
+    "rating": "5.0",
+    "established": 1966,
+    "coordinates": {
+      "lat": 19.293168224816036,
+      "lng": 75.24101563023294
+    },
+    "role": "factory_owner",
+    "email": "factory61@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Tumsar Cooperative Sugar Factory Ltd.",
+    "district": "Bhandara",
+    "taluka": "Tumsar",
+    "fullAddress": "Main Road, Tumsar, Bhandara, Maharashtra",
+    "contact": "020-8747824",
+    "isOpen": true,
+    "frpRate": 2824,
+    "capacity": "5407 T/D",
+    "rating": "3.4",
+    "established": 2008,
+    "coordinates": {
+      "lat": 19.29682223602202,
+      "lng": 73.0074115647775
+    },
+    "role": "factory_owner",
+    "email": "factory62@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Buldhana Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Buldhana",
+    "fullAddress": "Main Road, Buldhana, Buldhana, Maharashtra",
+    "contact": "020-5054768",
+    "isOpen": false,
+    "frpRate": 2613,
+    "capacity": "6256 T/D",
+    "rating": "4.9",
+    "established": 1985,
+    "coordinates": {
+      "lat": 19.745784586898115,
+      "lng": 72.44501663594977
+    },
+    "role": "factory_owner",
+    "email": "factory63@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chikhli Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Chikhli",
+    "fullAddress": "Main Road, Chikhli, Buldhana, Maharashtra",
+    "contact": "020-3695542",
+    "isOpen": false,
+    "frpRate": 3005,
+    "capacity": "5173 T/D",
+    "rating": "4.2",
+    "established": 1978,
+    "coordinates": {
+      "lat": 18.827627286500288,
+      "lng": 73.336142871696
+    },
+    "role": "factory_owner",
+    "email": "factory64@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Deulgaon Raja Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Deulgaon Raja",
+    "fullAddress": "Main Road, Deulgaon Raja, Buldhana, Maharashtra",
+    "contact": "020-5125173",
+    "isOpen": true,
+    "frpRate": 2767,
+    "capacity": "4677 T/D",
+    "rating": "3.4",
+    "established": 1996,
+    "coordinates": {
+      "lat": 19.633716203286966,
+      "lng": 72.94113080485961
+    },
+    "role": "factory_owner",
+    "email": "factory65@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jalgaon Jamod Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Jalgaon Jamod",
+    "fullAddress": "Main Road, Jalgaon Jamod, Buldhana, Maharashtra",
+    "contact": "020-4445629",
+    "isOpen": true,
+    "frpRate": 2862,
+    "capacity": "6644 T/D",
+    "rating": "3.3",
+    "established": 1970,
+    "coordinates": {
+      "lat": 17.869540297117958,
+      "lng": 74.46185870144237
+    },
+    "role": "factory_owner",
+    "email": "factory66@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khamgaon Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Khamgaon",
+    "fullAddress": "Main Road, Khamgaon, Buldhana, Maharashtra",
+    "contact": "020-6385457",
+    "isOpen": true,
+    "frpRate": 2669,
+    "capacity": "4505 T/D",
+    "rating": "4.2",
+    "established": 1972,
+    "coordinates": {
+      "lat": 17.97153111035337,
+      "lng": 72.27393633578514
+    },
+    "role": "factory_owner",
+    "email": "factory67@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Lonar Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Lonar",
+    "fullAddress": "Main Road, Lonar, Buldhana, Maharashtra",
+    "contact": "020-6103092",
+    "isOpen": false,
+    "frpRate": 3143,
+    "capacity": "3885 T/D",
+    "rating": "3.3",
+    "established": 2009,
+    "coordinates": {
+      "lat": 16.82551320778657,
+      "lng": 74.16583901314199
+    },
+    "role": "factory_owner",
+    "email": "factory68@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Malkapur Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Malkapur",
+    "fullAddress": "Main Road, Malkapur, Buldhana, Maharashtra",
+    "contact": "020-2808576",
+    "isOpen": false,
+    "frpRate": 3224,
+    "capacity": "5601 T/D",
+    "rating": "3.0",
+    "established": 1974,
+    "coordinates": {
+      "lat": 20.1286452135125,
+      "lng": 72.92844583357041
+    },
+    "role": "factory_owner",
+    "email": "factory69@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mehkar Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Mehkar",
+    "fullAddress": "Main Road, Mehkar, Buldhana, Maharashtra",
+    "contact": "020-2588651",
+    "isOpen": false,
+    "frpRate": 2701,
+    "capacity": "5738 T/D",
+    "rating": "4.9",
+    "established": 2009,
+    "coordinates": {
+      "lat": 18.427089387631373,
+      "lng": 72.95969337135155
+    },
+    "role": "factory_owner",
+    "email": "factory70@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Motala Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Motala",
+    "fullAddress": "Main Road, Motala, Buldhana, Maharashtra",
+    "contact": "020-1230831",
+    "isOpen": true,
+    "frpRate": 3329,
+    "capacity": "4152 T/D",
+    "rating": "4.4",
+    "established": 1980,
+    "coordinates": {
+      "lat": 20.08499722311615,
+      "lng": 75.62752321763568
+    },
+    "role": "factory_owner",
+    "email": "factory71@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nandura Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Nandura",
+    "fullAddress": "Main Road, Nandura, Buldhana, Maharashtra",
+    "contact": "020-4966178",
+    "isOpen": true,
+    "frpRate": 3211,
+    "capacity": "6855 T/D",
+    "rating": "4.4",
+    "established": 1991,
+    "coordinates": {
+      "lat": 18.428567547205787,
+      "lng": 75.82116807632426
+    },
+    "role": "factory_owner",
+    "email": "factory72@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sangrampur Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Sangrampur",
+    "fullAddress": "Main Road, Sangrampur, Buldhana, Maharashtra",
+    "contact": "020-2062703",
+    "isOpen": false,
+    "frpRate": 2707,
+    "capacity": "3541 T/D",
+    "rating": "3.3",
+    "established": 2006,
+    "coordinates": {
+      "lat": 17.25908365999706,
+      "lng": 75.10299452516979
+    },
+    "role": "factory_owner",
+    "email": "factory73@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shegaon Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Shegaon",
+    "fullAddress": "Main Road, Shegaon, Buldhana, Maharashtra",
+    "contact": "020-8805553",
+    "isOpen": true,
+    "frpRate": 2931,
+    "capacity": "2753 T/D",
+    "rating": "4.2",
+    "established": 1991,
+    "coordinates": {
+      "lat": 18.834603561306064,
+      "lng": 72.71244007126411
+    },
+    "role": "factory_owner",
+    "email": "factory74@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sindkhed Raja Cooperative Sugar Factory Ltd.",
+    "district": "Buldhana",
+    "taluka": "Sindkhed Raja",
+    "fullAddress": "Main Road, Sindkhed Raja, Buldhana, Maharashtra",
+    "contact": "020-7398952",
+    "isOpen": true,
+    "frpRate": 3062,
+    "capacity": "6470 T/D",
+    "rating": "3.3",
+    "established": 1997,
+    "coordinates": {
+      "lat": 19.134327463614717,
+      "lng": 75.5266733503607
+    },
+    "role": "factory_owner",
+    "email": "factory75@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ballarpur Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Ballarpur",
+    "fullAddress": "Main Road, Ballarpur, Chandrapur, Maharashtra",
+    "contact": "020-7234121",
+    "isOpen": true,
+    "frpRate": 2614,
+    "capacity": "6858 T/D",
+    "rating": "3.5",
+    "established": 2006,
+    "coordinates": {
+      "lat": 20.212127746334392,
+      "lng": 72.01126582750405
+    },
+    "role": "factory_owner",
+    "email": "factory76@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhadravati Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Bhadravati",
+    "fullAddress": "Main Road, Bhadravati, Chandrapur, Maharashtra",
+    "contact": "020-8718058",
+    "isOpen": true,
+    "frpRate": 2840,
+    "capacity": "2793 T/D",
+    "rating": "4.9",
+    "established": 1975,
+    "coordinates": {
+      "lat": 17.059263468556107,
+      "lng": 72.9090930448467
+    },
+    "role": "factory_owner",
+    "email": "factory77@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Brahmapuri Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Brahmapuri",
+    "fullAddress": "Main Road, Brahmapuri, Chandrapur, Maharashtra",
+    "contact": "020-5666653",
+    "isOpen": false,
+    "frpRate": 2862,
+    "capacity": "2965 T/D",
+    "rating": "4.2",
+    "established": 1980,
+    "coordinates": {
+      "lat": 18.395395967975197,
+      "lng": 74.10617243688112
+    },
+    "role": "factory_owner",
+    "email": "factory78@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chandrapur Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Chandrapur",
+    "fullAddress": "Main Road, Chandrapur, Chandrapur, Maharashtra",
+    "contact": "020-8581608",
+    "isOpen": true,
+    "frpRate": 2903,
+    "capacity": "5672 T/D",
+    "rating": "4.2",
+    "established": 1992,
+    "coordinates": {
+      "lat": 19.031176804467542,
+      "lng": 73.05518503241767
+    },
+    "role": "factory_owner",
+    "email": "factory79@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chimur Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Chimur",
+    "fullAddress": "Main Road, Chimur, Chandrapur, Maharashtra",
+    "contact": "020-8025869",
+    "isOpen": true,
+    "frpRate": 2839,
+    "capacity": "5168 T/D",
+    "rating": "3.4",
+    "established": 1970,
+    "coordinates": {
+      "lat": 18.73460793112664,
+      "lng": 72.4933250866537
+    },
+    "role": "factory_owner",
+    "email": "factory80@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gondpipari Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Gondpipari",
+    "fullAddress": "Main Road, Gondpipari, Chandrapur, Maharashtra",
+    "contact": "020-8311588",
+    "isOpen": true,
+    "frpRate": 2758,
+    "capacity": "4476 T/D",
+    "rating": "4.2",
+    "established": 2003,
+    "coordinates": {
+      "lat": 17.53690190687938,
+      "lng": 72.04877790974179
+    },
+    "role": "factory_owner",
+    "email": "factory81@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jiwati Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Jiwati",
+    "fullAddress": "Main Road, Jiwati, Chandrapur, Maharashtra",
+    "contact": "020-8682080",
+    "isOpen": false,
+    "frpRate": 2557,
+    "capacity": "3683 T/D",
+    "rating": "4.3",
+    "established": 1971,
+    "coordinates": {
+      "lat": 16.601309063595316,
+      "lng": 75.32752419362146
+    },
+    "role": "factory_owner",
+    "email": "factory82@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Korpana Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Korpana",
+    "fullAddress": "Main Road, Korpana, Chandrapur, Maharashtra",
+    "contact": "020-2488265",
+    "isOpen": true,
+    "frpRate": 2711,
+    "capacity": "5142 T/D",
+    "rating": "3.5",
+    "established": 1994,
+    "coordinates": {
+      "lat": 18.75658239477652,
+      "lng": 73.61476585056896
+    },
+    "role": "factory_owner",
+    "email": "factory83@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mul Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Mul",
+    "fullAddress": "Main Road, Mul, Chandrapur, Maharashtra",
+    "contact": "020-2723306",
+    "isOpen": true,
+    "frpRate": 3313,
+    "capacity": "6808 T/D",
+    "rating": "4.7",
+    "established": 1996,
+    "coordinates": {
+      "lat": 17.943359914193607,
+      "lng": 73.75890384430282
+    },
+    "role": "factory_owner",
+    "email": "factory84@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nagbhir Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Nagbhir",
+    "fullAddress": "Main Road, Nagbhir, Chandrapur, Maharashtra",
+    "contact": "020-7117747",
+    "isOpen": false,
+    "frpRate": 2635,
+    "capacity": "6313 T/D",
+    "rating": "5.0",
+    "established": 1965,
+    "coordinates": {
+      "lat": 18.647199787930514,
+      "lng": 73.97883758522856
+    },
+    "role": "factory_owner",
+    "email": "factory85@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pombhurna Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Pombhurna",
+    "fullAddress": "Main Road, Pombhurna, Chandrapur, Maharashtra",
+    "contact": "020-3050771",
+    "isOpen": false,
+    "frpRate": 3066,
+    "capacity": "2928 T/D",
+    "rating": "3.1",
+    "established": 1963,
+    "coordinates": {
+      "lat": 17.00856114546716,
+      "lng": 75.33642003313952
+    },
+    "role": "factory_owner",
+    "email": "factory86@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Rajura Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Rajura",
+    "fullAddress": "Main Road, Rajura, Chandrapur, Maharashtra",
+    "contact": "020-9834373",
+    "isOpen": true,
+    "frpRate": 2957,
+    "capacity": "2044 T/D",
+    "rating": "4.2",
+    "established": 1991,
+    "coordinates": {
+      "lat": 20.00223102452418,
+      "lng": 74.11687471993451
+    },
+    "role": "factory_owner",
+    "email": "factory87@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sawali Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Sawali",
+    "fullAddress": "Main Road, Sawali, Chandrapur, Maharashtra",
+    "contact": "020-9433077",
+    "isOpen": true,
+    "frpRate": 3421,
+    "capacity": "2325 T/D",
+    "rating": "4.2",
+    "established": 1990,
+    "coordinates": {
+      "lat": 17.719863972384655,
+      "lng": 74.23673267816923
+    },
+    "role": "factory_owner",
+    "email": "factory88@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sindewahi Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Sindewahi",
+    "fullAddress": "Main Road, Sindewahi, Chandrapur, Maharashtra",
+    "contact": "020-6773305",
+    "isOpen": true,
+    "frpRate": 2503,
+    "capacity": "4658 T/D",
+    "rating": "3.9",
+    "established": 1969,
+    "coordinates": {
+      "lat": 17.789918887991274,
+      "lng": 73.15296903650187
+    },
+    "role": "factory_owner",
+    "email": "factory89@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Warora Cooperative Sugar Factory Ltd.",
+    "district": "Chandrapur",
+    "taluka": "Warora",
+    "fullAddress": "Main Road, Warora, Chandrapur, Maharashtra",
+    "contact": "020-7765104",
+    "isOpen": false,
+    "frpRate": 3436,
+    "capacity": "2283 T/D",
+    "rating": "3.2",
+    "established": 1977,
+    "coordinates": {
+      "lat": 20.4824407712955,
+      "lng": 72.47578507545319
+    },
+    "role": "factory_owner",
+    "email": "factory90@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dhule Cooperative Sugar Factory Ltd.",
+    "district": "Dhule",
+    "taluka": "Dhule",
+    "fullAddress": "Main Road, Dhule, Dhule, Maharashtra",
+    "contact": "020-1833760",
+    "isOpen": true,
+    "frpRate": 2868,
+    "capacity": "4068 T/D",
+    "rating": "3.7",
+    "established": 1983,
+    "coordinates": {
+      "lat": 17.952700798069223,
+      "lng": 73.58211727998639
+    },
+    "role": "factory_owner",
+    "email": "factory91@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sakri Cooperative Sugar Factory Ltd.",
+    "district": "Dhule",
+    "taluka": "Sakri",
+    "fullAddress": "Main Road, Sakri, Dhule, Maharashtra",
+    "contact": "020-9319860",
+    "isOpen": true,
+    "frpRate": 3480,
+    "capacity": "3983 T/D",
+    "rating": "4.1",
+    "established": 1971,
+    "coordinates": {
+      "lat": 18.9726772724501,
+      "lng": 73.59217067308182
+    },
+    "role": "factory_owner",
+    "email": "factory92@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shirpur Cooperative Sugar Factory Ltd.",
+    "district": "Dhule",
+    "taluka": "Shirpur",
+    "fullAddress": "Main Road, Shirpur, Dhule, Maharashtra",
+    "contact": "020-6924566",
+    "isOpen": true,
+    "frpRate": 3052,
+    "capacity": "3353 T/D",
+    "rating": "4.9",
+    "established": 1977,
+    "coordinates": {
+      "lat": 18.283818137568222,
+      "lng": 71.97676720828169
+    },
+    "role": "factory_owner",
+    "email": "factory93@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sindkheda Cooperative Sugar Factory Ltd.",
+    "district": "Dhule",
+    "taluka": "Sindkheda",
+    "fullAddress": "Main Road, Sindkheda, Dhule, Maharashtra",
+    "contact": "020-1217057",
+    "isOpen": true,
+    "frpRate": 3148,
+    "capacity": "5668 T/D",
+    "rating": "4.0",
+    "established": 2003,
+    "coordinates": {
+      "lat": 17.46166540491765,
+      "lng": 75.48001353842847
+    },
+    "role": "factory_owner",
+    "email": "factory94@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Aheri Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Aheri",
+    "fullAddress": "Main Road, Aheri, Gadchiroli, Maharashtra",
+    "contact": "020-4333663",
+    "isOpen": true,
+    "frpRate": 2620,
+    "capacity": "6041 T/D",
+    "rating": "3.6",
+    "established": 1987,
+    "coordinates": {
+      "lat": 17.201981455802017,
+      "lng": 72.1714800905699
+    },
+    "role": "factory_owner",
+    "email": "factory95@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Armori Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Armori",
+    "fullAddress": "Main Road, Armori, Gadchiroli, Maharashtra",
+    "contact": "020-9314773",
+    "isOpen": false,
+    "frpRate": 3207,
+    "capacity": "2005 T/D",
+    "rating": "3.4",
+    "established": 1969,
+    "coordinates": {
+      "lat": 16.996735104490856,
+      "lng": 75.05323505640716
+    },
+    "role": "factory_owner",
+    "email": "factory96@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhamragad Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Bhamragad",
+    "fullAddress": "Main Road, Bhamragad, Gadchiroli, Maharashtra",
+    "contact": "020-9385864",
+    "isOpen": true,
+    "frpRate": 3477,
+    "capacity": "4590 T/D",
+    "rating": "3.4",
+    "established": 2006,
+    "coordinates": {
+      "lat": 19.81841895454973,
+      "lng": 74.31068599593712
+    },
+    "role": "factory_owner",
+    "email": "factory97@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chamorshi Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Chamorshi",
+    "fullAddress": "Main Road, Chamorshi, Gadchiroli, Maharashtra",
+    "contact": "020-6002448",
+    "isOpen": true,
+    "frpRate": 3211,
+    "capacity": "4615 T/D",
+    "rating": "3.6",
+    "established": 1986,
+    "coordinates": {
+      "lat": 18.304593387354025,
+      "lng": 73.40178523449764
+    },
+    "role": "factory_owner",
+    "email": "factory98@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dhanora Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Dhanora",
+    "fullAddress": "Main Road, Dhanora, Gadchiroli, Maharashtra",
+    "contact": "020-2466467",
+    "isOpen": true,
+    "frpRate": 3375,
+    "capacity": "3493 T/D",
+    "rating": "4.5",
+    "established": 2008,
+    "coordinates": {
+      "lat": 20.450808834114504,
+      "lng": 73.10610076216051
+    },
+    "role": "factory_owner",
+    "email": "factory99@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Etapalli Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Etapalli",
+    "fullAddress": "Main Road, Etapalli, Gadchiroli, Maharashtra",
+    "contact": "020-4253040",
+    "isOpen": false,
+    "frpRate": 3099,
+    "capacity": "6147 T/D",
+    "rating": "3.1",
+    "established": 1965,
+    "coordinates": {
+      "lat": 17.345003142754695,
+      "lng": 75.36611267313206
+    },
+    "role": "factory_owner",
+    "email": "factory100@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gadchiroli Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Gadchiroli",
+    "fullAddress": "Main Road, Gadchiroli, Gadchiroli, Maharashtra",
+    "contact": "020-1643685",
+    "isOpen": true,
+    "frpRate": 2922,
+    "capacity": "5809 T/D",
+    "rating": "4.8",
+    "established": 1979,
+    "coordinates": {
+      "lat": 19.848044041391333,
+      "lng": 74.05134170003926
+    },
+    "role": "factory_owner",
+    "email": "factory101@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Korchi Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Korchi",
+    "fullAddress": "Main Road, Korchi, Gadchiroli, Maharashtra",
+    "contact": "020-8323721",
+    "isOpen": true,
+    "frpRate": 3071,
+    "capacity": "6054 T/D",
+    "rating": "4.7",
+    "established": 1996,
+    "coordinates": {
+      "lat": 17.708586718396013,
+      "lng": 73.14548051462273
+    },
+    "role": "factory_owner",
+    "email": "factory102@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kurkheda Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Kurkheda",
+    "fullAddress": "Main Road, Kurkheda, Gadchiroli, Maharashtra",
+    "contact": "020-2224252",
+    "isOpen": false,
+    "frpRate": 2508,
+    "capacity": "6353 T/D",
+    "rating": "4.7",
+    "established": 1975,
+    "coordinates": {
+      "lat": 19.558644417672237,
+      "lng": 71.90541109050554
+    },
+    "role": "factory_owner",
+    "email": "factory103@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mulchera Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Mulchera",
+    "fullAddress": "Main Road, Mulchera, Gadchiroli, Maharashtra",
+    "contact": "020-1254592",
+    "isOpen": true,
+    "frpRate": 3382,
+    "capacity": "2188 T/D",
+    "rating": "4.2",
+    "established": 1973,
+    "coordinates": {
+      "lat": 19.26565427530191,
+      "lng": 72.11778931516096
+    },
+    "role": "factory_owner",
+    "email": "factory104@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sironcha Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Sironcha",
+    "fullAddress": "Main Road, Sironcha, Gadchiroli, Maharashtra",
+    "contact": "020-3550430",
+    "isOpen": false,
+    "frpRate": 3243,
+    "capacity": "2495 T/D",
+    "rating": "4.2",
+    "established": 1990,
+    "coordinates": {
+      "lat": 17.278666070820076,
+      "lng": 74.96423651518111
+    },
+    "role": "factory_owner",
+    "email": "factory105@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Desaiganj Cooperative Sugar Factory Ltd.",
+    "district": "Gadchiroli",
+    "taluka": "Desaiganj",
+    "fullAddress": "Main Road, Desaiganj, Gadchiroli, Maharashtra",
+    "contact": "020-6806851",
+    "isOpen": true,
+    "frpRate": 2653,
+    "capacity": "5492 T/D",
+    "rating": "4.1",
+    "established": 1974,
+    "coordinates": {
+      "lat": 18.52477939669209,
+      "lng": 73.82119885800607
+    },
+    "role": "factory_owner",
+    "email": "factory106@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Amgaon Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Amgaon",
+    "fullAddress": "Main Road, Amgaon, Gondia, Maharashtra",
+    "contact": "020-1702142",
+    "isOpen": true,
+    "frpRate": 2689,
+    "capacity": "4251 T/D",
+    "rating": "4.6",
+    "established": 1964,
+    "coordinates": {
+      "lat": 16.75857150218831,
+      "lng": 75.50099804996921
+    },
+    "role": "factory_owner",
+    "email": "factory107@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Arjuni Morgaon Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Arjuni Morgaon",
+    "fullAddress": "Main Road, Arjuni Morgaon, Gondia, Maharashtra",
+    "contact": "020-1649769",
+    "isOpen": true,
+    "frpRate": 3034,
+    "capacity": "5517 T/D",
+    "rating": "4.9",
+    "established": 1989,
+    "coordinates": {
+      "lat": 19.380068178898448,
+      "lng": 72.70968160698676
+    },
+    "role": "factory_owner",
+    "email": "factory108@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Deori Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Deori",
+    "fullAddress": "Main Road, Deori, Gondia, Maharashtra",
+    "contact": "020-1804174",
+    "isOpen": true,
+    "frpRate": 2778,
+    "capacity": "2569 T/D",
+    "rating": "3.9",
+    "established": 2007,
+    "coordinates": {
+      "lat": 20.356815974211155,
+      "lng": 73.28863118761406
+    },
+    "role": "factory_owner",
+    "email": "factory109@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gondia Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Gondia",
+    "fullAddress": "Main Road, Gondia, Gondia, Maharashtra",
+    "contact": "020-3122704",
+    "isOpen": true,
+    "frpRate": 2966,
+    "capacity": "2642 T/D",
+    "rating": "4.4",
+    "established": 1979,
+    "coordinates": {
+      "lat": 18.56479369267916,
+      "lng": 75.55790574927768
+    },
+    "role": "factory_owner",
+    "email": "factory110@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Goregaon Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Goregaon",
+    "fullAddress": "Main Road, Goregaon, Gondia, Maharashtra",
+    "contact": "020-2350085",
+    "isOpen": false,
+    "frpRate": 3007,
+    "capacity": "3290 T/D",
+    "rating": "4.0",
+    "established": 1960,
+    "coordinates": {
+      "lat": 19.87911092324773,
+      "lng": 73.5052141451565
+    },
+    "role": "factory_owner",
+    "email": "factory111@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sadak-Arjuni Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Sadak-Arjuni",
+    "fullAddress": "Main Road, Sadak-Arjuni, Gondia, Maharashtra",
+    "contact": "020-6826260",
+    "isOpen": true,
+    "frpRate": 2577,
+    "capacity": "4337 T/D",
+    "rating": "3.9",
+    "established": 2009,
+    "coordinates": {
+      "lat": 20.380951584195845,
+      "lng": 73.19971584385023
+    },
+    "role": "factory_owner",
+    "email": "factory112@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Salekasa Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Salekasa",
+    "fullAddress": "Main Road, Salekasa, Gondia, Maharashtra",
+    "contact": "020-2659288",
+    "isOpen": true,
+    "frpRate": 3348,
+    "capacity": "2910 T/D",
+    "rating": "3.8",
+    "established": 1999,
+    "coordinates": {
+      "lat": 19.696908146816032,
+      "lng": 72.26790152175646
+    },
+    "role": "factory_owner",
+    "email": "factory113@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Tirora Cooperative Sugar Factory Ltd.",
+    "district": "Gondia",
+    "taluka": "Tirora",
+    "fullAddress": "Main Road, Tirora, Gondia, Maharashtra",
+    "contact": "020-4241069",
+    "isOpen": true,
+    "frpRate": 3343,
+    "capacity": "6532 T/D",
+    "rating": "3.4",
+    "established": 1995,
+    "coordinates": {
+      "lat": 17.802335137042785,
+      "lng": 74.31689815313065
+    },
+    "role": "factory_owner",
+    "email": "factory114@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Aundha Cooperative Sugar Factory Ltd.",
+    "district": "Hingoli",
+    "taluka": "Aundha",
+    "fullAddress": "Main Road, Aundha, Hingoli, Maharashtra",
+    "contact": "020-4109347",
+    "isOpen": false,
+    "frpRate": 2545,
+    "capacity": "6369 T/D",
+    "rating": "5.0",
+    "established": 2001,
+    "coordinates": {
+      "lat": 17.158563101998674,
+      "lng": 72.99156561964826
+    },
+    "role": "factory_owner",
+    "email": "factory115@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Basmath Cooperative Sugar Factory Ltd.",
+    "district": "Hingoli",
+    "taluka": "Basmath",
+    "fullAddress": "Main Road, Basmath, Hingoli, Maharashtra",
+    "contact": "020-3759175",
+    "isOpen": true,
+    "frpRate": 3311,
+    "capacity": "5349 T/D",
+    "rating": "4.0",
+    "established": 1972,
+    "coordinates": {
+      "lat": 16.70677213943433,
+      "lng": 75.80058045545147
+    },
+    "role": "factory_owner",
+    "email": "factory116@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Hingoli Cooperative Sugar Factory Ltd.",
+    "district": "Hingoli",
+    "taluka": "Hingoli",
+    "fullAddress": "Main Road, Hingoli, Hingoli, Maharashtra",
+    "contact": "020-6188668",
+    "isOpen": true,
+    "frpRate": 3351,
+    "capacity": "4730 T/D",
+    "rating": "4.3",
+    "established": 1993,
+    "coordinates": {
+      "lat": 19.565307003492645,
+      "lng": 71.88452221216701
+    },
+    "role": "factory_owner",
+    "email": "factory117@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kalamnuri Cooperative Sugar Factory Ltd.",
+    "district": "Hingoli",
+    "taluka": "Kalamnuri",
+    "fullAddress": "Main Road, Kalamnuri, Hingoli, Maharashtra",
+    "contact": "020-1627101",
+    "isOpen": true,
+    "frpRate": 2637,
+    "capacity": "6774 T/D",
+    "rating": "3.3",
+    "established": 1973,
+    "coordinates": {
+      "lat": 17.13356312307239,
+      "lng": 73.00971187721656
+    },
+    "role": "factory_owner",
+    "email": "factory118@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sengaon Cooperative Sugar Factory Ltd.",
+    "district": "Hingoli",
+    "taluka": "Sengaon",
+    "fullAddress": "Main Road, Sengaon, Hingoli, Maharashtra",
+    "contact": "020-9758297",
+    "isOpen": false,
+    "frpRate": 2524,
+    "capacity": "4657 T/D",
+    "rating": "3.5",
+    "established": 1983,
+    "coordinates": {
+      "lat": 20.515556668092398,
+      "lng": 72.560272102393
+    },
+    "role": "factory_owner",
+    "email": "factory119@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Amalner Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Amalner",
+    "fullAddress": "Main Road, Amalner, Jalgaon, Maharashtra",
+    "contact": "020-9019628",
+    "isOpen": false,
+    "frpRate": 2655,
+    "capacity": "4359 T/D",
+    "rating": "3.4",
+    "established": 2009,
+    "coordinates": {
+      "lat": 18.259240885834956,
+      "lng": 74.27584751779281
+    },
+    "role": "factory_owner",
+    "email": "factory120@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhadgaon Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Bhadgaon",
+    "fullAddress": "Main Road, Bhadgaon, Jalgaon, Maharashtra",
+    "contact": "020-8420864",
+    "isOpen": false,
+    "frpRate": 3082,
+    "capacity": "3312 T/D",
+    "rating": "4.7",
+    "established": 1963,
+    "coordinates": {
+      "lat": 17.98746800055015,
+      "lng": 75.32709345636324
+    },
+    "role": "factory_owner",
+    "email": "factory121@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhusawal Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Bhusawal",
+    "fullAddress": "Main Road, Bhusawal, Jalgaon, Maharashtra",
+    "contact": "020-7927950",
+    "isOpen": true,
+    "frpRate": 3208,
+    "capacity": "5081 T/D",
+    "rating": "4.7",
+    "established": 2006,
+    "coordinates": {
+      "lat": 19.86469069857836,
+      "lng": 73.01036193769146
+    },
+    "role": "factory_owner",
+    "email": "factory122@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bodwad Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Bodwad",
+    "fullAddress": "Main Road, Bodwad, Jalgaon, Maharashtra",
+    "contact": "020-6076612",
+    "isOpen": true,
+    "frpRate": 3115,
+    "capacity": "6428 T/D",
+    "rating": "4.6",
+    "established": 1983,
+    "coordinates": {
+      "lat": 19.260483702843665,
+      "lng": 72.50433402821025
+    },
+    "role": "factory_owner",
+    "email": "factory123@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chalisgaon Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Chalisgaon",
+    "fullAddress": "Main Road, Chalisgaon, Jalgaon, Maharashtra",
+    "contact": "020-8503855",
+    "isOpen": true,
+    "frpRate": 2954,
+    "capacity": "2950 T/D",
+    "rating": "4.3",
+    "established": 1990,
+    "coordinates": {
+      "lat": 19.709021995415114,
+      "lng": 75.73408069608422
+    },
+    "role": "factory_owner",
+    "email": "factory124@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chopda Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Chopda",
+    "fullAddress": "Main Road, Chopda, Jalgaon, Maharashtra",
+    "contact": "020-7188944",
+    "isOpen": true,
+    "frpRate": 3134,
+    "capacity": "5726 T/D",
+    "rating": "4.5",
+    "established": 2001,
+    "coordinates": {
+      "lat": 19.586974900294315,
+      "lng": 74.01298175526465
+    },
+    "role": "factory_owner",
+    "email": "factory125@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dharangaon Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Dharangaon",
+    "fullAddress": "Main Road, Dharangaon, Jalgaon, Maharashtra",
+    "contact": "020-5169075",
+    "isOpen": true,
+    "frpRate": 2840,
+    "capacity": "5397 T/D",
+    "rating": "4.9",
+    "established": 1985,
+    "coordinates": {
+      "lat": 18.09807538224327,
+      "lng": 73.79344593435297
+    },
+    "role": "factory_owner",
+    "email": "factory126@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Erandol Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Erandol",
+    "fullAddress": "Main Road, Erandol, Jalgaon, Maharashtra",
+    "contact": "020-2590964",
+    "isOpen": true,
+    "frpRate": 3227,
+    "capacity": "5672 T/D",
+    "rating": "4.0",
+    "established": 1995,
+    "coordinates": {
+      "lat": 20.474136209520495,
+      "lng": 72.74726370003212
+    },
+    "role": "factory_owner",
+    "email": "factory127@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jalgaon Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Jalgaon",
+    "fullAddress": "Main Road, Jalgaon, Jalgaon, Maharashtra",
+    "contact": "020-9048640",
+    "isOpen": false,
+    "frpRate": 3134,
+    "capacity": "3387 T/D",
+    "rating": "4.4",
+    "established": 1979,
+    "coordinates": {
+      "lat": 19.28390377750923,
+      "lng": 72.46074584268595
+    },
+    "role": "factory_owner",
+    "email": "factory128@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jamner Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Jamner",
+    "fullAddress": "Main Road, Jamner, Jalgaon, Maharashtra",
+    "contact": "020-6722066",
+    "isOpen": true,
+    "frpRate": 2741,
+    "capacity": "2934 T/D",
+    "rating": "4.8",
+    "established": 1978,
+    "coordinates": {
+      "lat": 19.132600787529185,
+      "lng": 73.9363329918534
+    },
+    "role": "factory_owner",
+    "email": "factory129@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Muktainagar Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Muktainagar",
+    "fullAddress": "Main Road, Muktainagar, Jalgaon, Maharashtra",
+    "contact": "020-8298776",
+    "isOpen": true,
+    "frpRate": 3178,
+    "capacity": "2206 T/D",
+    "rating": "3.4",
+    "established": 2006,
+    "coordinates": {
+      "lat": 17.81218359141598,
+      "lng": 75.33632397574985
+    },
+    "role": "factory_owner",
+    "email": "factory130@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pachora Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Pachora",
+    "fullAddress": "Main Road, Pachora, Jalgaon, Maharashtra",
+    "contact": "020-1526299",
+    "isOpen": true,
+    "frpRate": 2534,
+    "capacity": "3333 T/D",
+    "rating": "4.5",
+    "established": 2002,
+    "coordinates": {
+      "lat": 19.33725240686922,
+      "lng": 71.9036905994632
+    },
+    "role": "factory_owner",
+    "email": "factory131@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Parola Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Parola",
+    "fullAddress": "Main Road, Parola, Jalgaon, Maharashtra",
+    "contact": "020-6696243",
+    "isOpen": true,
+    "frpRate": 2925,
+    "capacity": "2789 T/D",
+    "rating": "3.3",
+    "established": 1969,
+    "coordinates": {
+      "lat": 17.601950750728594,
+      "lng": 74.19970893719739
+    },
+    "role": "factory_owner",
+    "email": "factory132@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Raver Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Raver",
+    "fullAddress": "Main Road, Raver, Jalgaon, Maharashtra",
+    "contact": "020-4085500",
+    "isOpen": true,
+    "frpRate": 2526,
+    "capacity": "3872 T/D",
+    "rating": "3.5",
+    "established": 2007,
+    "coordinates": {
+      "lat": 17.80955339685842,
+      "lng": 74.14782538926318
+    },
+    "role": "factory_owner",
+    "email": "factory133@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Yawal Cooperative Sugar Factory Ltd.",
+    "district": "Jalgaon",
+    "taluka": "Yawal",
+    "fullAddress": "Main Road, Yawal, Jalgaon, Maharashtra",
+    "contact": "020-4467027",
+    "isOpen": true,
+    "frpRate": 2615,
+    "capacity": "5495 T/D",
+    "rating": "3.1",
+    "established": 1977,
+    "coordinates": {
+      "lat": 18.252625993228264,
+      "lng": 74.52529129734661
+    },
+    "role": "factory_owner",
+    "email": "factory134@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ambad Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Ambad",
+    "fullAddress": "Main Road, Ambad, Jalna, Maharashtra",
+    "contact": "020-3712765",
+    "isOpen": true,
+    "frpRate": 2994,
+    "capacity": "3830 T/D",
+    "rating": "4.4",
+    "established": 1967,
+    "coordinates": {
+      "lat": 17.220451662114005,
+      "lng": 73.4009444851073
+    },
+    "role": "factory_owner",
+    "email": "factory135@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Badnapur Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Badnapur",
+    "fullAddress": "Main Road, Badnapur, Jalna, Maharashtra",
+    "contact": "020-5712080",
+    "isOpen": true,
+    "frpRate": 3182,
+    "capacity": "6839 T/D",
+    "rating": "4.1",
+    "established": 1988,
+    "coordinates": {
+      "lat": 17.0110778475646,
+      "lng": 72.25621972327177
+    },
+    "role": "factory_owner",
+    "email": "factory136@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhokardan Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Bhokardan",
+    "fullAddress": "Main Road, Bhokardan, Jalna, Maharashtra",
+    "contact": "020-5556997",
+    "isOpen": true,
+    "frpRate": 2849,
+    "capacity": "2150 T/D",
+    "rating": "3.8",
+    "established": 2002,
+    "coordinates": {
+      "lat": 19.790491264373177,
+      "lng": 74.77804174843943
+    },
+    "role": "factory_owner",
+    "email": "factory137@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ghansawangi Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Ghansawangi",
+    "fullAddress": "Main Road, Ghansawangi, Jalna, Maharashtra",
+    "contact": "020-2588735",
+    "isOpen": true,
+    "frpRate": 2689,
+    "capacity": "2121 T/D",
+    "rating": "4.7",
+    "established": 1960,
+    "coordinates": {
+      "lat": 16.64365136691256,
+      "lng": 74.3013423525453
+    },
+    "role": "factory_owner",
+    "email": "factory138@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jalna Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Jalna",
+    "fullAddress": "Main Road, Jalna, Jalna, Maharashtra",
+    "contact": "020-4750385",
+    "isOpen": true,
+    "frpRate": 3169,
+    "capacity": "3380 T/D",
+    "rating": "3.1",
+    "established": 1983,
+    "coordinates": {
+      "lat": 18.411600557024798,
+      "lng": 72.58299031207629
+    },
+    "role": "factory_owner",
+    "email": "factory139@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jafrabad Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Jafrabad",
+    "fullAddress": "Main Road, Jafrabad, Jalna, Maharashtra",
+    "contact": "020-3453761",
+    "isOpen": true,
+    "frpRate": 3287,
+    "capacity": "5940 T/D",
+    "rating": "4.8",
+    "established": 1974,
+    "coordinates": {
+      "lat": 17.747130788500023,
+      "lng": 73.56741501809816
+    },
+    "role": "factory_owner",
+    "email": "factory140@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mantha Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Mantha",
+    "fullAddress": "Main Road, Mantha, Jalna, Maharashtra",
+    "contact": "020-1215618",
+    "isOpen": true,
+    "frpRate": 2911,
+    "capacity": "5515 T/D",
+    "rating": "3.8",
+    "established": 1974,
+    "coordinates": {
+      "lat": 16.814343039667868,
+      "lng": 75.33675844204267
+    },
+    "role": "factory_owner",
+    "email": "factory141@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Partur Cooperative Sugar Factory Ltd.",
+    "district": "Jalna",
+    "taluka": "Partur",
+    "fullAddress": "Main Road, Partur, Jalna, Maharashtra",
+    "contact": "020-7278692",
+    "isOpen": true,
+    "frpRate": 2747,
+    "capacity": "6637 T/D",
+    "rating": "3.2",
+    "established": 1963,
+    "coordinates": {
+      "lat": 17.65058859813136,
+      "lng": 74.83356333356943
+    },
+    "role": "factory_owner",
+    "email": "factory142@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ajara Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Ajara",
+    "fullAddress": "Main Road, Ajara, Kolhapur, Maharashtra",
+    "contact": "020-3949564",
+    "isOpen": true,
+    "frpRate": 3096,
+    "capacity": "3818 T/D",
+    "rating": "3.4",
+    "established": 1980,
+    "coordinates": {
+      "lat": 17.983327356666656,
+      "lng": 75.24584627353497
+    },
+    "role": "factory_owner",
+    "email": "factory143@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bavada Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Bavada",
+    "fullAddress": "Main Road, Bavada, Kolhapur, Maharashtra",
+    "contact": "020-5924695",
+    "isOpen": false,
+    "frpRate": 2858,
+    "capacity": "3844 T/D",
+    "rating": "3.4",
+    "established": 1981,
+    "coordinates": {
+      "lat": 17.085757913046386,
+      "lng": 75.69091838048493
+    },
+    "role": "factory_owner",
+    "email": "factory144@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chandgad Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Chandgad",
+    "fullAddress": "Main Road, Chandgad, Kolhapur, Maharashtra",
+    "contact": "020-4326607",
+    "isOpen": true,
+    "frpRate": 3149,
+    "capacity": "4844 T/D",
+    "rating": "4.6",
+    "established": 1968,
+    "coordinates": {
+      "lat": 19.245381452215216,
+      "lng": 74.9147002200261
+    },
+    "role": "factory_owner",
+    "email": "factory145@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gadhinglaj Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Gadhinglaj",
+    "fullAddress": "Main Road, Gadhinglaj, Kolhapur, Maharashtra",
+    "contact": "020-6823994",
+    "isOpen": false,
+    "frpRate": 3311,
+    "capacity": "6335 T/D",
+    "rating": "4.2",
+    "established": 1967,
+    "coordinates": {
+      "lat": 17.84917488939135,
+      "lng": 72.76115198560504
+    },
+    "role": "factory_owner",
+    "email": "factory146@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Hatkanangle Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Hatkanangle",
+    "fullAddress": "Main Road, Hatkanangle, Kolhapur, Maharashtra",
+    "contact": "020-9000714",
+    "isOpen": false,
+    "frpRate": 2744,
+    "capacity": "6533 T/D",
+    "rating": "4.6",
+    "established": 1980,
+    "coordinates": {
+      "lat": 19.369067648873994,
+      "lng": 72.19150968305277
+    },
+    "role": "factory_owner",
+    "email": "factory147@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kagal Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Kagal",
+    "fullAddress": "Main Road, Kagal, Kolhapur, Maharashtra",
+    "contact": "020-6209258",
+    "isOpen": false,
+    "frpRate": 2835,
+    "capacity": "5521 T/D",
+    "rating": "4.6",
+    "established": 1996,
+    "coordinates": {
+      "lat": 19.607819375782764,
+      "lng": 74.06229451695489
+    },
+    "role": "factory_owner",
+    "email": "factory148@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karveer Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Karveer",
+    "fullAddress": "Main Road, Karveer, Kolhapur, Maharashtra",
+    "contact": "020-9998385",
+    "isOpen": true,
+    "frpRate": 2724,
+    "capacity": "4329 T/D",
+    "rating": "4.3",
+    "established": 1976,
+    "coordinates": {
+      "lat": 20.296096767968034,
+      "lng": 73.81744908944303
+    },
+    "role": "factory_owner",
+    "email": "factory149@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Panhala Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Panhala",
+    "fullAddress": "Main Road, Panhala, Kolhapur, Maharashtra",
+    "contact": "020-6101310",
+    "isOpen": true,
+    "frpRate": 2625,
+    "capacity": "6988 T/D",
+    "rating": "3.0",
+    "established": 1975,
+    "coordinates": {
+      "lat": 17.094729121196906,
+      "lng": 73.11983073205221
+    },
+    "role": "factory_owner",
+    "email": "factory150@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Radhanagari Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Radhanagari",
+    "fullAddress": "Main Road, Radhanagari, Kolhapur, Maharashtra",
+    "contact": "020-1716208",
+    "isOpen": true,
+    "frpRate": 3395,
+    "capacity": "3735 T/D",
+    "rating": "4.0",
+    "established": 1994,
+    "coordinates": {
+      "lat": 16.93352161041526,
+      "lng": 74.3297335086643
+    },
+    "role": "factory_owner",
+    "email": "factory151@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shahuwadi Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Shahuwadi",
+    "fullAddress": "Main Road, Shahuwadi, Kolhapur, Maharashtra",
+    "contact": "020-9487196",
+    "isOpen": true,
+    "frpRate": 3308,
+    "capacity": "2082 T/D",
+    "rating": "4.3",
+    "established": 2007,
+    "coordinates": {
+      "lat": 18.036005076033632,
+      "lng": 73.230270335409
+    },
+    "role": "factory_owner",
+    "email": "factory152@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shirol Cooperative Sugar Factory Ltd.",
+    "district": "Kolhapur",
+    "taluka": "Shirol",
+    "fullAddress": "Main Road, Shirol, Kolhapur, Maharashtra",
+    "contact": "020-2367266",
+    "isOpen": false,
+    "frpRate": 2874,
+    "capacity": "2140 T/D",
+    "rating": "3.7",
+    "established": 1965,
+    "coordinates": {
+      "lat": 18.96380174679016,
+      "lng": 75.3452966061743
+    },
+    "role": "factory_owner",
+    "email": "factory153@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ahmedpur Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Ahmedpur",
+    "fullAddress": "Main Road, Ahmedpur, Latur, Maharashtra",
+    "contact": "020-6502071",
+    "isOpen": false,
+    "frpRate": 2740,
+    "capacity": "3748 T/D",
+    "rating": "4.3",
+    "established": 2002,
+    "coordinates": {
+      "lat": 18.33610818112972,
+      "lng": 72.17527667713856
+    },
+    "role": "factory_owner",
+    "email": "factory154@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ausa Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Ausa",
+    "fullAddress": "Main Road, Ausa, Latur, Maharashtra",
+    "contact": "020-6277393",
+    "isOpen": true,
+    "frpRate": 2695,
+    "capacity": "4642 T/D",
+    "rating": "3.0",
+    "established": 2001,
+    "coordinates": {
+      "lat": 17.555713881348034,
+      "lng": 72.78560819450223
+    },
+    "role": "factory_owner",
+    "email": "factory155@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chakaur Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Chakaur",
+    "fullAddress": "Main Road, Chakaur, Latur, Maharashtra",
+    "contact": "020-3100825",
+    "isOpen": true,
+    "frpRate": 2737,
+    "capacity": "3823 T/D",
+    "rating": "4.9",
+    "established": 1968,
+    "coordinates": {
+      "lat": 19.999554599661227,
+      "lng": 73.97562673987716
+    },
+    "role": "factory_owner",
+    "email": "factory156@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Deoni Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Deoni",
+    "fullAddress": "Main Road, Deoni, Latur, Maharashtra",
+    "contact": "020-5016601",
+    "isOpen": true,
+    "frpRate": 2854,
+    "capacity": "3132 T/D",
+    "rating": "3.8",
+    "established": 1977,
+    "coordinates": {
+      "lat": 17.78116191735003,
+      "lng": 72.27870139719967
+    },
+    "role": "factory_owner",
+    "email": "factory157@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jalgon Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Jalgon",
+    "fullAddress": "Main Road, Jalgon, Latur, Maharashtra",
+    "contact": "020-9888798",
+    "isOpen": true,
+    "frpRate": 2798,
+    "capacity": "6198 T/D",
+    "rating": "4.7",
+    "established": 1994,
+    "coordinates": {
+      "lat": 18.198738584789204,
+      "lng": 72.45361280505219
+    },
+    "role": "factory_owner",
+    "email": "factory158@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Latur Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Latur",
+    "fullAddress": "Main Road, Latur, Latur, Maharashtra",
+    "contact": "020-5615570",
+    "isOpen": true,
+    "frpRate": 3271,
+    "capacity": "4206 T/D",
+    "rating": "4.4",
+    "established": 1993,
+    "coordinates": {
+      "lat": 20.09714264162874,
+      "lng": 72.5013105972536
+    },
+    "role": "factory_owner",
+    "email": "factory159@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nilanga Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Nilanga",
+    "fullAddress": "Main Road, Nilanga, Latur, Maharashtra",
+    "contact": "020-3089393",
+    "isOpen": true,
+    "frpRate": 2573,
+    "capacity": "5257 T/D",
+    "rating": "4.6",
+    "established": 1963,
+    "coordinates": {
+      "lat": 20.270171695405494,
+      "lng": 74.51292774988082
+    },
+    "role": "factory_owner",
+    "email": "factory160@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Renapur Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Renapur",
+    "fullAddress": "Main Road, Renapur, Latur, Maharashtra",
+    "contact": "020-7066959",
+    "isOpen": true,
+    "frpRate": 2861,
+    "capacity": "6771 T/D",
+    "rating": "3.7",
+    "established": 1966,
+    "coordinates": {
+      "lat": 17.74411970332407,
+      "lng": 74.31210902583251
+    },
+    "role": "factory_owner",
+    "email": "factory161@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shirur Anantpal Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Shirur Anantpal",
+    "fullAddress": "Main Road, Shirur Anantpal, Latur, Maharashtra",
+    "contact": "020-1929951",
+    "isOpen": true,
+    "frpRate": 3329,
+    "capacity": "6332 T/D",
+    "rating": "3.8",
+    "established": 1997,
+    "coordinates": {
+      "lat": 17.252501214661756,
+      "lng": 73.42343504800529
+    },
+    "role": "factory_owner",
+    "email": "factory162@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Udgir Cooperative Sugar Factory Ltd.",
+    "district": "Latur",
+    "taluka": "Udgir",
+    "fullAddress": "Main Road, Udgir, Latur, Maharashtra",
+    "contact": "020-3847626",
+    "isOpen": true,
+    "frpRate": 2764,
+    "capacity": "3547 T/D",
+    "rating": "3.9",
+    "established": 1985,
+    "coordinates": {
+      "lat": 20.119692322569318,
+      "lng": 73.16030660746716
+    },
+    "role": "factory_owner",
+    "email": "factory163@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mumbai City Cooperative Sugar Factory Ltd.",
+    "district": "Mumbai City",
+    "taluka": "Mumbai City",
+    "fullAddress": "Main Road, Mumbai City, Mumbai City, Maharashtra",
+    "contact": "020-6908639",
+    "isOpen": true,
+    "frpRate": 3434,
+    "capacity": "3980 T/D",
+    "rating": "5.0",
+    "established": 1961,
+    "coordinates": {
+      "lat": 18.235993143186583,
+      "lng": 73.10321200382054
+    },
+    "role": "factory_owner",
+    "email": "factory164@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Andheri Cooperative Sugar Factory Ltd.",
+    "district": "Mumbai Suburban",
+    "taluka": "Andheri",
+    "fullAddress": "Main Road, Andheri, Mumbai Suburban, Maharashtra",
+    "contact": "020-7372194",
+    "isOpen": true,
+    "frpRate": 3278,
+    "capacity": "4201 T/D",
+    "rating": "4.6",
+    "established": 1967,
+    "coordinates": {
+      "lat": 18.24235602381139,
+      "lng": 74.28590771759411
+    },
+    "role": "factory_owner",
+    "email": "factory165@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Borivali Cooperative Sugar Factory Ltd.",
+    "district": "Mumbai Suburban",
+    "taluka": "Borivali",
+    "fullAddress": "Main Road, Borivali, Mumbai Suburban, Maharashtra",
+    "contact": "020-3151207",
+    "isOpen": false,
+    "frpRate": 2605,
+    "capacity": "2962 T/D",
+    "rating": "5.0",
+    "established": 1991,
+    "coordinates": {
+      "lat": 17.186344713798867,
+      "lng": 74.14125312227137
+    },
+    "role": "factory_owner",
+    "email": "factory166@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kurla Cooperative Sugar Factory Ltd.",
+    "district": "Mumbai Suburban",
+    "taluka": "Kurla",
+    "fullAddress": "Main Road, Kurla, Mumbai Suburban, Maharashtra",
+    "contact": "020-8821225",
+    "isOpen": true,
+    "frpRate": 2681,
+    "capacity": "4674 T/D",
+    "rating": "4.4",
+    "established": 1994,
+    "coordinates": {
+      "lat": 17.19120839636003,
+      "lng": 72.32986290123321
+    },
+    "role": "factory_owner",
+    "email": "factory167@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhiwapur Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Bhiwapur",
+    "fullAddress": "Main Road, Bhiwapur, Nagpur, Maharashtra",
+    "contact": "020-3998604",
+    "isOpen": false,
+    "frpRate": 2607,
+    "capacity": "4099 T/D",
+    "rating": "4.0",
+    "established": 1974,
+    "coordinates": {
+      "lat": 18.733096904141792,
+      "lng": 75.3663088186319
+    },
+    "role": "factory_owner",
+    "email": "factory168@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Hingna Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Hingna",
+    "fullAddress": "Main Road, Hingna, Nagpur, Maharashtra",
+    "contact": "020-9239084",
+    "isOpen": true,
+    "frpRate": 3179,
+    "capacity": "4520 T/D",
+    "rating": "4.2",
+    "established": 1983,
+    "coordinates": {
+      "lat": 19.039255719753502,
+      "lng": 73.29270821967289
+    },
+    "role": "factory_owner",
+    "email": "factory169@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kalameshwar Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Kalameshwar",
+    "fullAddress": "Main Road, Kalameshwar, Nagpur, Maharashtra",
+    "contact": "020-1056091",
+    "isOpen": false,
+    "frpRate": 2562,
+    "capacity": "4852 T/D",
+    "rating": "3.1",
+    "established": 2009,
+    "coordinates": {
+      "lat": 17.676646058039406,
+      "lng": 75.6849758016637
+    },
+    "role": "factory_owner",
+    "email": "factory170@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kamptee Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Kamptee",
+    "fullAddress": "Main Road, Kamptee, Nagpur, Maharashtra",
+    "contact": "020-5446091",
+    "isOpen": false,
+    "frpRate": 2589,
+    "capacity": "2532 T/D",
+    "rating": "3.1",
+    "established": 1984,
+    "coordinates": {
+      "lat": 17.58684783800565,
+      "lng": 72.13459600417022
+    },
+    "role": "factory_owner",
+    "email": "factory171@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Katol Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Katol",
+    "fullAddress": "Main Road, Katol, Nagpur, Maharashtra",
+    "contact": "020-7398898",
+    "isOpen": true,
+    "frpRate": 2522,
+    "capacity": "2979 T/D",
+    "rating": "3.4",
+    "established": 2005,
+    "coordinates": {
+      "lat": 19.33488194153632,
+      "lng": 72.94040881039005
+    },
+    "role": "factory_owner",
+    "email": "factory172@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kuhi Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Kuhi",
+    "fullAddress": "Main Road, Kuhi, Nagpur, Maharashtra",
+    "contact": "020-8019301",
+    "isOpen": true,
+    "frpRate": 3370,
+    "capacity": "4489 T/D",
+    "rating": "4.4",
+    "established": 1972,
+    "coordinates": {
+      "lat": 18.236935522831892,
+      "lng": 74.49099306851602
+    },
+    "role": "factory_owner",
+    "email": "factory173@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mauda Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Mauda",
+    "fullAddress": "Main Road, Mauda, Nagpur, Maharashtra",
+    "contact": "020-3660659",
+    "isOpen": true,
+    "frpRate": 3030,
+    "capacity": "6849 T/D",
+    "rating": "4.8",
+    "established": 1979,
+    "coordinates": {
+      "lat": 17.681348660484804,
+      "lng": 72.18728416236543
+    },
+    "role": "factory_owner",
+    "email": "factory174@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nagpur Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Nagpur",
+    "fullAddress": "Main Road, Nagpur, Nagpur, Maharashtra",
+    "contact": "020-3589636",
+    "isOpen": true,
+    "frpRate": 2896,
+    "capacity": "5984 T/D",
+    "rating": "3.2",
+    "established": 1980,
+    "coordinates": {
+      "lat": 19.90663745630931,
+      "lng": 72.77477628577357
+    },
+    "role": "factory_owner",
+    "email": "factory175@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nagpur Rural Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Nagpur Rural",
+    "fullAddress": "Main Road, Nagpur Rural, Nagpur, Maharashtra",
+    "contact": "020-6586609",
+    "isOpen": true,
+    "frpRate": 3041,
+    "capacity": "5993 T/D",
+    "rating": "3.7",
+    "established": 1973,
+    "coordinates": {
+      "lat": 17.89300165106752,
+      "lng": 75.25959964782224
+    },
+    "role": "factory_owner",
+    "email": "factory176@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Narkhed Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Narkhed",
+    "fullAddress": "Main Road, Narkhed, Nagpur, Maharashtra",
+    "contact": "020-8979765",
+    "isOpen": true,
+    "frpRate": 2940,
+    "capacity": "3788 T/D",
+    "rating": "4.7",
+    "established": 2002,
+    "coordinates": {
+      "lat": 20.48722736776572,
+      "lng": 73.17164066455035
+    },
+    "role": "factory_owner",
+    "email": "factory177@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Parseoni Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Parseoni",
+    "fullAddress": "Main Road, Parseoni, Nagpur, Maharashtra",
+    "contact": "020-7584385",
+    "isOpen": false,
+    "frpRate": 3254,
+    "capacity": "3498 T/D",
+    "rating": "4.3",
+    "established": 1964,
+    "coordinates": {
+      "lat": 20.260284055665284,
+      "lng": 74.01118924982643
+    },
+    "role": "factory_owner",
+    "email": "factory178@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ramtek Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Ramtek",
+    "fullAddress": "Main Road, Ramtek, Nagpur, Maharashtra",
+    "contact": "020-6933019",
+    "isOpen": false,
+    "frpRate": 3301,
+    "capacity": "3516 T/D",
+    "rating": "3.8",
+    "established": 2004,
+    "coordinates": {
+      "lat": 18.42894167155127,
+      "lng": 73.84951972999025
+    },
+    "role": "factory_owner",
+    "email": "factory179@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Saoner Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Saoner",
+    "fullAddress": "Main Road, Saoner, Nagpur, Maharashtra",
+    "contact": "020-7550824",
+    "isOpen": true,
+    "frpRate": 2849,
+    "capacity": "6387 T/D",
+    "rating": "3.7",
+    "established": 1977,
+    "coordinates": {
+      "lat": 19.22241810036769,
+      "lng": 72.47054096755974
+    },
+    "role": "factory_owner",
+    "email": "factory180@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Umred Cooperative Sugar Factory Ltd.",
+    "district": "Nagpur",
+    "taluka": "Umred",
+    "fullAddress": "Main Road, Umred, Nagpur, Maharashtra",
+    "contact": "020-1724697",
+    "isOpen": true,
+    "frpRate": 3034,
+    "capacity": "5256 T/D",
+    "rating": "4.6",
+    "established": 2007,
+    "coordinates": {
+      "lat": 17.518663838968337,
+      "lng": 73.12783180574871
+    },
+    "role": "factory_owner",
+    "email": "factory181@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ardhapur Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Ardhapur",
+    "fullAddress": "Main Road, Ardhapur, Nanded, Maharashtra",
+    "contact": "020-1862180",
+    "isOpen": false,
+    "frpRate": 3476,
+    "capacity": "6034 T/D",
+    "rating": "3.8",
+    "established": 1981,
+    "coordinates": {
+      "lat": 18.328648265364954,
+      "lng": 73.34357851893071
+    },
+    "role": "factory_owner",
+    "email": "factory182@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhokar Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Bhokar",
+    "fullAddress": "Main Road, Bhokar, Nanded, Maharashtra",
+    "contact": "020-5791196",
+    "isOpen": true,
+    "frpRate": 3484,
+    "capacity": "3863 T/D",
+    "rating": "3.9",
+    "established": 1978,
+    "coordinates": {
+      "lat": 20.38872947437066,
+      "lng": 72.51612751932181
+    },
+    "role": "factory_owner",
+    "email": "factory183@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Biloli Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Biloli",
+    "fullAddress": "Main Road, Biloli, Nanded, Maharashtra",
+    "contact": "020-2885333",
+    "isOpen": false,
+    "frpRate": 3082,
+    "capacity": "5789 T/D",
+    "rating": "3.5",
+    "established": 1960,
+    "coordinates": {
+      "lat": 17.355882329815856,
+      "lng": 73.87682334075636
+    },
+    "role": "factory_owner",
+    "email": "factory184@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Deglur Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Deglur",
+    "fullAddress": "Main Road, Deglur, Nanded, Maharashtra",
+    "contact": "020-5142789",
+    "isOpen": true,
+    "frpRate": 3399,
+    "capacity": "2948 T/D",
+    "rating": "4.8",
+    "established": 2006,
+    "coordinates": {
+      "lat": 19.970954761475678,
+      "lng": 73.92664042631182
+    },
+    "role": "factory_owner",
+    "email": "factory185@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dharmabad Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Dharmabad",
+    "fullAddress": "Main Road, Dharmabad, Nanded, Maharashtra",
+    "contact": "020-3226395",
+    "isOpen": true,
+    "frpRate": 3367,
+    "capacity": "3250 T/D",
+    "rating": "3.4",
+    "established": 1960,
+    "coordinates": {
+      "lat": 17.45982977739121,
+      "lng": 71.9130522518581
+    },
+    "role": "factory_owner",
+    "email": "factory186@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Hadgaon Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Hadgaon",
+    "fullAddress": "Main Road, Hadgaon, Nanded, Maharashtra",
+    "contact": "020-7103760",
+    "isOpen": true,
+    "frpRate": 2558,
+    "capacity": "5005 T/D",
+    "rating": "3.6",
+    "established": 1974,
+    "coordinates": {
+      "lat": 19.403299632821764,
+      "lng": 75.14167511189201
+    },
+    "role": "factory_owner",
+    "email": "factory187@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Himayatnagar Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Himayatnagar",
+    "fullAddress": "Main Road, Himayatnagar, Nanded, Maharashtra",
+    "contact": "020-8716583",
+    "isOpen": true,
+    "frpRate": 3088,
+    "capacity": "2920 T/D",
+    "rating": "4.6",
+    "established": 1996,
+    "coordinates": {
+      "lat": 18.124003879579043,
+      "lng": 75.07908019295483
+    },
+    "role": "factory_owner",
+    "email": "factory188@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kandhar Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Kandhar",
+    "fullAddress": "Main Road, Kandhar, Nanded, Maharashtra",
+    "contact": "020-7547409",
+    "isOpen": false,
+    "frpRate": 3146,
+    "capacity": "6666 T/D",
+    "rating": "3.2",
+    "established": 1977,
+    "coordinates": {
+      "lat": 17.54767985718098,
+      "lng": 74.80734813764953
+    },
+    "role": "factory_owner",
+    "email": "factory189@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kinwat Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Kinwat",
+    "fullAddress": "Main Road, Kinwat, Nanded, Maharashtra",
+    "contact": "020-5177860",
+    "isOpen": true,
+    "frpRate": 3300,
+    "capacity": "4019 T/D",
+    "rating": "4.3",
+    "established": 1995,
+    "coordinates": {
+      "lat": 17.17964512072033,
+      "lng": 73.91347705362328
+    },
+    "role": "factory_owner",
+    "email": "factory190@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Loha Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Loha",
+    "fullAddress": "Main Road, Loha, Nanded, Maharashtra",
+    "contact": "020-5204838",
+    "isOpen": true,
+    "frpRate": 2761,
+    "capacity": "4330 T/D",
+    "rating": "4.8",
+    "established": 1996,
+    "coordinates": {
+      "lat": 19.818652372795075,
+      "lng": 73.98732089753307
+    },
+    "role": "factory_owner",
+    "email": "factory191@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mahur Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Mahur",
+    "fullAddress": "Main Road, Mahur, Nanded, Maharashtra",
+    "contact": "020-6014506",
+    "isOpen": false,
+    "frpRate": 3056,
+    "capacity": "5760 T/D",
+    "rating": "4.9",
+    "established": 1978,
+    "coordinates": {
+      "lat": 16.596257012560198,
+      "lng": 75.67193832388536
+    },
+    "role": "factory_owner",
+    "email": "factory192@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mudkhed Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Mudkhed",
+    "fullAddress": "Main Road, Mudkhed, Nanded, Maharashtra",
+    "contact": "020-9549302",
+    "isOpen": true,
+    "frpRate": 3334,
+    "capacity": "5724 T/D",
+    "rating": "3.9",
+    "established": 1994,
+    "coordinates": {
+      "lat": 18.342344088393645,
+      "lng": 73.16600404276741
+    },
+    "role": "factory_owner",
+    "email": "factory193@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mukhed Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Mukhed",
+    "fullAddress": "Main Road, Mukhed, Nanded, Maharashtra",
+    "contact": "020-2367359",
+    "isOpen": true,
+    "frpRate": 3118,
+    "capacity": "2312 T/D",
+    "rating": "4.1",
+    "established": 1975,
+    "coordinates": {
+      "lat": 19.886169865136278,
+      "lng": 72.34250198115427
+    },
+    "role": "factory_owner",
+    "email": "factory194@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nanded Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Nanded",
+    "fullAddress": "Main Road, Nanded, Nanded, Maharashtra",
+    "contact": "020-8690561",
+    "isOpen": true,
+    "frpRate": 3325,
+    "capacity": "4186 T/D",
+    "rating": "4.1",
+    "established": 1988,
+    "coordinates": {
+      "lat": 18.32551733932501,
+      "lng": 72.14211657073031
+    },
+    "role": "factory_owner",
+    "email": "factory195@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Naigaon Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Naigaon",
+    "fullAddress": "Main Road, Naigaon, Nanded, Maharashtra",
+    "contact": "020-6766693",
+    "isOpen": false,
+    "frpRate": 2652,
+    "capacity": "2712 T/D",
+    "rating": "4.6",
+    "established": 1977,
+    "coordinates": {
+      "lat": 16.80509636644053,
+      "lng": 74.26262614345663
+    },
+    "role": "factory_owner",
+    "email": "factory196@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Umri Cooperative Sugar Factory Ltd.",
+    "district": "Nanded",
+    "taluka": "Umri",
+    "fullAddress": "Main Road, Umri, Nanded, Maharashtra",
+    "contact": "020-2278816",
+    "isOpen": true,
+    "frpRate": 3436,
+    "capacity": "5288 T/D",
+    "rating": "4.7",
+    "established": 1981,
+    "coordinates": {
+      "lat": 20.23408139321064,
+      "lng": 74.20915947332773
+    },
+    "role": "factory_owner",
+    "email": "factory197@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Akkalkuwa Cooperative Sugar Factory Ltd.",
+    "district": "Nandurbar",
+    "taluka": "Akkalkuwa",
+    "fullAddress": "Main Road, Akkalkuwa, Nandurbar, Maharashtra",
+    "contact": "020-1528870",
+    "isOpen": true,
+    "frpRate": 3143,
+    "capacity": "2971 T/D",
+    "rating": "4.2",
+    "established": 1987,
+    "coordinates": {
+      "lat": 19.924486498304148,
+      "lng": 72.03586363277151
+    },
+    "role": "factory_owner",
+    "email": "factory198@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Akrani Cooperative Sugar Factory Ltd.",
+    "district": "Nandurbar",
+    "taluka": "Akrani",
+    "fullAddress": "Main Road, Akrani, Nandurbar, Maharashtra",
+    "contact": "020-3863613",
+    "isOpen": true,
+    "frpRate": 3409,
+    "capacity": "3362 T/D",
+    "rating": "4.7",
+    "established": 1984,
+    "coordinates": {
+      "lat": 18.344039797536325,
+      "lng": 73.59097790670847
+    },
+    "role": "factory_owner",
+    "email": "factory199@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nandurbar Cooperative Sugar Factory Ltd.",
+    "district": "Nandurbar",
+    "taluka": "Nandurbar",
+    "fullAddress": "Main Road, Nandurbar, Nandurbar, Maharashtra",
+    "contact": "020-7800356",
+    "isOpen": true,
+    "frpRate": 3012,
+    "capacity": "6588 T/D",
+    "rating": "4.7",
+    "established": 2007,
+    "coordinates": {
+      "lat": 18.714946521192235,
+      "lng": 73.83297974785935
+    },
+    "role": "factory_owner",
+    "email": "factory200@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Navapur Cooperative Sugar Factory Ltd.",
+    "district": "Nandurbar",
+    "taluka": "Navapur",
+    "fullAddress": "Main Road, Navapur, Nandurbar, Maharashtra",
+    "contact": "020-4175388",
+    "isOpen": true,
+    "frpRate": 2887,
+    "capacity": "4479 T/D",
+    "rating": "4.0",
+    "established": 1998,
+    "coordinates": {
+      "lat": 18.34149631841365,
+      "lng": 74.44467363889622
+    },
+    "role": "factory_owner",
+    "email": "factory201@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shahada Cooperative Sugar Factory Ltd.",
+    "district": "Nandurbar",
+    "taluka": "Shahada",
+    "fullAddress": "Main Road, Shahada, Nandurbar, Maharashtra",
+    "contact": "020-3741458",
+    "isOpen": true,
+    "frpRate": 3194,
+    "capacity": "4639 T/D",
+    "rating": "4.7",
+    "established": 1999,
+    "coordinates": {
+      "lat": 19.752259132709817,
+      "lng": 72.49931349948247
+    },
+    "role": "factory_owner",
+    "email": "factory202@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Taloda Cooperative Sugar Factory Ltd.",
+    "district": "Nandurbar",
+    "taluka": "Taloda",
+    "fullAddress": "Main Road, Taloda, Nandurbar, Maharashtra",
+    "contact": "020-7638143",
+    "isOpen": false,
+    "frpRate": 3311,
+    "capacity": "4261 T/D",
+    "rating": "3.2",
+    "established": 1998,
+    "coordinates": {
+      "lat": 19.197758857553335,
+      "lng": 72.41303130625379
+    },
+    "role": "factory_owner",
+    "email": "factory203@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Baglan Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Baglan",
+    "fullAddress": "Main Road, Baglan, Nashik, Maharashtra",
+    "contact": "020-6170446",
+    "isOpen": true,
+    "frpRate": 3405,
+    "capacity": "2127 T/D",
+    "rating": "3.1",
+    "established": 1969,
+    "coordinates": {
+      "lat": 19.988047071060763,
+      "lng": 74.64463209611438
+    },
+    "role": "factory_owner",
+    "email": "factory204@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chandwad Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Chandwad",
+    "fullAddress": "Main Road, Chandwad, Nashik, Maharashtra",
+    "contact": "020-4196956",
+    "isOpen": false,
+    "frpRate": 2588,
+    "capacity": "4082 T/D",
+    "rating": "3.6",
+    "established": 1974,
+    "coordinates": {
+      "lat": 16.962048036944985,
+      "lng": 74.96801027492116
+    },
+    "role": "factory_owner",
+    "email": "factory205@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Deola Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Deola",
+    "fullAddress": "Main Road, Deola, Nashik, Maharashtra",
+    "contact": "020-3619523",
+    "isOpen": true,
+    "frpRate": 2762,
+    "capacity": "5526 T/D",
+    "rating": "3.6",
+    "established": 1961,
+    "coordinates": {
+      "lat": 18.835674646159774,
+      "lng": 74.56145778123918
+    },
+    "role": "factory_owner",
+    "email": "factory206@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dindori Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Dindori",
+    "fullAddress": "Main Road, Dindori, Nashik, Maharashtra",
+    "contact": "020-3291970",
+    "isOpen": true,
+    "frpRate": 3370,
+    "capacity": "6456 T/D",
+    "rating": "4.9",
+    "established": 1997,
+    "coordinates": {
+      "lat": 20.443425528216405,
+      "lng": 71.91406743150291
+    },
+    "role": "factory_owner",
+    "email": "factory207@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Igatpuri Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Igatpuri",
+    "fullAddress": "Main Road, Igatpuri, Nashik, Maharashtra",
+    "contact": "020-9480270",
+    "isOpen": true,
+    "frpRate": 2733,
+    "capacity": "4667 T/D",
+    "rating": "4.0",
+    "established": 1960,
+    "coordinates": {
+      "lat": 19.46219021554242,
+      "lng": 75.66192837319525
+    },
+    "role": "factory_owner",
+    "email": "factory208@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kalwan Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Kalwan",
+    "fullAddress": "Main Road, Kalwan, Nashik, Maharashtra",
+    "contact": "020-9377254",
+    "isOpen": true,
+    "frpRate": 3256,
+    "capacity": "2991 T/D",
+    "rating": "3.7",
+    "established": 1962,
+    "coordinates": {
+      "lat": 18.542662021142274,
+      "lng": 73.9251514229137
+    },
+    "role": "factory_owner",
+    "email": "factory209@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Malegaon Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Malegaon",
+    "fullAddress": "Main Road, Malegaon, Nashik, Maharashtra",
+    "contact": "020-7020379",
+    "isOpen": true,
+    "frpRate": 3122,
+    "capacity": "6177 T/D",
+    "rating": "3.6",
+    "established": 1994,
+    "coordinates": {
+      "lat": 17.693642412413553,
+      "lng": 73.07300938544564
+    },
+    "role": "factory_owner",
+    "email": "factory210@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nandgaon Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Nandgaon",
+    "fullAddress": "Main Road, Nandgaon, Nashik, Maharashtra",
+    "contact": "020-1002263",
+    "isOpen": true,
+    "frpRate": 3184,
+    "capacity": "4090 T/D",
+    "rating": "4.7",
+    "established": 1992,
+    "coordinates": {
+      "lat": 17.104399317285846,
+      "lng": 74.08582933737786
+    },
+    "role": "factory_owner",
+    "email": "factory211@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Nashik Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Nashik",
+    "fullAddress": "Main Road, Nashik, Nashik, Maharashtra",
+    "contact": "020-8811781",
+    "isOpen": true,
+    "frpRate": 3316,
+    "capacity": "4820 T/D",
+    "rating": "4.0",
+    "established": 1988,
+    "coordinates": {
+      "lat": 17.410100338025376,
+      "lng": 74.90110517977016
+    },
+    "role": "factory_owner",
+    "email": "factory212@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Niphad Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Niphad",
+    "fullAddress": "Main Road, Niphad, Nashik, Maharashtra",
+    "contact": "020-9602392",
+    "isOpen": true,
+    "frpRate": 2588,
+    "capacity": "3785 T/D",
+    "rating": "3.2",
+    "established": 1974,
+    "coordinates": {
+      "lat": 19.80370589386219,
+      "lng": 72.39272873277561
+    },
+    "role": "factory_owner",
+    "email": "factory213@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Peint Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Peint",
+    "fullAddress": "Main Road, Peint, Nashik, Maharashtra",
+    "contact": "020-4894001",
+    "isOpen": true,
+    "frpRate": 3088,
+    "capacity": "2670 T/D",
+    "rating": "3.4",
+    "established": 1970,
+    "coordinates": {
+      "lat": 17.322311908238376,
+      "lng": 75.73984103771724
+    },
+    "role": "factory_owner",
+    "email": "factory214@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sinnar Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Sinnar",
+    "fullAddress": "Main Road, Sinnar, Nashik, Maharashtra",
+    "contact": "020-7954377",
+    "isOpen": false,
+    "frpRate": 3263,
+    "capacity": "2812 T/D",
+    "rating": "3.7",
+    "established": 1967,
+    "coordinates": {
+      "lat": 19.36564430955818,
+      "lng": 74.95815346219023
+    },
+    "role": "factory_owner",
+    "email": "factory215@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Surgana Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Surgana",
+    "fullAddress": "Main Road, Surgana, Nashik, Maharashtra",
+    "contact": "020-3122920",
+    "isOpen": true,
+    "frpRate": 3167,
+    "capacity": "3545 T/D",
+    "rating": "3.6",
+    "established": 2000,
+    "coordinates": {
+      "lat": 20.14247435133927,
+      "lng": 72.37744195570173
+    },
+    "role": "factory_owner",
+    "email": "factory216@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Trimbakeshwar Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Trimbakeshwar",
+    "fullAddress": "Main Road, Trimbakeshwar, Nashik, Maharashtra",
+    "contact": "020-2883082",
+    "isOpen": false,
+    "frpRate": 3012,
+    "capacity": "3425 T/D",
+    "rating": "4.6",
+    "established": 1967,
+    "coordinates": {
+      "lat": 19.40020143588244,
+      "lng": 74.84114899731571
+    },
+    "role": "factory_owner",
+    "email": "factory217@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Yeola Cooperative Sugar Factory Ltd.",
+    "district": "Nashik",
+    "taluka": "Yeola",
+    "fullAddress": "Main Road, Yeola, Nashik, Maharashtra",
+    "contact": "020-3160546",
+    "isOpen": true,
+    "frpRate": 2912,
+    "capacity": "2703 T/D",
+    "rating": "3.4",
+    "established": 1992,
+    "coordinates": {
+      "lat": 17.754136927264994,
+      "lng": 72.35074428519546
+    },
+    "role": "factory_owner",
+    "email": "factory218@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhum Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Bhum",
+    "fullAddress": "Main Road, Bhum, Osmanabad, Maharashtra",
+    "contact": "020-1806725",
+    "isOpen": true,
+    "frpRate": 2601,
+    "capacity": "2997 T/D",
+    "rating": "4.0",
+    "established": 2003,
+    "coordinates": {
+      "lat": 19.63445688547379,
+      "lng": 72.22723403620867
+    },
+    "role": "factory_owner",
+    "email": "factory219@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kalamb Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Kalamb",
+    "fullAddress": "Main Road, Kalamb, Osmanabad, Maharashtra",
+    "contact": "020-5551297",
+    "isOpen": false,
+    "frpRate": 2570,
+    "capacity": "3304 T/D",
+    "rating": "4.7",
+    "established": 1981,
+    "coordinates": {
+      "lat": 18.451322399690202,
+      "lng": 72.28282507389918
+    },
+    "role": "factory_owner",
+    "email": "factory220@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Lohara Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Lohara",
+    "fullAddress": "Main Road, Lohara, Osmanabad, Maharashtra",
+    "contact": "020-7993838",
+    "isOpen": true,
+    "frpRate": 2684,
+    "capacity": "5813 T/D",
+    "rating": "3.4",
+    "established": 1963,
+    "coordinates": {
+      "lat": 18.805341533539565,
+      "lng": 73.19755217973648
+    },
+    "role": "factory_owner",
+    "email": "factory221@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Osmanabad Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Osmanabad",
+    "fullAddress": "Main Road, Osmanabad, Osmanabad, Maharashtra",
+    "contact": "020-5987796",
+    "isOpen": true,
+    "frpRate": 3328,
+    "capacity": "3579 T/D",
+    "rating": "3.5",
+    "established": 1995,
+    "coordinates": {
+      "lat": 16.737516126484127,
+      "lng": 73.64351459266409
+    },
+    "role": "factory_owner",
+    "email": "factory222@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Paranda Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Paranda",
+    "fullAddress": "Main Road, Paranda, Osmanabad, Maharashtra",
+    "contact": "020-6163607",
+    "isOpen": false,
+    "frpRate": 3021,
+    "capacity": "5638 T/D",
+    "rating": "4.2",
+    "established": 1972,
+    "coordinates": {
+      "lat": 18.6872974689489,
+      "lng": 73.73136132154056
+    },
+    "role": "factory_owner",
+    "email": "factory223@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Tuljapur Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Tuljapur",
+    "fullAddress": "Main Road, Tuljapur, Osmanabad, Maharashtra",
+    "contact": "020-8317530",
+    "isOpen": false,
+    "frpRate": 3028,
+    "capacity": "5507 T/D",
+    "rating": "4.2",
+    "established": 1976,
+    "coordinates": {
+      "lat": 20.02691463085206,
+      "lng": 73.35170842889808
+    },
+    "role": "factory_owner",
+    "email": "factory224@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Umarga Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Umarga",
+    "fullAddress": "Main Road, Umarga, Osmanabad, Maharashtra",
+    "contact": "020-9787838",
+    "isOpen": false,
+    "frpRate": 2674,
+    "capacity": "2791 T/D",
+    "rating": "3.8",
+    "established": 1973,
+    "coordinates": {
+      "lat": 17.05588098938212,
+      "lng": 73.0213500457454
+    },
+    "role": "factory_owner",
+    "email": "factory225@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Washi Cooperative Sugar Factory Ltd.",
+    "district": "Osmanabad",
+    "taluka": "Washi",
+    "fullAddress": "Main Road, Washi, Osmanabad, Maharashtra",
+    "contact": "020-6148358",
+    "isOpen": true,
+    "frpRate": 3005,
+    "capacity": "3586 T/D",
+    "rating": "3.9",
+    "established": 1969,
+    "coordinates": {
+      "lat": 16.633601743816936,
+      "lng": 73.68771142135932
+    },
+    "role": "factory_owner",
+    "email": "factory226@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dahanu Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Dahanu",
+    "fullAddress": "Main Road, Dahanu, Palghar, Maharashtra",
+    "contact": "020-5545205",
+    "isOpen": false,
+    "frpRate": 3397,
+    "capacity": "2395 T/D",
+    "rating": "3.2",
+    "established": 1980,
+    "coordinates": {
+      "lat": 19.788650767734854,
+      "lng": 72.28094613896255
+    },
+    "role": "factory_owner",
+    "email": "factory227@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jawhar Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Jawhar",
+    "fullAddress": "Main Road, Jawhar, Palghar, Maharashtra",
+    "contact": "020-1069818",
+    "isOpen": false,
+    "frpRate": 3243,
+    "capacity": "2909 T/D",
+    "rating": "4.9",
+    "established": 2001,
+    "coordinates": {
+      "lat": 17.66682162371518,
+      "lng": 73.73828984413596
+    },
+    "role": "factory_owner",
+    "email": "factory228@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mokhada Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Mokhada",
+    "fullAddress": "Main Road, Mokhada, Palghar, Maharashtra",
+    "contact": "020-8180086",
+    "isOpen": true,
+    "frpRate": 2766,
+    "capacity": "4499 T/D",
+    "rating": "4.7",
+    "established": 1980,
+    "coordinates": {
+      "lat": 19.65577714896774,
+      "lng": 74.45607049153756
+    },
+    "role": "factory_owner",
+    "email": "factory229@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Palghar Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Palghar",
+    "fullAddress": "Main Road, Palghar, Palghar, Maharashtra",
+    "contact": "020-7947448",
+    "isOpen": true,
+    "frpRate": 3295,
+    "capacity": "6279 T/D",
+    "rating": "3.4",
+    "established": 1996,
+    "coordinates": {
+      "lat": 20.258527411072404,
+      "lng": 75.81995143142738
+    },
+    "role": "factory_owner",
+    "email": "factory230@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Talasari Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Talasari",
+    "fullAddress": "Main Road, Talasari, Palghar, Maharashtra",
+    "contact": "020-7233556",
+    "isOpen": true,
+    "frpRate": 3227,
+    "capacity": "2357 T/D",
+    "rating": "3.1",
+    "established": 2001,
+    "coordinates": {
+      "lat": 17.494977377622345,
+      "lng": 75.38108928507884
+    },
+    "role": "factory_owner",
+    "email": "factory231@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Vada Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Vada",
+    "fullAddress": "Main Road, Vada, Palghar, Maharashtra",
+    "contact": "020-1951889",
+    "isOpen": false,
+    "frpRate": 2632,
+    "capacity": "3460 T/D",
+    "rating": "3.6",
+    "established": 1963,
+    "coordinates": {
+      "lat": 20.295689849865703,
+      "lng": 73.9350855420733
+    },
+    "role": "factory_owner",
+    "email": "factory232@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Vasai Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Vasai",
+    "fullAddress": "Main Road, Vasai, Palghar, Maharashtra",
+    "contact": "020-7643961",
+    "isOpen": true,
+    "frpRate": 3158,
+    "capacity": "6613 T/D",
+    "rating": "3.7",
+    "established": 1960,
+    "coordinates": {
+      "lat": 17.293851057403973,
+      "lng": 74.79369290505484
+    },
+    "role": "factory_owner",
+    "email": "factory233@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Vikramgad Cooperative Sugar Factory Ltd.",
+    "district": "Palghar",
+    "taluka": "Vikramgad",
+    "fullAddress": "Main Road, Vikramgad, Palghar, Maharashtra",
+    "contact": "020-4271460",
+    "isOpen": false,
+    "frpRate": 2872,
+    "capacity": "3858 T/D",
+    "rating": "4.3",
+    "established": 1985,
+    "coordinates": {
+      "lat": 19.34006045592181,
+      "lng": 73.42327567930948
+    },
+    "role": "factory_owner",
+    "email": "factory234@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Gangakhed Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Gangakhed",
+    "fullAddress": "Main Road, Gangakhed, Parbhani, Maharashtra",
+    "contact": "020-8611324",
+    "isOpen": false,
+    "frpRate": 3387,
+    "capacity": "4529 T/D",
+    "rating": "3.2",
+    "established": 2000,
+    "coordinates": {
+      "lat": 18.4006412259979,
+      "lng": 75.527228584391
+    },
+    "role": "factory_owner",
+    "email": "factory235@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jintur Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Jintur",
+    "fullAddress": "Main Road, Jintur, Parbhani, Maharashtra",
+    "contact": "020-8573451",
+    "isOpen": true,
+    "frpRate": 3062,
+    "capacity": "5514 T/D",
+    "rating": "3.7",
+    "established": 1977,
+    "coordinates": {
+      "lat": 19.439315614462217,
+      "lng": 75.5677390930485
+    },
+    "role": "factory_owner",
+    "email": "factory236@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Manwath Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Manwath",
+    "fullAddress": "Main Road, Manwath, Parbhani, Maharashtra",
+    "contact": "020-7585177",
+    "isOpen": true,
+    "frpRate": 2888,
+    "capacity": "2974 T/D",
+    "rating": "4.6",
+    "established": 1977,
+    "coordinates": {
+      "lat": 19.988916030498178,
+      "lng": 73.57610942138892
+    },
+    "role": "factory_owner",
+    "email": "factory237@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Palam Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Palam",
+    "fullAddress": "Main Road, Palam, Parbhani, Maharashtra",
+    "contact": "020-7615185",
+    "isOpen": true,
+    "frpRate": 2993,
+    "capacity": "2592 T/D",
+    "rating": "3.4",
+    "established": 2008,
+    "coordinates": {
+      "lat": 20.33916430952126,
+      "lng": 72.36838545423366
+    },
+    "role": "factory_owner",
+    "email": "factory238@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Parbhani Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Parbhani",
+    "fullAddress": "Main Road, Parbhani, Parbhani, Maharashtra",
+    "contact": "020-4598419",
+    "isOpen": true,
+    "frpRate": 3230,
+    "capacity": "4856 T/D",
+    "rating": "4.9",
+    "established": 1986,
+    "coordinates": {
+      "lat": 18.947218816040554,
+      "lng": 72.5855242339176
+    },
+    "role": "factory_owner",
+    "email": "factory239@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pathri Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Pathri",
+    "fullAddress": "Main Road, Pathri, Parbhani, Maharashtra",
+    "contact": "020-3766078",
+    "isOpen": false,
+    "frpRate": 3493,
+    "capacity": "3442 T/D",
+    "rating": "3.6",
+    "established": 1988,
+    "coordinates": {
+      "lat": 20.35595851298065,
+      "lng": 72.64359257120081
+    },
+    "role": "factory_owner",
+    "email": "factory240@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Purna Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Purna",
+    "fullAddress": "Main Road, Purna, Parbhani, Maharashtra",
+    "contact": "020-4930013",
+    "isOpen": false,
+    "frpRate": 2628,
+    "capacity": "2972 T/D",
+    "rating": "3.8",
+    "established": 1969,
+    "coordinates": {
+      "lat": 17.420587209391623,
+      "lng": 74.76976671679695
+    },
+    "role": "factory_owner",
+    "email": "factory241@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sailu Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Sailu",
+    "fullAddress": "Main Road, Sailu, Parbhani, Maharashtra",
+    "contact": "020-6600925",
+    "isOpen": true,
+    "frpRate": 2752,
+    "capacity": "5247 T/D",
+    "rating": "4.8",
+    "established": 2005,
+    "coordinates": {
+      "lat": 18.39312093686581,
+      "lng": 74.57774129262695
+    },
+    "role": "factory_owner",
+    "email": "factory242@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sonpeth Cooperative Sugar Factory Ltd.",
+    "district": "Parbhani",
+    "taluka": "Sonpeth",
+    "fullAddress": "Main Road, Sonpeth, Parbhani, Maharashtra",
+    "contact": "020-5662961",
+    "isOpen": true,
+    "frpRate": 3184,
+    "capacity": "6933 T/D",
+    "rating": "3.6",
+    "established": 1989,
+    "coordinates": {
+      "lat": 18.59229193965454,
+      "lng": 72.95700524959092
+    },
+    "role": "factory_owner",
+    "email": "factory243@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ambegaon Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Ambegaon",
+    "fullAddress": "Main Road, Ambegaon, Pune, Maharashtra",
+    "contact": "020-9466735",
+    "isOpen": true,
+    "frpRate": 2964,
+    "capacity": "5406 T/D",
+    "rating": "3.4",
+    "established": 2004,
+    "coordinates": {
+      "lat": 17.261309567957454,
+      "lng": 74.36267353836317
+    },
+    "role": "factory_owner",
+    "email": "factory244@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Baramati Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Baramati",
+    "fullAddress": "Main Road, Baramati, Pune, Maharashtra",
+    "contact": "020-8570756",
+    "isOpen": false,
+    "frpRate": 2926,
+    "capacity": "3875 T/D",
+    "rating": "4.0",
+    "established": 1973,
+    "coordinates": {
+      "lat": 17.544913013629827,
+      "lng": 72.63456169838213
+    },
+    "role": "factory_owner",
+    "email": "factory245@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhor Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Bhor",
+    "fullAddress": "Main Road, Bhor, Pune, Maharashtra",
+    "contact": "020-6909706",
+    "isOpen": true,
+    "frpRate": 2961,
+    "capacity": "2501 T/D",
+    "rating": "3.3",
+    "established": 1979,
+    "coordinates": {
+      "lat": 20.159669197194475,
+      "lng": 75.84454325073541
+    },
+    "role": "factory_owner",
+    "email": "factory246@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Daund Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Daund",
+    "fullAddress": "Main Road, Daund, Pune, Maharashtra",
+    "contact": "020-3160414",
+    "isOpen": false,
+    "frpRate": 2513,
+    "capacity": "6585 T/D",
+    "rating": "3.9",
+    "established": 1988,
+    "coordinates": {
+      "lat": 18.80549496081259,
+      "lng": 72.44036305848783
+    },
+    "role": "factory_owner",
+    "email": "factory247@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Haveli Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Haveli",
+    "fullAddress": "Main Road, Haveli, Pune, Maharashtra",
+    "contact": "020-9660267",
+    "isOpen": true,
+    "frpRate": 3197,
+    "capacity": "4790 T/D",
+    "rating": "3.6",
+    "established": 1978,
+    "coordinates": {
+      "lat": 18.688657008551207,
+      "lng": 72.47734788209225
+    },
+    "role": "factory_owner",
+    "email": "factory248@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Indapur Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Indapur",
+    "fullAddress": "Main Road, Indapur, Pune, Maharashtra",
+    "contact": "020-8721313",
+    "isOpen": true,
+    "frpRate": 2605,
+    "capacity": "3283 T/D",
+    "rating": "4.2",
+    "established": 1965,
+    "coordinates": {
+      "lat": 16.537804324264027,
+      "lng": 72.67872156481245
+    },
+    "role": "factory_owner",
+    "email": "factory249@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Junnar Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Junnar",
+    "fullAddress": "Main Road, Junnar, Pune, Maharashtra",
+    "contact": "020-8020312",
+    "isOpen": false,
+    "frpRate": 3294,
+    "capacity": "5679 T/D",
+    "rating": "4.7",
+    "established": 1969,
+    "coordinates": {
+      "lat": 18.677652513210614,
+      "lng": 72.32608259410361
+    },
+    "role": "factory_owner",
+    "email": "factory250@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khed Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Khed",
+    "fullAddress": "Main Road, Khed, Pune, Maharashtra",
+    "contact": "020-8295715",
+    "isOpen": true,
+    "frpRate": 2696,
+    "capacity": "3526 T/D",
+    "rating": "4.6",
+    "established": 1970,
+    "coordinates": {
+      "lat": 19.55623298853072,
+      "lng": 72.50439546764166
+    },
+    "role": "factory_owner",
+    "email": "factory251@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Maval Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Maval",
+    "fullAddress": "Main Road, Maval, Pune, Maharashtra",
+    "contact": "020-7994728",
+    "isOpen": false,
+    "frpRate": 2930,
+    "capacity": "2245 T/D",
+    "rating": "4.2",
+    "established": 1961,
+    "coordinates": {
+      "lat": 17.741656643902235,
+      "lng": 73.07952983114102
+    },
+    "role": "factory_owner",
+    "email": "factory252@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mulshi Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Mulshi",
+    "fullAddress": "Main Road, Mulshi, Pune, Maharashtra",
+    "contact": "020-4543920",
+    "isOpen": true,
+    "frpRate": 2901,
+    "capacity": "4007 T/D",
+    "rating": "3.2",
+    "established": 1976,
+    "coordinates": {
+      "lat": 19.849569087450448,
+      "lng": 72.74331371236227
+    },
+    "role": "factory_owner",
+    "email": "factory253@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pune City Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Pune City",
+    "fullAddress": "Main Road, Pune City, Pune, Maharashtra",
+    "contact": "020-3041670",
+    "isOpen": true,
+    "frpRate": 2516,
+    "capacity": "6423 T/D",
+    "rating": "3.5",
+    "established": 1962,
+    "coordinates": {
+      "lat": 19.77069558681979,
+      "lng": 75.23745495179475
+    },
+    "role": "factory_owner",
+    "email": "factory254@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Purandar Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Purandar",
+    "fullAddress": "Main Road, Purandar, Pune, Maharashtra",
+    "contact": "020-9985920",
+    "isOpen": true,
+    "frpRate": 3207,
+    "capacity": "6451 T/D",
+    "rating": "4.7",
+    "established": 1969,
+    "coordinates": {
+      "lat": 17.00232450019654,
+      "lng": 73.45769093394368
+    },
+    "role": "factory_owner",
+    "email": "factory255@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shirur Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Shirur",
+    "fullAddress": "Main Road, Shirur, Pune, Maharashtra",
+    "contact": "020-1878937",
+    "isOpen": false,
+    "frpRate": 2940,
+    "capacity": "5599 T/D",
+    "rating": "3.3",
+    "established": 1988,
+    "coordinates": {
+      "lat": 16.581936189430692,
+      "lng": 73.23943753779474
+    },
+    "role": "factory_owner",
+    "email": "factory256@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Velhe Cooperative Sugar Factory Ltd.",
+    "district": "Pune",
+    "taluka": "Velhe",
+    "fullAddress": "Main Road, Velhe, Pune, Maharashtra",
+    "contact": "020-4987259",
+    "isOpen": true,
+    "frpRate": 3083,
+    "capacity": "3436 T/D",
+    "rating": "4.3",
+    "established": 1999,
+    "coordinates": {
+      "lat": 18.451582429487857,
+      "lng": 75.23329569724068
+    },
+    "role": "factory_owner",
+    "email": "factory257@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Alibag Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Alibag",
+    "fullAddress": "Main Road, Alibag, Raigad, Maharashtra",
+    "contact": "020-4812879",
+    "isOpen": true,
+    "frpRate": 3029,
+    "capacity": "3932 T/D",
+    "rating": "4.3",
+    "established": 1983,
+    "coordinates": {
+      "lat": 18.577887637651735,
+      "lng": 72.94708340434285
+    },
+    "role": "factory_owner",
+    "email": "factory258@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karjat Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Karjat",
+    "fullAddress": "Main Road, Karjat, Raigad, Maharashtra",
+    "contact": "020-7805480",
+    "isOpen": false,
+    "frpRate": 3295,
+    "capacity": "6245 T/D",
+    "rating": "3.1",
+    "established": 1983,
+    "coordinates": {
+      "lat": 17.937772286715827,
+      "lng": 72.49306685467593
+    },
+    "role": "factory_owner",
+    "email": "factory259@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khalapur Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Khalapur",
+    "fullAddress": "Main Road, Khalapur, Raigad, Maharashtra",
+    "contact": "020-1418367",
+    "isOpen": true,
+    "frpRate": 2530,
+    "capacity": "6722 T/D",
+    "rating": "3.5",
+    "established": 1976,
+    "coordinates": {
+      "lat": 16.882564258702256,
+      "lng": 72.0622961182785
+    },
+    "role": "factory_owner",
+    "email": "factory260@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mahad Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Mahad",
+    "fullAddress": "Main Road, Mahad, Raigad, Maharashtra",
+    "contact": "020-4228031",
+    "isOpen": false,
+    "frpRate": 3225,
+    "capacity": "6442 T/D",
+    "rating": "3.9",
+    "established": 1989,
+    "coordinates": {
+      "lat": 16.64058105774579,
+      "lng": 74.22629411454577
+    },
+    "role": "factory_owner",
+    "email": "factory261@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mangaon Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Mangaon",
+    "fullAddress": "Main Road, Mangaon, Raigad, Maharashtra",
+    "contact": "020-4795999",
+    "isOpen": true,
+    "frpRate": 2736,
+    "capacity": "2983 T/D",
+    "rating": "3.1",
+    "established": 1980,
+    "coordinates": {
+      "lat": 17.797094375324747,
+      "lng": 72.41892205248963
+    },
+    "role": "factory_owner",
+    "email": "factory262@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mhasala Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Mhasala",
+    "fullAddress": "Main Road, Mhasala, Raigad, Maharashtra",
+    "contact": "020-6475636",
+    "isOpen": false,
+    "frpRate": 2622,
+    "capacity": "5849 T/D",
+    "rating": "4.9",
+    "established": 1967,
+    "coordinates": {
+      "lat": 18.453299796609848,
+      "lng": 73.04047021996243
+    },
+    "role": "factory_owner",
+    "email": "factory263@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Murud Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Murud",
+    "fullAddress": "Main Road, Murud, Raigad, Maharashtra",
+    "contact": "020-8300200",
+    "isOpen": true,
+    "frpRate": 3469,
+    "capacity": "3285 T/D",
+    "rating": "3.7",
+    "established": 1977,
+    "coordinates": {
+      "lat": 19.5174592182184,
+      "lng": 72.64810893904055
+    },
+    "role": "factory_owner",
+    "email": "factory264@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Panvel Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Panvel",
+    "fullAddress": "Main Road, Panvel, Raigad, Maharashtra",
+    "contact": "020-9759017",
+    "isOpen": true,
+    "frpRate": 3056,
+    "capacity": "2076 T/D",
+    "rating": "4.2",
+    "established": 1962,
+    "coordinates": {
+      "lat": 17.819952343253448,
+      "lng": 73.81299508416137
+    },
+    "role": "factory_owner",
+    "email": "factory265@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pen Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Pen",
+    "fullAddress": "Main Road, Pen, Raigad, Maharashtra",
+    "contact": "020-6114813",
+    "isOpen": true,
+    "frpRate": 3254,
+    "capacity": "6514 T/D",
+    "rating": "4.1",
+    "established": 2003,
+    "coordinates": {
+      "lat": 18.630138252502316,
+      "lng": 74.98999438070277
+    },
+    "role": "factory_owner",
+    "email": "factory266@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Poladpur Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Poladpur",
+    "fullAddress": "Main Road, Poladpur, Raigad, Maharashtra",
+    "contact": "020-1760890",
+    "isOpen": true,
+    "frpRate": 2980,
+    "capacity": "6521 T/D",
+    "rating": "4.2",
+    "established": 1993,
+    "coordinates": {
+      "lat": 18.07428275914736,
+      "lng": 73.3308604743843
+    },
+    "role": "factory_owner",
+    "email": "factory267@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Roha Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Roha",
+    "fullAddress": "Main Road, Roha, Raigad, Maharashtra",
+    "contact": "020-5364619",
+    "isOpen": true,
+    "frpRate": 3137,
+    "capacity": "4187 T/D",
+    "rating": "3.1",
+    "established": 2003,
+    "coordinates": {
+      "lat": 18.702137555019107,
+      "lng": 72.13415164772557
+    },
+    "role": "factory_owner",
+    "email": "factory268@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shrivardhan Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Shrivardhan",
+    "fullAddress": "Main Road, Shrivardhan, Raigad, Maharashtra",
+    "contact": "020-8317575",
+    "isOpen": true,
+    "frpRate": 2970,
+    "capacity": "6307 T/D",
+    "rating": "4.9",
+    "established": 1980,
+    "coordinates": {
+      "lat": 16.547962899690802,
+      "lng": 74.51189228566459
+    },
+    "role": "factory_owner",
+    "email": "factory269@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sudhagad Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Sudhagad",
+    "fullAddress": "Main Road, Sudhagad, Raigad, Maharashtra",
+    "contact": "020-3947956",
+    "isOpen": true,
+    "frpRate": 2866,
+    "capacity": "6187 T/D",
+    "rating": "3.9",
+    "established": 2000,
+    "coordinates": {
+      "lat": 16.660057353734587,
+      "lng": 72.50160696659987
+    },
+    "role": "factory_owner",
+    "email": "factory270@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Tala Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Tala",
+    "fullAddress": "Main Road, Tala, Raigad, Maharashtra",
+    "contact": "020-2378641",
+    "isOpen": true,
+    "frpRate": 2852,
+    "capacity": "2335 T/D",
+    "rating": "4.3",
+    "established": 2001,
+    "coordinates": {
+      "lat": 19.477615202712215,
+      "lng": 75.26929942506798
+    },
+    "role": "factory_owner",
+    "email": "factory271@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Uran Cooperative Sugar Factory Ltd.",
+    "district": "Raigad",
+    "taluka": "Uran",
+    "fullAddress": "Main Road, Uran, Raigad, Maharashtra",
+    "contact": "020-3385866",
+    "isOpen": true,
+    "frpRate": 2881,
+    "capacity": "2804 T/D",
+    "rating": "4.0",
+    "established": 1981,
+    "coordinates": {
+      "lat": 16.9230684564078,
+      "lng": 72.85121699023635
+    },
+    "role": "factory_owner",
+    "email": "factory272@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Chiplun Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Chiplun",
+    "fullAddress": "Main Road, Chiplun, Ratnagiri, Maharashtra",
+    "contact": "020-6580303",
+    "isOpen": false,
+    "frpRate": 3424,
+    "capacity": "6815 T/D",
+    "rating": "3.2",
+    "established": 1991,
+    "coordinates": {
+      "lat": 16.625884838414102,
+      "lng": 74.32817571233619
+    },
+    "role": "factory_owner",
+    "email": "factory273@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dapoli Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Dapoli",
+    "fullAddress": "Main Road, Dapoli, Ratnagiri, Maharashtra",
+    "contact": "020-6490706",
+    "isOpen": false,
+    "frpRate": 3415,
+    "capacity": "4276 T/D",
+    "rating": "4.6",
+    "established": 1986,
+    "coordinates": {
+      "lat": 18.537174542712023,
+      "lng": 75.60492754822546
+    },
+    "role": "factory_owner",
+    "email": "factory274@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Guhagar Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Guhagar",
+    "fullAddress": "Main Road, Guhagar, Ratnagiri, Maharashtra",
+    "contact": "020-8015354",
+    "isOpen": false,
+    "frpRate": 3050,
+    "capacity": "2251 T/D",
+    "rating": "4.4",
+    "established": 1971,
+    "coordinates": {
+      "lat": 16.55599852074279,
+      "lng": 75.35555887837776
+    },
+    "role": "factory_owner",
+    "email": "factory275@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khed Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Khed",
+    "fullAddress": "Main Road, Khed, Ratnagiri, Maharashtra",
+    "contact": "020-9723282",
+    "isOpen": false,
+    "frpRate": 3129,
+    "capacity": "3779 T/D",
+    "rating": "4.6",
+    "established": 2001,
+    "coordinates": {
+      "lat": 16.73603295116475,
+      "lng": 74.85688840764347
+    },
+    "role": "factory_owner",
+    "email": "factory276@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Lanja Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Lanja",
+    "fullAddress": "Main Road, Lanja, Ratnagiri, Maharashtra",
+    "contact": "020-4961936",
+    "isOpen": false,
+    "frpRate": 2593,
+    "capacity": "3476 T/D",
+    "rating": "3.0",
+    "established": 1961,
+    "coordinates": {
+      "lat": 19.43492012725845,
+      "lng": 73.4450588019961
+    },
+    "role": "factory_owner",
+    "email": "factory277@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mandangad Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Mandangad",
+    "fullAddress": "Main Road, Mandangad, Ratnagiri, Maharashtra",
+    "contact": "020-7432018",
+    "isOpen": true,
+    "frpRate": 3158,
+    "capacity": "5583 T/D",
+    "rating": "4.9",
+    "established": 1990,
+    "coordinates": {
+      "lat": 20.115456313823437,
+      "lng": 74.63356586178567
+    },
+    "role": "factory_owner",
+    "email": "factory278@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ratnagiri Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Ratnagiri",
+    "fullAddress": "Main Road, Ratnagiri, Ratnagiri, Maharashtra",
+    "contact": "020-8101117",
+    "isOpen": false,
+    "frpRate": 3039,
+    "capacity": "3668 T/D",
+    "rating": "3.3",
+    "established": 1991,
+    "coordinates": {
+      "lat": 17.580937713660685,
+      "lng": 72.28551249557398
+    },
+    "role": "factory_owner",
+    "email": "factory279@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sangameshwar Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Sangameshwar",
+    "fullAddress": "Main Road, Sangameshwar, Ratnagiri, Maharashtra",
+    "contact": "020-8645539",
+    "isOpen": false,
+    "frpRate": 3212,
+    "capacity": "6484 T/D",
+    "rating": "4.5",
+    "established": 1986,
+    "coordinates": {
+      "lat": 17.101008073334558,
+      "lng": 73.3838304897547
+    },
+    "role": "factory_owner",
+    "email": "factory280@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Rajapur Cooperative Sugar Factory Ltd.",
+    "district": "Ratnagiri",
+    "taluka": "Rajapur",
+    "fullAddress": "Main Road, Rajapur, Ratnagiri, Maharashtra",
+    "contact": "020-3851595",
+    "isOpen": true,
+    "frpRate": 3388,
+    "capacity": "6432 T/D",
+    "rating": "3.0",
+    "established": 1986,
+    "coordinates": {
+      "lat": 16.580684385171438,
+      "lng": 73.55603744319329
+    },
+    "role": "factory_owner",
+    "email": "factory281@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Atpadi Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Atpadi",
+    "fullAddress": "Main Road, Atpadi, Sangli, Maharashtra",
+    "contact": "020-2442946",
+    "isOpen": false,
+    "frpRate": 3311,
+    "capacity": "2635 T/D",
+    "rating": "3.7",
+    "established": 1999,
+    "coordinates": {
+      "lat": 16.749328834916543,
+      "lng": 73.13109097690833
+    },
+    "role": "factory_owner",
+    "email": "factory282@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jat Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Jat",
+    "fullAddress": "Main Road, Jat, Sangli, Maharashtra",
+    "contact": "020-5951321",
+    "isOpen": true,
+    "frpRate": 2725,
+    "capacity": "5720 T/D",
+    "rating": "4.7",
+    "established": 2006,
+    "coordinates": {
+      "lat": 17.624006403584193,
+      "lng": 75.23256852661362
+    },
+    "role": "factory_owner",
+    "email": "factory283@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kavathe Mahankal Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Kavathe Mahankal",
+    "fullAddress": "Main Road, Kavathe Mahankal, Sangli, Maharashtra",
+    "contact": "020-3219321",
+    "isOpen": true,
+    "frpRate": 2823,
+    "capacity": "2266 T/D",
+    "rating": "3.8",
+    "established": 2009,
+    "coordinates": {
+      "lat": 17.985173084548048,
+      "lng": 73.06318761727366
+    },
+    "role": "factory_owner",
+    "email": "factory284@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khanapur Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Khanapur",
+    "fullAddress": "Main Road, Khanapur, Sangli, Maharashtra",
+    "contact": "020-5377753",
+    "isOpen": true,
+    "frpRate": 2825,
+    "capacity": "5566 T/D",
+    "rating": "4.2",
+    "established": 2005,
+    "coordinates": {
+      "lat": 19.296805718500117,
+      "lng": 74.91019283073966
+    },
+    "role": "factory_owner",
+    "email": "factory285@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Miraj Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Miraj",
+    "fullAddress": "Main Road, Miraj, Sangli, Maharashtra",
+    "contact": "020-8613120",
+    "isOpen": true,
+    "frpRate": 3424,
+    "capacity": "4543 T/D",
+    "rating": "4.5",
+    "established": 2001,
+    "coordinates": {
+      "lat": 17.18984038058024,
+      "lng": 74.17025782601661
+    },
+    "role": "factory_owner",
+    "email": "factory286@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Palus Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Palus",
+    "fullAddress": "Main Road, Palus, Sangli, Maharashtra",
+    "contact": "020-4153996",
+    "isOpen": true,
+    "frpRate": 3089,
+    "capacity": "2324 T/D",
+    "rating": "4.7",
+    "established": 1989,
+    "coordinates": {
+      "lat": 16.79054081841332,
+      "lng": 71.87946731909939
+    },
+    "role": "factory_owner",
+    "email": "factory287@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shirala Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Shirala",
+    "fullAddress": "Main Road, Shirala, Sangli, Maharashtra",
+    "contact": "020-6234513",
+    "isOpen": true,
+    "frpRate": 2637,
+    "capacity": "2828 T/D",
+    "rating": "3.9",
+    "established": 1972,
+    "coordinates": {
+      "lat": 20.259680622498365,
+      "lng": 73.81949803398999
+    },
+    "role": "factory_owner",
+    "email": "factory288@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Tasgaon Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Tasgaon",
+    "fullAddress": "Main Road, Tasgaon, Sangli, Maharashtra",
+    "contact": "020-6330471",
+    "isOpen": true,
+    "frpRate": 2514,
+    "capacity": "4458 T/D",
+    "rating": "3.2",
+    "established": 1989,
+    "coordinates": {
+      "lat": 18.88303613644002,
+      "lng": 73.24077675889167
+    },
+    "role": "factory_owner",
+    "email": "factory289@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Walwa Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Walwa",
+    "fullAddress": "Main Road, Walwa, Sangli, Maharashtra",
+    "contact": "020-1056915",
+    "isOpen": true,
+    "frpRate": 2686,
+    "capacity": "5666 T/D",
+    "rating": "4.2",
+    "established": 1978,
+    "coordinates": {
+      "lat": 18.74622449271266,
+      "lng": 74.86521014697432
+    },
+    "role": "factory_owner",
+    "email": "factory290@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kadegaon Cooperative Sugar Factory Ltd.",
+    "district": "Sangli",
+    "taluka": "Kadegaon",
+    "fullAddress": "Main Road, Kadegaon, Sangli, Maharashtra",
+    "contact": "020-4601625",
+    "isOpen": true,
+    "frpRate": 2522,
+    "capacity": "3345 T/D",
+    "rating": "3.6",
+    "established": 1997,
+    "coordinates": {
+      "lat": 16.79810466597823,
+      "lng": 75.10889845485599
+    },
+    "role": "factory_owner",
+    "email": "factory291@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Jaoli Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Jaoli",
+    "fullAddress": "Main Road, Jaoli, Satara, Maharashtra",
+    "contact": "020-9691394",
+    "isOpen": true,
+    "frpRate": 3156,
+    "capacity": "4611 T/D",
+    "rating": "3.7",
+    "established": 1978,
+    "coordinates": {
+      "lat": 19.245795049029184,
+      "lng": 74.31474711758794
+    },
+    "role": "factory_owner",
+    "email": "factory292@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karad Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Karad",
+    "fullAddress": "Main Road, Karad, Satara, Maharashtra",
+    "contact": "020-5593491",
+    "isOpen": true,
+    "frpRate": 3439,
+    "capacity": "2021 T/D",
+    "rating": "4.9",
+    "established": 1972,
+    "coordinates": {
+      "lat": 20.30362373934348,
+      "lng": 72.15383290751672
+    },
+    "role": "factory_owner",
+    "email": "factory293@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khandala Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Khandala",
+    "fullAddress": "Main Road, Khandala, Satara, Maharashtra",
+    "contact": "020-5689748",
+    "isOpen": true,
+    "frpRate": 3212,
+    "capacity": "3009 T/D",
+    "rating": "4.8",
+    "established": 1986,
+    "coordinates": {
+      "lat": 19.67954233593513,
+      "lng": 74.29984852546526
+    },
+    "role": "factory_owner",
+    "email": "factory294@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Khatav Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Khatav",
+    "fullAddress": "Main Road, Khatav, Satara, Maharashtra",
+    "contact": "020-8882991",
+    "isOpen": true,
+    "frpRate": 3098,
+    "capacity": "2974 T/D",
+    "rating": "3.0",
+    "established": 1983,
+    "coordinates": {
+      "lat": 19.437063067880835,
+      "lng": 72.77975467682788
+    },
+    "role": "factory_owner",
+    "email": "factory295@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Koregaon Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Koregaon",
+    "fullAddress": "Main Road, Koregaon, Satara, Maharashtra",
+    "contact": "020-5651040",
+    "isOpen": false,
+    "frpRate": 3173,
+    "capacity": "6819 T/D",
+    "rating": "4.1",
+    "established": 1982,
+    "coordinates": {
+      "lat": 16.654082705387,
+      "lng": 73.1790205474313
+    },
+    "role": "factory_owner",
+    "email": "factory296@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mahabaleshwar Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Mahabaleshwar",
+    "fullAddress": "Main Road, Mahabaleshwar, Satara, Maharashtra",
+    "contact": "020-4652348",
+    "isOpen": true,
+    "frpRate": 3183,
+    "capacity": "4118 T/D",
+    "rating": "5.0",
+    "established": 1992,
+    "coordinates": {
+      "lat": 17.013935651149126,
+      "lng": 74.08928362024967
+    },
+    "role": "factory_owner",
+    "email": "factory297@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Man Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Man",
+    "fullAddress": "Main Road, Man, Satara, Maharashtra",
+    "contact": "020-7255019",
+    "isOpen": true,
+    "frpRate": 2528,
+    "capacity": "6863 T/D",
+    "rating": "4.0",
+    "established": 1971,
+    "coordinates": {
+      "lat": 18.404849116594896,
+      "lng": 75.21329149716465
+    },
+    "role": "factory_owner",
+    "email": "factory298@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Patan Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Patan",
+    "fullAddress": "Main Road, Patan, Satara, Maharashtra",
+    "contact": "020-4802491",
+    "isOpen": false,
+    "frpRate": 2576,
+    "capacity": "5735 T/D",
+    "rating": "3.4",
+    "established": 1982,
+    "coordinates": {
+      "lat": 17.83739611627624,
+      "lng": 72.92681002499813
+    },
+    "role": "factory_owner",
+    "email": "factory299@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Phaltan Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Phaltan",
+    "fullAddress": "Main Road, Phaltan, Satara, Maharashtra",
+    "contact": "020-1369859",
+    "isOpen": true,
+    "frpRate": 2923,
+    "capacity": "6091 T/D",
+    "rating": "5.0",
+    "established": 1982,
+    "coordinates": {
+      "lat": 20.49860399369836,
+      "lng": 72.90577026611929
+    },
+    "role": "factory_owner",
+    "email": "factory300@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Satara Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Satara",
+    "fullAddress": "Main Road, Satara, Satara, Maharashtra",
+    "contact": "020-4380778",
+    "isOpen": false,
+    "frpRate": 2618,
+    "capacity": "3534 T/D",
+    "rating": "4.6",
+    "established": 1999,
+    "coordinates": {
+      "lat": 18.563389997695605,
+      "lng": 75.76459256204977
+    },
+    "role": "factory_owner",
+    "email": "factory301@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Wai Cooperative Sugar Factory Ltd.",
+    "district": "Satara",
+    "taluka": "Wai",
+    "fullAddress": "Main Road, Wai, Satara, Maharashtra",
+    "contact": "020-6407636",
+    "isOpen": true,
+    "frpRate": 3206,
+    "capacity": "4056 T/D",
+    "rating": "3.0",
+    "established": 1999,
+    "coordinates": {
+      "lat": 17.82648492342099,
+      "lng": 72.33700782634415
+    },
+    "role": "factory_owner",
+    "email": "factory302@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Devgad Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Devgad",
+    "fullAddress": "Main Road, Devgad, Sindhudurg, Maharashtra",
+    "contact": "020-5743614",
+    "isOpen": true,
+    "frpRate": 3328,
+    "capacity": "2624 T/D",
+    "rating": "4.1",
+    "established": 1972,
+    "coordinates": {
+      "lat": 18.536895808338528,
+      "lng": 73.14499380619154
+    },
+    "role": "factory_owner",
+    "email": "factory303@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Dodamarg Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Dodamarg",
+    "fullAddress": "Main Road, Dodamarg, Sindhudurg, Maharashtra",
+    "contact": "020-5620809",
+    "isOpen": false,
+    "frpRate": 3478,
+    "capacity": "2382 T/D",
+    "rating": "4.4",
+    "established": 2002,
+    "coordinates": {
+      "lat": 17.982223576082703,
+      "lng": 74.84222762520825
+    },
+    "role": "factory_owner",
+    "email": "factory304@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kankavli Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Kankavli",
+    "fullAddress": "Main Road, Kankavli, Sindhudurg, Maharashtra",
+    "contact": "020-2137639",
+    "isOpen": true,
+    "frpRate": 3379,
+    "capacity": "2706 T/D",
+    "rating": "4.7",
+    "established": 1967,
+    "coordinates": {
+      "lat": 20.040791996174505,
+      "lng": 73.76017373457161
+    },
+    "role": "factory_owner",
+    "email": "factory305@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kudal Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Kudal",
+    "fullAddress": "Main Road, Kudal, Sindhudurg, Maharashtra",
+    "contact": "020-7480744",
+    "isOpen": true,
+    "frpRate": 2607,
+    "capacity": "3881 T/D",
+    "rating": "4.6",
+    "established": 2002,
+    "coordinates": {
+      "lat": 17.4062795935802,
+      "lng": 73.04291809960662
+    },
+    "role": "factory_owner",
+    "email": "factory306@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Malvan Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Malvan",
+    "fullAddress": "Main Road, Malvan, Sindhudurg, Maharashtra",
+    "contact": "020-8747258",
+    "isOpen": true,
+    "frpRate": 2919,
+    "capacity": "2700 T/D",
+    "rating": "4.2",
+    "established": 1981,
+    "coordinates": {
+      "lat": 18.934006353870416,
+      "lng": 75.07691781190674
+    },
+    "role": "factory_owner",
+    "email": "factory307@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sawantwadi Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Sawantwadi",
+    "fullAddress": "Main Road, Sawantwadi, Sindhudurg, Maharashtra",
+    "contact": "020-3867674",
+    "isOpen": false,
+    "frpRate": 3027,
+    "capacity": "2315 T/D",
+    "rating": "4.4",
+    "established": 1986,
+    "coordinates": {
+      "lat": 18.38762863901975,
+      "lng": 72.06847673243865
+    },
+    "role": "factory_owner",
+    "email": "factory308@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Vaibhavvadi Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Vaibhavvadi",
+    "fullAddress": "Main Road, Vaibhavvadi, Sindhudurg, Maharashtra",
+    "contact": "020-3296520",
+    "isOpen": true,
+    "frpRate": 2838,
+    "capacity": "2846 T/D",
+    "rating": "4.8",
+    "established": 1960,
+    "coordinates": {
+      "lat": 18.170562461872397,
+      "lng": 75.81600936973051
+    },
+    "role": "factory_owner",
+    "email": "factory309@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Vengurla Cooperative Sugar Factory Ltd.",
+    "district": "Sindhudurg",
+    "taluka": "Vengurla",
+    "fullAddress": "Main Road, Vengurla, Sindhudurg, Maharashtra",
+    "contact": "020-8691704",
+    "isOpen": true,
+    "frpRate": 2500,
+    "capacity": "3712 T/D",
+    "rating": "4.5",
+    "established": 1990,
+    "coordinates": {
+      "lat": 17.102582642534927,
+      "lng": 73.67444748997308
+    },
+    "role": "factory_owner",
+    "email": "factory310@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Akkalkot Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Akkalkot",
+    "fullAddress": "Main Road, Akkalkot, Solapur, Maharashtra",
+    "contact": "020-8954648",
+    "isOpen": true,
+    "frpRate": 2583,
+    "capacity": "6164 T/D",
+    "rating": "4.9",
+    "established": 2009,
+    "coordinates": {
+      "lat": 17.043036968299987,
+      "lng": 74.00512335496869
+    },
+    "role": "factory_owner",
+    "email": "factory311@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Barshi Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Barshi",
+    "fullAddress": "Main Road, Barshi, Solapur, Maharashtra",
+    "contact": "020-4662895",
+    "isOpen": true,
+    "frpRate": 2957,
+    "capacity": "2854 T/D",
+    "rating": "3.9",
+    "established": 1960,
+    "coordinates": {
+      "lat": 18.50029610048907,
+      "lng": 74.57382437708507
+    },
+    "role": "factory_owner",
+    "email": "factory312@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karmala Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Karmala",
+    "fullAddress": "Main Road, Karmala, Solapur, Maharashtra",
+    "contact": "020-4793527",
+    "isOpen": true,
+    "frpRate": 2782,
+    "capacity": "5237 T/D",
+    "rating": "4.4",
+    "established": 2003,
+    "coordinates": {
+      "lat": 18.964301029403426,
+      "lng": 73.28136788386199
+    },
+    "role": "factory_owner",
+    "email": "factory313@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Madha Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Madha",
+    "fullAddress": "Main Road, Madha, Solapur, Maharashtra",
+    "contact": "020-7934827",
+    "isOpen": true,
+    "frpRate": 2696,
+    "capacity": "3510 T/D",
+    "rating": "3.3",
+    "established": 2008,
+    "coordinates": {
+      "lat": 18.913807476984886,
+      "lng": 72.96955933098457
+    },
+    "role": "factory_owner",
+    "email": "factory314@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Malshiras Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Malshiras",
+    "fullAddress": "Main Road, Malshiras, Solapur, Maharashtra",
+    "contact": "020-8697527",
+    "isOpen": true,
+    "frpRate": 3236,
+    "capacity": "3311 T/D",
+    "rating": "3.2",
+    "established": 1975,
+    "coordinates": {
+      "lat": 19.30761900040956,
+      "lng": 72.07568696551719
+    },
+    "role": "factory_owner",
+    "email": "factory315@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mangalvedhe Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Mangalvedhe",
+    "fullAddress": "Main Road, Mangalvedhe, Solapur, Maharashtra",
+    "contact": "020-9206022",
+    "isOpen": false,
+    "frpRate": 3235,
+    "capacity": "4298 T/D",
+    "rating": "4.8",
+    "established": 1989,
+    "coordinates": {
+      "lat": 17.883818167087924,
+      "lng": 74.08039351725736
+    },
+    "role": "factory_owner",
+    "email": "factory316@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mohol Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Mohol",
+    "fullAddress": "Main Road, Mohol, Solapur, Maharashtra",
+    "contact": "020-4659921",
+    "isOpen": true,
+    "frpRate": 2750,
+    "capacity": "4237 T/D",
+    "rating": "3.4",
+    "established": 1994,
+    "coordinates": {
+      "lat": 17.58123052643696,
+      "lng": 75.00770772305573
+    },
+    "role": "factory_owner",
+    "email": "factory317@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pandharpur Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Pandharpur",
+    "fullAddress": "Main Road, Pandharpur, Solapur, Maharashtra",
+    "contact": "020-2902228",
+    "isOpen": false,
+    "frpRate": 3293,
+    "capacity": "4300 T/D",
+    "rating": "3.7",
+    "established": 2000,
+    "coordinates": {
+      "lat": 18.57356499898581,
+      "lng": 75.12802492743354
+    },
+    "role": "factory_owner",
+    "email": "factory318@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Sangola Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Sangola",
+    "fullAddress": "Main Road, Sangola, Solapur, Maharashtra",
+    "contact": "020-7119900",
+    "isOpen": true,
+    "frpRate": 3199,
+    "capacity": "3271 T/D",
+    "rating": "4.6",
+    "established": 1987,
+    "coordinates": {
+      "lat": 16.940242420334474,
+      "lng": 75.13372106098423
+    },
+    "role": "factory_owner",
+    "email": "factory319@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Solapur North Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Solapur North",
+    "fullAddress": "Main Road, Solapur North, Solapur, Maharashtra",
+    "contact": "020-1236012",
+    "isOpen": false,
+    "frpRate": 2887,
+    "capacity": "4499 T/D",
+    "rating": "4.2",
+    "established": 1968,
+    "coordinates": {
+      "lat": 18.665549822904573,
+      "lng": 73.9001594772648
+    },
+    "role": "factory_owner",
+    "email": "factory320@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Solapur South Cooperative Sugar Factory Ltd.",
+    "district": "Solapur",
+    "taluka": "Solapur South",
+    "fullAddress": "Main Road, Solapur South, Solapur, Maharashtra",
+    "contact": "020-6068951",
+    "isOpen": true,
+    "frpRate": 3406,
+    "capacity": "5704 T/D",
+    "rating": "4.6",
+    "established": 1985,
+    "coordinates": {
+      "lat": 18.494301375296757,
+      "lng": 74.4860303209596
+    },
+    "role": "factory_owner",
+    "email": "factory321@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ambarnath Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Ambarnath",
+    "fullAddress": "Main Road, Ambarnath, Thane, Maharashtra",
+    "contact": "020-2737935",
+    "isOpen": false,
+    "frpRate": 3128,
+    "capacity": "6499 T/D",
+    "rating": "4.8",
+    "established": 2008,
+    "coordinates": {
+      "lat": 19.968978255308514,
+      "lng": 74.22373955651052
+    },
+    "role": "factory_owner",
+    "email": "factory322@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Bhiwandi Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Bhiwandi",
+    "fullAddress": "Main Road, Bhiwandi, Thane, Maharashtra",
+    "contact": "020-3241971",
+    "isOpen": false,
+    "frpRate": 3266,
+    "capacity": "4163 T/D",
+    "rating": "3.5",
+    "established": 1981,
+    "coordinates": {
+      "lat": 20.36670625165566,
+      "lng": 73.2961596958886
+    },
+    "role": "factory_owner",
+    "email": "factory323@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kalyan Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Kalyan",
+    "fullAddress": "Main Road, Kalyan, Thane, Maharashtra",
+    "contact": "020-3281649",
+    "isOpen": true,
+    "frpRate": 3465,
+    "capacity": "4369 T/D",
+    "rating": "4.2",
+    "established": 1996,
+    "coordinates": {
+      "lat": 16.58941365908441,
+      "lng": 75.04304246048892
+    },
+    "role": "factory_owner",
+    "email": "factory324@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Murbad Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Murbad",
+    "fullAddress": "Main Road, Murbad, Thane, Maharashtra",
+    "contact": "020-4333189",
+    "isOpen": true,
+    "frpRate": 2770,
+    "capacity": "5314 T/D",
+    "rating": "4.8",
+    "established": 1983,
+    "coordinates": {
+      "lat": 19.786223033770774,
+      "lng": 74.48434835378161
+    },
+    "role": "factory_owner",
+    "email": "factory325@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Shahapur Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Shahapur",
+    "fullAddress": "Main Road, Shahapur, Thane, Maharashtra",
+    "contact": "020-7564003",
+    "isOpen": true,
+    "frpRate": 3476,
+    "capacity": "2933 T/D",
+    "rating": "4.2",
+    "established": 1989,
+    "coordinates": {
+      "lat": 19.699097960896847,
+      "lng": 73.86093806189248
+    },
+    "role": "factory_owner",
+    "email": "factory326@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Thane Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Thane",
+    "fullAddress": "Main Road, Thane, Thane, Maharashtra",
+    "contact": "020-5901477",
+    "isOpen": false,
+    "frpRate": 3103,
+    "capacity": "6425 T/D",
+    "rating": "3.3",
+    "established": 1964,
+    "coordinates": {
+      "lat": 19.382236214874208,
+      "lng": 75.16153409835522
+    },
+    "role": "factory_owner",
+    "email": "factory327@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ulhasnagar Cooperative Sugar Factory Ltd.",
+    "district": "Thane",
+    "taluka": "Ulhasnagar",
+    "fullAddress": "Main Road, Ulhasnagar, Thane, Maharashtra",
+    "contact": "020-8986407",
+    "isOpen": true,
+    "frpRate": 3190,
+    "capacity": "2853 T/D",
+    "rating": "4.2",
+    "established": 2004,
+    "coordinates": {
+      "lat": 17.90811397413,
+      "lng": 71.96795503937743
+    },
+    "role": "factory_owner",
+    "email": "factory328@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Arvi Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Arvi",
+    "fullAddress": "Main Road, Arvi, Wardha, Maharashtra",
+    "contact": "020-7643156",
+    "isOpen": true,
+    "frpRate": 2799,
+    "capacity": "5144 T/D",
+    "rating": "4.6",
+    "established": 1960,
+    "coordinates": {
+      "lat": 17.146396542578376,
+      "lng": 72.40804393436665
+    },
+    "role": "factory_owner",
+    "email": "factory329@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ashti Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Ashti",
+    "fullAddress": "Main Road, Ashti, Wardha, Maharashtra",
+    "contact": "020-7807572",
+    "isOpen": true,
+    "frpRate": 3199,
+    "capacity": "4343 T/D",
+    "rating": "3.4",
+    "established": 1981,
+    "coordinates": {
+      "lat": 17.61844349995804,
+      "lng": 74.17805759486073
+    },
+    "role": "factory_owner",
+    "email": "factory330@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Deoli Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Deoli",
+    "fullAddress": "Main Road, Deoli, Wardha, Maharashtra",
+    "contact": "020-1429645",
+    "isOpen": true,
+    "frpRate": 2816,
+    "capacity": "6890 T/D",
+    "rating": "3.3",
+    "established": 1973,
+    "coordinates": {
+      "lat": 17.798192078743227,
+      "lng": 74.69962155947265
+    },
+    "role": "factory_owner",
+    "email": "factory331@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Hinganghat Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Hinganghat",
+    "fullAddress": "Main Road, Hinganghat, Wardha, Maharashtra",
+    "contact": "020-4488080",
+    "isOpen": true,
+    "frpRate": 2872,
+    "capacity": "5926 T/D",
+    "rating": "4.5",
+    "established": 1994,
+    "coordinates": {
+      "lat": 17.241943374614053,
+      "lng": 73.36008219974084
+    },
+    "role": "factory_owner",
+    "email": "factory332@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karanjha Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Karanjha",
+    "fullAddress": "Main Road, Karanjha, Wardha, Maharashtra",
+    "contact": "020-4861248",
+    "isOpen": true,
+    "frpRate": 3292,
+    "capacity": "5783 T/D",
+    "rating": "4.6",
+    "established": 1967,
+    "coordinates": {
+      "lat": 17.419101112709438,
+      "lng": 75.73737479159519
+    },
+    "role": "factory_owner",
+    "email": "factory333@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Samudrapur Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Samudrapur",
+    "fullAddress": "Main Road, Samudrapur, Wardha, Maharashtra",
+    "contact": "020-1917127",
+    "isOpen": true,
+    "frpRate": 2652,
+    "capacity": "2402 T/D",
+    "rating": "3.9",
+    "established": 2008,
+    "coordinates": {
+      "lat": 19.378174373304308,
+      "lng": 73.80978122631625
+    },
+    "role": "factory_owner",
+    "email": "factory334@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Seloo Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Seloo",
+    "fullAddress": "Main Road, Seloo, Wardha, Maharashtra",
+    "contact": "020-5469751",
+    "isOpen": true,
+    "frpRate": 2888,
+    "capacity": "6986 T/D",
+    "rating": "3.8",
+    "established": 1961,
+    "coordinates": {
+      "lat": 17.70558025948163,
+      "lng": 72.01429624654443
+    },
+    "role": "factory_owner",
+    "email": "factory335@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Wardha Cooperative Sugar Factory Ltd.",
+    "district": "Wardha",
+    "taluka": "Wardha",
+    "fullAddress": "Main Road, Wardha, Wardha, Maharashtra",
+    "contact": "020-8388737",
+    "isOpen": false,
+    "frpRate": 3074,
+    "capacity": "5435 T/D",
+    "rating": "4.2",
+    "established": 1983,
+    "coordinates": {
+      "lat": 17.342109076617778,
+      "lng": 71.86902590992005
+    },
+    "role": "factory_owner",
+    "email": "factory336@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Karanja Cooperative Sugar Factory Ltd.",
+    "district": "Washim",
+    "taluka": "Karanja",
+    "fullAddress": "Main Road, Karanja, Washim, Maharashtra",
+    "contact": "020-2451725",
+    "isOpen": false,
+    "frpRate": 2588,
+    "capacity": "2451 T/D",
+    "rating": "3.8",
+    "established": 1978,
+    "coordinates": {
+      "lat": 16.658664296801682,
+      "lng": 73.87383172944428
+    },
+    "role": "factory_owner",
+    "email": "factory337@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mangrulpir Cooperative Sugar Factory Ltd.",
+    "district": "Washim",
+    "taluka": "Mangrulpir",
+    "fullAddress": "Main Road, Mangrulpir, Washim, Maharashtra",
+    "contact": "020-2590633",
+    "isOpen": true,
+    "frpRate": 3238,
+    "capacity": "5447 T/D",
+    "rating": "4.0",
+    "established": 1961,
+    "coordinates": {
+      "lat": 18.105226985246862,
+      "lng": 74.3987865079672
+    },
+    "role": "factory_owner",
+    "email": "factory338@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Manora Cooperative Sugar Factory Ltd.",
+    "district": "Washim",
+    "taluka": "Manora",
+    "fullAddress": "Main Road, Manora, Washim, Maharashtra",
+    "contact": "020-8422228",
+    "isOpen": true,
+    "frpRate": 3365,
+    "capacity": "2642 T/D",
+    "rating": "4.4",
+    "established": 1989,
+    "coordinates": {
+      "lat": 16.718034291344615,
+      "lng": 72.40544931219097
+    },
+    "role": "factory_owner",
+    "email": "factory339@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Risod Cooperative Sugar Factory Ltd.",
+    "district": "Washim",
+    "taluka": "Risod",
+    "fullAddress": "Main Road, Risod, Washim, Maharashtra",
+    "contact": "020-6211720",
+    "isOpen": true,
+    "frpRate": 2843,
+    "capacity": "3440 T/D",
+    "rating": "3.1",
+    "established": 2005,
+    "coordinates": {
+      "lat": 20.187757453256054,
+      "lng": 74.3165815758459
+    },
+    "role": "factory_owner",
+    "email": "factory340@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Washim Cooperative Sugar Factory Ltd.",
+    "district": "Washim",
+    "taluka": "Washim",
+    "fullAddress": "Main Road, Washim, Washim, Maharashtra",
+    "contact": "020-1780206",
+    "isOpen": true,
+    "frpRate": 3361,
+    "capacity": "5790 T/D",
+    "rating": "4.4",
+    "established": 1965,
+    "coordinates": {
+      "lat": 16.862964883137828,
+      "lng": 73.62130718483996
+    },
+    "role": "factory_owner",
+    "email": "factory341@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Malegaon Cooperative Sugar Factory Ltd.",
+    "district": "Washim",
+    "taluka": "Malegaon",
+    "fullAddress": "Main Road, Malegaon, Washim, Maharashtra",
+    "contact": "020-9433515",
+    "isOpen": true,
+    "frpRate": 3030,
+    "capacity": "3023 T/D",
+    "rating": "4.9",
+    "established": 1990,
+    "coordinates": {
+      "lat": 18.772808449327304,
+      "lng": 74.33891472355135
+    },
+    "role": "factory_owner",
+    "email": "factory342@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Arni Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Arni",
+    "fullAddress": "Main Road, Arni, Yavatmal, Maharashtra",
+    "contact": "020-4148259",
+    "isOpen": false,
+    "frpRate": 2875,
+    "capacity": "5261 T/D",
+    "rating": "4.1",
+    "established": 1978,
+    "coordinates": {
+      "lat": 20.357541579312894,
+      "lng": 72.99947071487846
+    },
+    "role": "factory_owner",
+    "email": "factory343@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Babulgaon Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Babulgaon",
+    "fullAddress": "Main Road, Babulgaon, Yavatmal, Maharashtra",
+    "contact": "020-9637470",
+    "isOpen": true,
+    "frpRate": 3498,
+    "capacity": "5564 T/D",
+    "rating": "3.6",
+    "established": 2007,
+    "coordinates": {
+      "lat": 17.016628535215254,
+      "lng": 74.90232100716963
+    },
+    "role": "factory_owner",
+    "email": "factory344@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Darwha Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Darwha",
+    "fullAddress": "Main Road, Darwha, Yavatmal, Maharashtra",
+    "contact": "020-4350151",
+    "isOpen": false,
+    "frpRate": 2543,
+    "capacity": "2063 T/D",
+    "rating": "3.2",
+    "established": 1992,
+    "coordinates": {
+      "lat": 17.424264640581683,
+      "lng": 72.56772462654983
+    },
+    "role": "factory_owner",
+    "email": "factory345@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Digras Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Digras",
+    "fullAddress": "Main Road, Digras, Yavatmal, Maharashtra",
+    "contact": "020-7278759",
+    "isOpen": true,
+    "frpRate": 2950,
+    "capacity": "5526 T/D",
+    "rating": "4.3",
+    "established": 2001,
+    "coordinates": {
+      "lat": 17.640687999058095,
+      "lng": 74.1555643763839
+    },
+    "role": "factory_owner",
+    "email": "factory346@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ghatanji Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Ghatanji",
+    "fullAddress": "Main Road, Ghatanji, Yavatmal, Maharashtra",
+    "contact": "020-7633427",
+    "isOpen": true,
+    "frpRate": 2739,
+    "capacity": "6725 T/D",
+    "rating": "3.1",
+    "established": 2006,
+    "coordinates": {
+      "lat": 20.42130947448291,
+      "lng": 73.80148009264356
+    },
+    "role": "factory_owner",
+    "email": "factory347@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kalamb Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Kalamb",
+    "fullAddress": "Main Road, Kalamb, Yavatmal, Maharashtra",
+    "contact": "020-3080301",
+    "isOpen": true,
+    "frpRate": 2699,
+    "capacity": "5303 T/D",
+    "rating": "3.3",
+    "established": 1982,
+    "coordinates": {
+      "lat": 18.350048090524446,
+      "lng": 75.45358658764333
+    },
+    "role": "factory_owner",
+    "email": "factory348@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Kelapur Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Kelapur",
+    "fullAddress": "Main Road, Kelapur, Yavatmal, Maharashtra",
+    "contact": "020-6827240",
+    "isOpen": true,
+    "frpRate": 2598,
+    "capacity": "4329 T/D",
+    "rating": "3.3",
+    "established": 1988,
+    "coordinates": {
+      "lat": 18.85925723601017,
+      "lng": 73.89853269405491
+    },
+    "role": "factory_owner",
+    "email": "factory349@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Mahagaon Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Mahagaon",
+    "fullAddress": "Main Road, Mahagaon, Yavatmal, Maharashtra",
+    "contact": "020-4436025",
+    "isOpen": true,
+    "frpRate": 2819,
+    "capacity": "5640 T/D",
+    "rating": "4.0",
+    "established": 2008,
+    "coordinates": {
+      "lat": 17.204865097179677,
+      "lng": 73.49436989892452
+    },
+    "role": "factory_owner",
+    "email": "factory350@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Maregaon Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Maregaon",
+    "fullAddress": "Main Road, Maregaon, Yavatmal, Maharashtra",
+    "contact": "020-4847465",
+    "isOpen": true,
+    "frpRate": 3223,
+    "capacity": "6275 T/D",
+    "rating": "3.6",
+    "established": 1980,
+    "coordinates": {
+      "lat": 20.26534876261318,
+      "lng": 75.17037889360024
+    },
+    "role": "factory_owner",
+    "email": "factory351@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ner Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Ner",
+    "fullAddress": "Main Road, Ner, Yavatmal, Maharashtra",
+    "contact": "020-6421384",
+    "isOpen": true,
+    "frpRate": 2929,
+    "capacity": "2233 T/D",
+    "rating": "3.9",
+    "established": 2004,
+    "coordinates": {
+      "lat": 18.888703349965667,
+      "lng": 74.9427684876242
+    },
+    "role": "factory_owner",
+    "email": "factory352@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Pusad Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Pusad",
+    "fullAddress": "Main Road, Pusad, Yavatmal, Maharashtra",
+    "contact": "020-9411407",
+    "isOpen": true,
+    "frpRate": 3030,
+    "capacity": "5287 T/D",
+    "rating": "3.3",
+    "established": 1967,
+    "coordinates": {
+      "lat": 16.755984736767772,
+      "lng": 74.66683135042963
+    },
+    "role": "factory_owner",
+    "email": "factory353@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Ralegaon Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Ralegaon",
+    "fullAddress": "Main Road, Ralegaon, Yavatmal, Maharashtra",
+    "contact": "020-5551800",
+    "isOpen": false,
+    "frpRate": 3391,
+    "capacity": "6255 T/D",
+    "rating": "3.6",
+    "established": 2002,
+    "coordinates": {
+      "lat": 18.339783563992775,
+      "lng": 74.93916489235984
+    },
+    "role": "factory_owner",
+    "email": "factory354@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Umarkhed Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Umarkhed",
+    "fullAddress": "Main Road, Umarkhed, Yavatmal, Maharashtra",
+    "contact": "020-8390094",
+    "isOpen": true,
+    "frpRate": 3342,
+    "capacity": "5549 T/D",
+    "rating": "4.5",
+    "established": 1982,
+    "coordinates": {
+      "lat": 17.746925071938897,
+      "lng": 73.74830026249775
+    },
+    "role": "factory_owner",
+    "email": "factory355@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Wani Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Wani",
+    "fullAddress": "Main Road, Wani, Yavatmal, Maharashtra",
+    "contact": "020-1351670",
+    "isOpen": true,
+    "frpRate": 2604,
+    "capacity": "5324 T/D",
+    "rating": "4.6",
+    "established": 1970,
+    "coordinates": {
+      "lat": 18.287148216958276,
+      "lng": 75.58525552353035
+    },
+    "role": "factory_owner",
+    "email": "factory356@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Yavatmal Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Yavatmal",
+    "fullAddress": "Main Road, Yavatmal, Yavatmal, Maharashtra",
+    "contact": "020-3819979",
+    "isOpen": true,
+    "frpRate": 3002,
+    "capacity": "6780 T/D",
+    "rating": "3.6",
+    "established": 1982,
+    "coordinates": {
+      "lat": 17.65801782289209,
+      "lng": 75.09311584470119
+    },
+    "role": "factory_owner",
+    "email": "factory357@example.com",
+    "password": "password123"
+  },
+  {
+    "name": "Zari-Jamani Cooperative Sugar Factory Ltd.",
+    "district": "Yavatmal",
+    "taluka": "Zari-Jamani",
+    "fullAddress": "Main Road, Zari-Jamani, Yavatmal, Maharashtra",
+    "contact": "020-7009728",
+    "isOpen": false,
+    "frpRate": 3430,
+    "capacity": "6314 T/D",
+    "rating": "3.5",
+    "established": 1962,
+    "coordinates": {
+      "lat": 18.471877665780152,
+      "lng": 74.21928024205624
+    },
+    "role": "factory_owner",
+    "email": "factory358@example.com",
+    "password": "password123"
+  }
+]

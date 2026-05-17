@@ -1,9 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { ShoppingCart, Tractor, LayoutDashboard, LogOut, Menu, X, Store, Bell, AlertCircle } from 'lucide-react'
-import { useState } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { ShoppingCart, Tractor, LayoutDashboard, LogOut, Menu, X, Store, Bell, AlertCircle, BarChart3 } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import useAuthStore from '../../store/authStore'
 import useCartStore from '../../store/cartStore'
 import useLanguageStore from '../../store/languageStore'
+import useBookingStore from '../../store/bookingStore'
+import useNotificationStore from '../../store/notificationStore'
 import LanguageSwitcher from './LanguageSwitcher'
 import NotificationDropdown from './NotificationDropdown'
 import toast from 'react-hot-toast'
@@ -12,8 +14,17 @@ export default function Navbar() {
   const { isAuthenticated, user, logout, getDashboardRoute } = useAuthStore()
   const { getTotalItems } = useCartStore()
   const { t, language }  = useLanguageStore()
+  const { allBookings: bookings, fetchAllBookings } = useBookingStore()
+  const { notifications, fetchNotifications } = useNotificationStore()
   const navigate          = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (isAuthenticated && user && ['owner', 'mart_owner', 'equipment_owner'].includes(user.role)) {
+      fetchAllBookings()
+      fetchNotifications()
+    }
+  }, [isAuthenticated, user])
 
   const isOwner  = ['owner', 'mart_owner', 'equipment_owner', 'factory_owner'].includes(user?.role)
   const isFarmer = ['farmer', 'admin'].includes(user?.role)
@@ -89,20 +100,74 @@ export default function Navbar() {
                 </>
               )}
 
-              {isOwner && (
-                <>
-                  <SidebarLink to="/store-dashboard" icon={<Store size={18} />} label={t('storeDashboard')} />
-                  <SidebarLink to="/store-dashboard?tab=complaints" icon={<AlertCircle size={18} />} label={language === 'mr' ? 'तक्रार निवारण' : 'Complaints'} />
-                  {user?.role === 'equipment_owner' && (
-                    <SidebarLink to="/store-dashboard?tab=bookings" icon={<Tractor size={18} />} label={language === 'mr' ? 'अवजार बुकिंग' : 'Equipment Bookings'} />
+              {isOwner && user && (
+                <div className="mb-6 space-y-1">
+                  <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{t('storeDashboard') || 'Dashboard'}</p>
+                  
+                  <SidebarLink to="/store-dashboard?tab=overview" icon={<LayoutDashboard size={18} />} label={language === 'mr' ? 'आढावा' : language === 'hi' ? 'अवलोकन' : 'Overview'} />
+                  
+                  {user.role === 'mart_owner' && (
+                    <>
+                      <SidebarLink to="/store-dashboard?tab=orders" icon="📦" label={language === 'mr' ? 'ऑर्डर्स' : language === 'hi' ? 'ऑर्डर्स' : 'Orders'} />
+                      <SidebarLink to="/store-dashboard?tab=inventory" icon="📦" label={language === 'mr' ? 'मालसाठा' : language === 'hi' ? 'स्टॉक' : 'Inventory'} />
+                    </>
                   )}
-                </>
+
+                  {user.role === 'equipment_owner' && (
+                    <>
+                      <SidebarLink 
+                        to="/store-dashboard?tab=bookings" 
+                        icon={<Tractor size={18} />} 
+                        label={language === 'mr' ? 'अवजार बुकिंग' : language === 'hi' ? 'उपकरण बुकिंग' : 'Bookings'} 
+                        badge={bookings.filter(b => b.status === 'pending').length > 0}
+                      />
+                      <SidebarLink to="/store-dashboard?tab=inventory" icon="⚙️" label={language === 'mr' ? 'माझी अवजारे' : language === 'hi' ? 'मेरे उपकरण' : 'My Equipment'} />
+                    </>
+                  )}
+
+                  {user.role === 'owner' && (
+                    <>
+                      <SidebarLink to="/store-dashboard?tab=orders" icon="📦" label={language === 'mr' ? 'ऑर्डर्स' : language === 'hi' ? 'ऑर्डर्स' : 'Orders'} />
+                      <SidebarLink 
+                        to="/store-dashboard?tab=bookings" 
+                        icon={<Tractor size={18} />} 
+                        label={language === 'mr' ? 'अवजार बुकिंग' : language === 'hi' ? 'उपकरण बुकिंग' : 'Bookings'} 
+                        badge={bookings.filter(b => b.status === 'pending').length > 0}
+                      />
+                      <SidebarLink to="/store-dashboard?tab=inventory" icon="📦" label={language === 'mr' ? 'इन्व्हेंटरी' : language === 'hi' ? 'इन्व्हेंटरी' : 'Inventory'} />
+                    </>
+                  )}
+
+                  {user.role === 'factory_owner' && (
+                    <SidebarLink to="/store-dashboard?tab=harvest" icon="🌱" label={language === 'mr' ? 'ऊस तोडणी' : language === 'hi' ? 'कटाई' : 'Harvest'} />
+                  )}
+
+                  <SidebarLink 
+                    to="/store-dashboard?tab=analytics" 
+                    icon={<BarChart3 size={18} />} 
+                    label={language === 'mr' ? 'विश्लेषण' : language === 'hi' ? 'विश्लेषण' : 'Analytics'} 
+                  />
+                  <SidebarLink 
+                    to="/store-dashboard?tab=complaints" 
+                    icon={<AlertCircle size={18} />} 
+                    label={language === 'mr' ? 'तक्रारी' : language === 'hi' ? 'शिकायतें' : 'Complaints'} 
+                  />
+
+                  <div className="my-4 border-t border-gray-100" />
+                  
+                  <SidebarLink 
+                    to="/store-dashboard?tab=notifications" 
+                    icon={<Bell size={18} />} 
+                    label={language === 'mr' ? 'सूचना' : language === 'hi' ? 'सूचनाएं' : 'Notifications'} 
+                    badge={notifications.filter(n => !n.isRead).length > 0}
+                  />
+                </div>
               )}
               
-              {/* 🔔 Independent Notification Row */}
-              <SidebarLink to="/notifications" icon={<Bell size={18} />} label="Alerts" />
-
-              <SidebarLink to="/profile" icon="👤" label={t('profile')} />
+              <div className="mt-2 space-y-1 border-t border-gray-100 pt-2">
+                <SidebarLink to="/notifications" icon={<Bell size={18} />} label={language === 'mr' ? 'सूचना' : language === 'hi' ? 'सूचनाएं' : 'Notifications'} />
+                <SidebarLink to="/profile" icon="👤" label={t('profile')} />
+              </div>
             </>
           ) : (
             <>
@@ -175,23 +240,51 @@ export default function Navbar() {
                         <MobileLink to="/schemes"        icon="🏛️" label={t('schemes')}       close={() => setMenuOpen(false)} />
                         {user?.role === 'admin' && (
                           <>
-                            <MobileLink to="/admin"          icon="📊" label={language === 'mr' ? 'ऍडमिन कंट्रोल' : 'Admin Control'} close={() => setMenuOpen(false)} />
-                            <MobileLink to="/admin/schemes"  icon="🛠️" label={language === 'mr' ? 'ऍडमिन योजना' : 'Admin Schemes'} close={() => setMenuOpen(false)} />
+                            <MobileLink to="/admin"          icon="📊" label={language === 'mr' ? 'ऍडमिन कंट्रोल' : language === 'hi' ? 'एडमिन कंट्रोल' : 'Admin Control'} close={() => setMenuOpen(false)} />
+                            <MobileLink to="/admin/schemes"  icon="🛠️" label={language === 'mr' ? 'ऍडमिन योजना' : language === 'hi' ? 'एडमिन योजनाएं' : 'Admin Schemes'} close={() => setMenuOpen(false)} />
                           </>
                         )}
                         <MobileLink to="/orders"         icon="📦" label={t('myOrders')}     close={() => setMenuOpen(false)} />
                         <MobileLink to="/cart"           icon="🛒" label={`${t('cartTitle')} (${getTotalItems()})`} close={() => setMenuOpen(false)} />
                      </>
                    )}
-                   {isOwner && (
-                     <>
-                       <MobileLink to="/store-dashboard" icon="🏪" label={t('storeDashboard')} close={() => setMenuOpen(false)} />
-                       {user?.role === 'equipment_owner' && (
-                         <MobileLink to="/store-dashboard?tab=bookings" icon="🚜" label={language === 'mr' ? 'अवजार बुकिंग' : 'Equipment Bookings'} close={() => setMenuOpen(false)} />
-                       )}
-                     </>
-                   )}
-                   <MobileLink to="/profile" icon="👤" label={t('profile')} close={() => setMenuOpen(false)} />
+                    {user.role === 'mart_owner' && (
+                      <div className="py-2 space-y-1">
+                        <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{t('storeDashboard')}</p>
+                        <MobileLink to="/store-dashboard?tab=overview" icon="📊" label={language === 'mr' ? 'आढावा' : language === 'hi' ? 'अवलोकन' : 'Overview'} close={() => setMenuOpen(false)} />
+                        <MobileLink to="/store-dashboard?tab=orders"   icon="📦" label={language === 'mr' ? 'ऑर्डर्स' : language === 'hi' ? 'ऑर्डर्स' : 'Orders'}   close={() => setMenuOpen(false)} />
+                        <MobileLink to="/store-dashboard?tab=inventory"icon="📦" label={language === 'mr' ? 'मालसाठा' : language === 'hi' ? 'स्टॉक' : 'Inventory'}close={() => setMenuOpen(false)} />
+                      </div>
+                    )}
+                    {user.role === 'equipment_owner' && (
+                      <div className="py-2 space-y-1">
+                        <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{t('storeDashboard')}</p>
+                        <MobileLink to="/store-dashboard?tab=overview" icon="📊" label={language === 'mr' ? 'आढावा' : language === 'hi' ? 'अवलोकन' : 'Overview'} close={() => setMenuOpen(false)} />
+                        <MobileLink 
+                          to="/store-dashboard?tab=bookings" 
+                          icon="🚜" 
+                          label={language === 'mr' ? 'बुकिंग' : language === 'hi' ? 'बुकिंग' : 'Bookings'} 
+                          close={() => setMenuOpen(false)} 
+                          badge={bookings.filter(b => b.status === 'pending').length > 0}
+                        />
+                        <MobileLink to="/store-dashboard?tab=inventory"icon="⚙️" label={language === 'mr' ? 'माझी अवजारे' : language === 'hi' ? 'मेरे उपकरण' : 'My Equipment'}close={() => setMenuOpen(false)} />
+                      </div>
+                    )}
+                    {user.role === 'owner' && (
+                      <div className="py-2 space-y-1">
+                        <p className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{t('storeDashboard')}</p>
+                        <MobileLink to="/store-dashboard?tab=overview" icon="📊" label={language === 'mr' ? 'आढावा' : language === 'hi' ? 'अवलोकन' : 'Overview'} close={() => setMenuOpen(false)} />
+                        <MobileLink to="/store-dashboard?tab=orders"   icon="📦" label={language === 'mr' ? 'ऑर्डर्स' : language === 'hi' ? 'ऑर्डर्स' : 'Orders'}   close={() => setMenuOpen(false)} />
+                        <MobileLink 
+                          to="/store-dashboard?tab=bookings" 
+                          icon="🚜" 
+                          label={language === 'mr' ? 'बुकिंग' : language === 'hi' ? 'बुकिंग' : 'Bookings'} 
+                          close={() => setMenuOpen(false)} 
+                          badge={bookings.filter(b => b.status === 'pending').length > 0}
+                        />
+                      </div>
+                    )}
+                    <MobileLink to="/profile" icon="👤" label={t('profile')} close={() => setMenuOpen(false)} />
                    
                    <div className="pt-4 mt-4 border-t border-gray-100">
                       <button onClick={handleLogout} className="w-full flex items-center gap-3 p-3 text-red-500 font-bold text-sm bg-red-50 rounded-xl">
@@ -214,8 +307,8 @@ export default function Navbar() {
 }
 
 function SidebarLink({ to, icon, label, badge }) {
-  const navigate = useNavigate()
-  const isActive = window.location.pathname === to
+  const location = useLocation()
+  const isActive = (location.pathname + location.search) === to || (location.pathname === to && !location.search)
 
   return (
     <Link to={to} className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 group
@@ -224,22 +317,29 @@ function SidebarLink({ to, icon, label, badge }) {
         <span className={`text-lg transition-transform group-hover:scale-110 duration-200 ${isActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'}`}>
           {icon}
         </span>
-        <span className="text-sm font-semibold">{label}</span>
+        <span className="text-sm font-bold">{label}</span>
       </div>
-      {badge > 0 && (
-        <span className="bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-          {badge}
-        </span>
+      {badge && (
+        <span className="w-2.5 h-2.5 bg-red-500 rounded-full shadow-lg shadow-red-500/40 animate-pulse border-2 border-white" />
       )}
     </Link>
   )
 }
 
-function MobileLink({ to, icon, label, close }) {
+function MobileLink({ to, icon, label, close, badge }) {
+  const location = useLocation()
+  const isActive = (location.pathname + location.search) === to || (location.pathname === to && !location.search)
+
   return (
-    <Link to={to} onClick={close} className="flex items-center gap-4 p-4 text-gray-700 hover:bg-gray-50 rounded-2xl transition font-bold text-sm">
-      <span className="text-xl">{icon}</span>
-      {label}
+    <Link to={to} onClick={close} className={`flex items-center justify-between p-4 rounded-2xl transition font-black text-sm
+      ${isActive ? 'bg-primary-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-50'}`}>
+      <div className="flex items-center gap-4">
+        <span className="text-xl">{icon}</span>
+        {label}
+      </div>
+      {badge && (
+        <span className="w-3 h-3 bg-red-500 rounded-full border-2 border-white shadow-lg animate-pulse" />
+      )}
     </Link>
   )
 }

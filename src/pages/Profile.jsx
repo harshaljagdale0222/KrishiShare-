@@ -107,10 +107,13 @@ export default function Profile() {
   }
 
   const roleConfig = {
-    farmer:   { emoji: '🧑‍🌾', labelKey: 'farmer',          color: 'bg-green-100  text-green-700'  },
-    owner:    { emoji: '🚜',   labelKey: 'equipmentOwner',  color: 'bg-blue-100   text-blue-700'   },
-    delivery: { emoji: '🛵',   labelKey: 'deliveryPartner', color: 'bg-orange-100 text-orange-700' },
-    admin:    { emoji: '👨‍💼', labelKey: 'admin',            color: 'bg-purple-100 text-purple-700' },
+    farmer:          { emoji: '🧑‍🌾', labelKey: 'farmer',          color: 'bg-green-100  text-green-700'  },
+    owner:           { emoji: '🚜',   labelKey: 'equipment_owner', color: 'bg-blue-100   text-blue-700'   },
+    equipment_owner: { emoji: '🚜',   labelKey: 'equipment_owner', color: 'bg-blue-100   text-blue-700'   },
+    mart_owner:      { emoji: '🛒',   labelKey: 'mart_owner',      color: 'bg-orange-100 text-orange-700' },
+    factory_owner:   { emoji: '🏭',   labelKey: 'factory_owner',   color: 'bg-purple-100 text-purple-700' },
+    delivery:        { emoji: '🛵',   labelKey: 'deliveryPartner', color: 'bg-orange-100 text-orange-700' },
+    admin:           { emoji: '👨‍💼', labelKey: 'admin',            color: 'bg-purple-100 text-purple-700' },
   }
 
   const role = roleConfig[user?.role] || roleConfig.farmer

@@ -7,21 +7,22 @@ import { maharashtraData } from '../../utils/locationData'
 import toast from 'react-hot-toast'
 
 const roles = [
-  { value: 'farmer',          emoji: '🧑‍🌾', labelKey: 'farmerRole' },
+  { value: 'farmer', emoji: '🧑‍🌾', labelKey: 'farmerRole' },
   { value: 'equipment_owner', emoji: '🚜', labelKey: 'ownerRole' },
-  { value: 'mart_owner',      emoji: '🛒', labelKey: 'martOwnerRole' },
-  { value: 'factory_owner',   emoji: '🏭', labelKey: 'factoryOwnerRole' },
+  { value: 'mart_owner', emoji: '🛒', labelKey: 'martOwnerRole' },
+  { value: 'factory_owner', emoji: '🏭', labelKey: 'factoryOwnerRole' },
+  { value: 'admin', emoji: '🛡️', labelKey: 'Admin' },
 ]
 
 export default function CompleteProfile() {
-  const { user, updateUser, logout } = useAuthStore()
+  const { user, token, isAuthenticated, updateUser, logout } = useAuthStore()
   const { t, language } = useLanguageStore()
   const navigate = useNavigate()
   const isMR = language === 'mr'
   const [form, setForm] = useState({
     name: user?.name || '',
     phone: '',
-    role: user?.location ? (user?.role || '') : '',
+    role: user?.role || '',
     district: '',
     taluka: '',
     village: '',
@@ -32,7 +33,7 @@ export default function CompleteProfile() {
     hasDeliveryService: true
   })
   const [villageSuggestions, setVillageSuggestions] = useState([])
-  const [isOtherVillage, setIsOtherVillage]       = useState(false)
+  const [isOtherVillage, setIsOtherVillage] = useState(false)
   const [isFetchingPin, setIsFetchingPin] = useState(false)
   const [showPass, setShowPass] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -44,12 +45,17 @@ export default function CompleteProfile() {
   const [talSearch, setTalSearch] = useState('')
 
   useEffect(() => {
-    if (!user) navigate('/login')
-    // If user has all mandatory fields (phone AND role AND location AND password), then and ONLY then redirect to dashboard
+    // If we're definitely not authenticated, go to login
+    if (!isAuthenticated && !token) {
+      navigate('/login')
+      return
+    }
+
+    // If profile is already complete, go to dashboard
     if (user?.role && user?.phone && user?.location) {
       navigate(user.role === 'farmer' ? '/dashboard' : '/store-dashboard')
     }
-  }, [user])
+  }, [user, isAuthenticated, token])
 
   const update = (key, value) => {
     setForm(prev => ({ ...prev, [key]: value }))
@@ -76,24 +82,24 @@ export default function CompleteProfile() {
           if (data && data[0] && data[0].Status === 'Success') {
             const offices = data[0].PostOffice
             const sample = offices[0]
-            
+
             const dist = sample.District
-            const foundDist = Object.keys(maharashtraData).find(d => 
+            const foundDist = Object.keys(maharashtraData).find(d =>
               dist.toLowerCase().includes(d.toLowerCase()) || d.toLowerCase().includes(dist.toLowerCase())
             )
-            
+
             if (foundDist) {
               const block = sample.Block
-              const foundTaluka = maharashtraData[foundDist].talukas.find(t => 
+              const foundTaluka = maharashtraData[foundDist].talukas.find(t =>
                 block.toLowerCase().includes(t.en.toLowerCase()) || t.en.toLowerCase().includes(block.toLowerCase())
               )
-              
-              setForm(prev => ({ 
-                ...prev, 
+
+              setForm(prev => ({
+                ...prev,
                 pincode: cleanVal,
-                district: foundDist, 
+                district: foundDist,
                 taluka: foundTaluka ? foundTaluka.en : '',
-                village: '' 
+                village: ''
               }))
               setVillageSuggestions(offices.map(o => o.Name))
               toast.success(isMR ? 'पिनकोडनुसार माहिती मिळवली!' : 'Location loaded!')
@@ -118,7 +124,7 @@ export default function CompleteProfile() {
     console.log('--- 📤 SUBMITTING PROFILE UPDATE ---');
     console.log('ROLE SELECTED:', role);
     console.log('NAME:', name);
-    
+
     if (!name || !phone || !district || !taluka || !village || !pincode || !password) {
       return toast.error(isMR ? 'सर्व माहिती आणि पासवर्ड भरणे आवश्यक आहे' : 'All fields and password are mandatory')
     }
@@ -135,7 +141,7 @@ export default function CompleteProfile() {
       return toast.error(isMR ? 'डिलिव्हरी सुविधा असल्याशिवाय तुम्ही मार्ट ओनर म्हणून नोंदणी करू शकत नाही' : 'You must have delivery service to register as Mart Owner')
     }
 
-    if (role !== 'farmer' && !businessName) {
+    if (['equipment_owner', 'mart_owner', 'factory_owner'].includes(role) && !businessName) {
       return toast.error(isMR ? 'व्यवसायाचे नाव भरणे आवश्यक आहे' : 'Business name is required')
     }
 
@@ -151,7 +157,7 @@ export default function CompleteProfile() {
         location: loc,
         businessName: role !== 'farmer' ? businessName : undefined,
         hasDeliveryService: role === 'mart_owner' ? hasDeliveryService : undefined,
-        password 
+        password
       })
       toast.success(isMR ? 'प्रोफाईल यशस्वीपणे पूर्ण झाली! 🎉' : 'Profile completed successfully!')
       navigate(role === 'farmer' ? '/dashboard' : '/store-dashboard')
@@ -161,15 +167,21 @@ export default function CompleteProfile() {
     }
   }
 
-  const districtKeys = Object.keys(maharashtraData).filter(k => 
-    maharashtraData[k][language].toLowerCase().includes(distSearch.toLowerCase()) ||
-    maharashtraData[k].en.toLowerCase().includes(distSearch.toLowerCase())
-  ).sort()
+  const districtKeys = Object.keys(maharashtraData).filter(k => {
+    const dName = maharashtraData[k][language] || maharashtraData[k].mr || maharashtraData[k].en
+    return dName.toLowerCase().includes(distSearch.toLowerCase()) ||
+           maharashtraData[k].en.toLowerCase().includes(distSearch.toLowerCase())
+  }).sort()
   
-  const talukaList = form.district ? maharashtraData[form.district].talukas.filter(t => 
-    t[language].toLowerCase().includes(talSearch.toLowerCase()) ||
-    t.en.toLowerCase().includes(talSearch.toLowerCase())
-  ).sort((a,b) => a[language].localeCompare(b[language])) : []
+  const talukaList = form.district ? maharashtraData[form.district].talukas.filter(t => {
+    const tName = t[language] || t.mr || t.en
+    return tName.toLowerCase().includes(talSearch.toLowerCase()) ||
+           t.en.toLowerCase().includes(talSearch.toLowerCase())
+  }).sort((a,b) => {
+    const aName = a[language] || a.mr || a.en
+    const bName = b[language] || b.mr || b.en
+    return aName.localeCompare(bName)
+  }) : []
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden font-outfit">
@@ -178,7 +190,7 @@ export default function CompleteProfile() {
 
       <div className="w-full max-w-[500px] relative z-10 animate-in fade-in zoom-in duration-500">
         <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border border-emerald-100">
-          
+
           <div className="p-8 text-center bg-emerald-50/50 border-b border-emerald-100">
             <h2 className="text-2xl font-black text-emerald-900">{isMR ? 'प्रोफाईल पूर्ण करा' : 'Complete Profile'}</h2>
             <p className="text-emerald-600 font-bold text-xs mt-1 uppercase tracking-widest">{isMR ? 'आम्हाला थोडी अधिक माहिती हवी आहे' : 'We need a little more info'}</p>
@@ -188,7 +200,7 @@ export default function CompleteProfile() {
             <div className="space-y-2">
               <label className="text-xs font-black text-emerald-800 ml-1 uppercase">{isMR ? 'तुमची भूमिका' : 'Your Role'}</label>
               <div className="relative">
-                <button type="button" onClick={() => setRoleOpen(!roleOpen)} 
+                <button type="button" onClick={() => setRoleOpen(!roleOpen)}
                   className={`w-full px-6 py-4 rounded-2xl border-2 text-left flex justify-between items-center font-bold text-sm transition-all
                     ${!form.role ? 'border-amber-400 bg-amber-50 shadow-md animate-pulse' : 'border-emerald-100 bg-slate-50'}`}>
                   <span className="flex items-center gap-3">
@@ -205,21 +217,23 @@ export default function CompleteProfile() {
                 </button>
                 {roleOpen && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-emerald-100 rounded-3xl shadow-xl z-50 overflow-hidden divide-y divide-emerald-50">
-                    {roles.map(r => (
-                      <button key={r.value} type="button" onClick={() => { 
-                        update('role', r.value); 
-                        setRoleOpen(false);
-                        if (r.value === 'mart_owner') update('hasDeliveryService', true);
-                      }} className="w-full text-left px-6 py-4 text-sm font-bold hover:bg-emerald-50 transition-colors flex items-center gap-3">
-                        <span>{r.emoji}</span> {t(r.labelKey)}
-                      </button>
-                    ))}
+                    {roles
+                      .filter(r => user?.email === 'harshaljagdale40@gmail.com' ? r.value === 'admin' : r.value !== 'admin')
+                      .map(r => (
+                        <button key={r.value} type="button" onClick={() => { 
+                          update('role', r.value); 
+                          setRoleOpen(false);
+                          if (r.value === 'mart_owner') update('hasDeliveryService', true);
+                        }} className="w-full text-left px-6 py-4 text-sm font-bold hover:bg-emerald-50 transition-colors flex items-center gap-3">
+                          <span>{r.emoji}</span> {t(r.labelKey)}
+                        </button>
+                      ))}
                   </div>
                 )}
               </div>
             </div>
 
-            {form.role !== 'farmer' && (
+            {['equipment_owner', 'mart_owner', 'factory_owner'].includes(form.role) && (
               <div className="space-y-4 animate-in slide-in-from-top-2">
                 <div className="space-y-2">
                   <label className="text-xs font-black text-emerald-800 ml-1 uppercase">{isMR ? 'व्यवसायाचे नाव' : 'Business Name'} <span className="text-red-500">*</span></label>
@@ -258,7 +272,7 @@ export default function CompleteProfile() {
               <label className="text-xs font-black text-emerald-800 ml-1 uppercase">{isMR ? 'संपूर्ण नाव' : 'Full Name'} <span className="text-red-500">*</span></label>
               <div className="relative">
                 <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-emerald-300" />
-                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} 
+                <input type="text" value={form.name} onChange={e => update('name', e.target.value)}
                   className="w-full pl-14 pr-6 py-4 rounded-2xl border-2 border-emerald-100 bg-slate-50 outline-none focus:border-emerald-600 font-bold text-sm" />
               </div>
             </div>
@@ -323,14 +337,14 @@ export default function CompleteProfile() {
               <div className="space-y-2 relative">
                 <label className="text-xs font-black text-emerald-800 ml-1 uppercase">{isMR ? 'जिल्हा' : 'District'} <span className="text-red-500">*</span></label>
                 <button type="button" onClick={() => setDistOpen(!distOpen)} className="w-full px-5 py-4 rounded-2xl border-2 border-emerald-100 bg-slate-50 text-left flex justify-between items-center font-bold text-sm">
-                  <span className="truncate">{form.district ? maharashtraData[form.district][language] : 'Select'}</span>
+                  <span className="truncate">{form.district ? (maharashtraData[form.district][language] || maharashtraData[form.district].mr) : 'Select'}</span>
                   <ChevronDown size={14} className="text-emerald-300" />
                 </button>
                 {distOpen && (
                   <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-emerald-100 rounded-2xl shadow-xl z-[70] overflow-hidden max-h-48 flex flex-col w-[150%]">
                     <input autoFocus type="text" placeholder="Search..." value={distSearch} onChange={e => setDistSearch(e.target.value)} className="p-4 text-xs border-b outline-none font-bold" />
                     <div className="overflow-y-auto">
-                      {districtKeys.map(k => <button key={k} type="button" onClick={() => update('district', k)} className="w-full text-left px-5 py-3 text-xs font-bold hover:bg-emerald-50">{maharashtraData[k][language]}</button>)}
+                      {districtKeys.map(k => <button key={k} type="button" onClick={() => update('district', k)} className="w-full text-left px-5 py-3 text-xs font-bold hover:bg-emerald-50">{maharashtraData[k][language] || maharashtraData[k].mr}</button>)}
                     </div>
                   </div>
                 )}
@@ -339,14 +353,14 @@ export default function CompleteProfile() {
               <div className="space-y-2 relative">
                 <label className="text-xs font-black text-emerald-800 ml-1 uppercase">{isMR ? 'तालुका' : 'Taluka'} <span className="text-red-500">*</span></label>
                 <button type="button" disabled={!form.district} onClick={() => setTalOpen(!talOpen)} className="w-full px-5 py-4 rounded-2xl border-2 border-emerald-100 bg-slate-50 text-left flex justify-between items-center font-bold text-sm disabled:opacity-50">
-                  <span className="truncate">{form.taluka ? (maharashtraData[form.district].talukas.find(t => t.en === form.taluka)?.[language]) : 'Select'}</span>
+                  <span className="truncate">{form.taluka ? (maharashtraData[form.district].talukas.find(t => t.en === form.taluka)?.[language] || maharashtraData[form.district].talukas.find(t => t.en === form.taluka)?.mr) : 'Select'}</span>
                   <ChevronDown size={14} className="text-emerald-300" />
                 </button>
                 {talOpen && (
                   <div className="absolute bottom-full right-0 mb-2 bg-white border border-emerald-100 rounded-2xl shadow-xl z-50 overflow-hidden max-h-48 flex flex-col w-[150%]">
                     <input autoFocus type="text" placeholder="Search..." value={talSearch} onChange={e => setTalSearch(e.target.value)} className="p-4 text-xs border-b outline-none font-bold" />
                     <div className="overflow-y-auto">
-                      {talukaList.map(t => <button key={t.en} type="button" onClick={() => update('taluka', t.en)} className="w-full text-left px-5 py-3 text-xs font-bold hover:bg-emerald-50">{t[language]}</button>)}
+                      {talukaList.map(t => <button key={t.en} type="button" onClick={() => update('taluka', t.en)} className="w-full text-left px-5 py-3 text-xs font-bold hover:bg-emerald-50">{t[language] || t.mr}</button>)}
                     </div>
                   </div>
                 )}
@@ -358,7 +372,7 @@ export default function CompleteProfile() {
               <div className="relative">
                 <MapPin size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-emerald-300" />
                 {villages.length > 0 ? (
-                  <select value={isOtherVillage ? 'other' : (villages.includes(form.village) ? form.village : '')} 
+                  <select value={isOtherVillage ? 'other' : (villages.includes(form.village) ? form.village : '')}
                     onChange={e => {
                       if (e.target.value === 'other') {
                         setIsOtherVillage(true);

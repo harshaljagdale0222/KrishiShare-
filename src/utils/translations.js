@@ -15,7 +15,9 @@ const translations = {
     login: 'Login',
     register: 'Register',
     farmer: 'Farmer',
-    equipmentOwner: 'Equipment Owner',
+    equipment_owner: 'Equipment Owner',
+    mart_owner: 'Mart Owner',
+    factory_owner: 'Factory Owner',
     myBookings: 'My Bookings',
     myOrders: 'My Orders',
 
@@ -196,7 +198,9 @@ const translations = {
     login: 'लॉगिन',
     register: 'नोंदणी',
     farmer: 'शेतकरी',
-    equipmentOwner: 'अवजारे मालक',
+    equipment_owner: 'अवजारे मालक',
+    mart_owner: 'मार्ट मालक',
+    factory_owner: 'साखर कारखाना मालक',
     myBookings: 'माझ्या बुकिंग',
     myOrders: 'माझे ऑर्डर',
 
@@ -378,7 +382,9 @@ const translations = {
     login: 'लॉगिन',
     register: 'पंजीकरण',
     farmer: 'किसान',
-    equipmentOwner: 'उपकरण मालिक',
+    equipment_owner: 'उपकरण मालिक',
+    mart_owner: 'मार्ट मालिक',
+    factory_owner: 'चीनी मिल मालिक',
     myBookings: 'मेरी बुकिंग',
     myOrders: 'मेरे ऑर्डर',
 

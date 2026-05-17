@@ -13,7 +13,7 @@ router.post('/', protect, async (req, res) => {
     const { equipmentId, date, timeSlot } = req.body
     
     // 🛡️ Prevent Double-Booking (Check for overlap)
-    if (equipmentId && date && timeSlot) {
+    if (equipmentId && date && timeSlot && !isNaN(new Date(date).getTime())) {
       const existing = await Booking.findOne({ 
         equipmentId, 
         date: new Date(date), 
@@ -38,8 +38,12 @@ router.post('/', protect, async (req, res) => {
 
     // Notify Owner if info is present
     if (booking.ownerPhone) {
-      const msg = `Navin Booking Referral: ${booking.farmerName} ne ${booking.equipmentName} sathi request पाठवली आहे. - KrishiShare`;
-      await sendSMS(booking.ownerPhone, msg);
+      try {
+        const msg = `Navin Booking Referral: ${booking.farmerName} ne ${booking.equipmentName} sathi request पाठवली आहे. - KrishiShare`;
+        await sendSMS(booking.ownerPhone, msg);
+      } catch (smsErr) {
+        console.error('SMS Notification Failed:', smsErr.message);
+      }
     }
 
     // Standard Notifications
@@ -98,8 +102,13 @@ router.get('/all', protect, async (req, res) => {
       // System Admin: Get EVERYTHING
       bookings = await Booking.find().sort({ createdAt: -1 });
     } else {
-      // Equipment Owner: Get only their bookings
-      bookings = await Booking.find({ ownerId: req.user._id }).sort({ createdAt: -1 });
+      // Equipment Owner: Get only their bookings (Using $or for extra safety with ID formats)
+      bookings = await Booking.find({ 
+        $or: [
+          { ownerId: req.user._id },
+          { ownerId: req.user._id.toString() }
+        ]
+      }).sort({ createdAt: -1 });
     }
     res.json(bookings);
   } catch (error) {
@@ -107,20 +116,47 @@ router.get('/all', protect, async (req, res) => {
   }
 });
 
-// UPDATE STATUS (Owner only)
-router.put('/:id', protect, ownerOnly, async (req, res) => {
+// UPDATE STATUS
+router.put('/:id', protect, async (req, res) => {
   try {
     const { status } = req.body
-    const booking = await Booking.findByIdAndUpdate(req.params.id, { status }, { new: true })
+    const booking = await Booking.findById(req.params.id)
     if (!booking) return res.status(404).json({ message: 'Booking sapdali nahi!' })
+
+    // Permission Check: Owner can update anything, Farmer can only update to 'completed' or 'cancelled'
+    const isOwner = booking.ownerId?.toString() === req.user._id.toString()
+    const isFarmer = booking.farmerId.toString() === req.user._id.toString()
+
+    if (!isOwner && !isFarmer) {
+      return res.status(403).json({ message: 'Tu mazi booking update nahi karu shakt!' })
+    }
+
+    if (isFarmer && !['pending_final_payment', 'cancelled'].includes(status)) {
+      return res.status(403).json({ message: 'Shetkari fkt kam purn mhanun mark karu shakto!' })
+    }
+
+    booking.status = status
+    await booking.save()
 
     // Custom Notifications based on Status
     let notifTitle = 'Booking Update 🚜'
-    let notifMsg = `Tuzya ${booking.equipmentName} booking la ${status} kelay.`
+    let notifMsg = `तुमच्या ${booking.equipmentName} बुकिंगचे स्टेटस ${status} झाले आहे.`
 
-    if (status === 'completed') {
+    if (status === 'accepted') {
+      notifTitle = 'बुकिंग स्वीकारली! ✅'
+      notifMsg = `तुमची ${booking.equipmentName} बुकिंग स्वीकारली आहे. कृपया अ‍ॅडव्हान्स भरून बुकिंग कन्फर्म करा.`
+    } else if (status === 'arrived') {
+      notifTitle = 'यंत्र पोहोचले! 🚜'
+      notifMsg = `तुमचे ${booking.equipmentName} शेतात पोहोचले आहे. काम सुरू करण्यास सज्ज!`
+    } else if (status === 'in_progress') {
+      notifTitle = 'काम सुरू झाले! 🌱'
+      notifMsg = `${booking.equipmentName} द्वारे काम सुरू झाले आहे.`
+    } else if (status === 'pending_final_payment') {
       notifTitle = 'काम पूर्ण झाले! ✅'
-      notifMsg = `तुमच्या ${booking.equipmentName} चे काम पूर्ण झाले आहे. कृपया उरलेले पेमेंट पूर्ण करा.`
+      notifMsg = `तुमच्या ${booking.equipmentName} चे काम पूर्ण झाले आहे. कृपया उरलेले पेमेंट पूर्ण करा जेणेकरून व्यवहार पूर्ण होईल.`
+    } else if (status === 'completed') {
+      notifTitle = 'व्यवहार पूर्ण! 💰'
+      notifMsg = `धन्यवाद! तुमचे पूर्ण पेमेंट मिळाले असून ${booking.equipmentName} चे काम यशस्वीरित्या पूर्ण झाले आहे.`
     }
 
     const dbNotif = await Notification.create({
@@ -139,10 +175,9 @@ router.put('/:id', protect, ownerOnly, async (req, res) => {
       req.io.to(booking.farmerId.toString()).emit('booking_status_updated', booking)
       
       // Notify Owner (Self-confirmation)
-      req.io.to(booking.ownerId.toString()).emit('notification', {
-        title: 'Status Updated', message: `Work for ${booking.equipmentName} marked as ${status}.`, type: 'order'
+      req.io.to(req.user._id.toString()).emit('notification', {
+        title: 'Status Updated', message: `Booking for ${booking.equipmentName} is now ${status}.`, type: 'order'
       })
-      req.io.to(booking.ownerId.toString()).emit('booking_status_updated', booking)
     }
 
     res.json(booking)
@@ -159,10 +194,10 @@ router.patch('/:id/confirm-advance', protect, async (req, res) => {
     if (!booking) return res.status(404).json({ message: 'Booking sapdali nahi!' })
 
     // Check if it's the final payment or advance
-    const isFinalPayment = booking.status === 'completed'
+    const isFinalPayment = booking.status === 'pending_final_payment' || booking.status === 'completed'
 
     booking.status = isFinalPayment ? 'completed' : 'confirmed' 
-    booking.paymentStatus = 'paid'
+    booking.paymentStatus = isFinalPayment ? 'paid' : 'partial'
     await booking.save()
 
     // Notify Farmer about payment receipt
@@ -229,7 +264,17 @@ router.post('/:id/rate', protect, async (req, res) => {
 router.patch('/:id/payment', protect, async (req, res) => {
   try {
     const { status } = req.body
-    const booking = await Booking.findByIdAndUpdate(req.params.id, { paymentStatus: status }, { new: true })
+    const booking = await Booking.findById(req.params.id)
+    if (!booking) return res.status(404).json({ message: 'Booking sapdali nahi!' })
+
+    booking.paymentStatus = status
+    
+    // If work is done and payment is successful, auto-complete
+    if (status === 'paid' && (booking.status === 'pending_final_payment' || booking.status === 'in_progress')) {
+      booking.status = 'completed'
+    }
+
+    await booking.save()
     res.json(booking)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -265,7 +310,10 @@ router.post('/:id/report-owner', protect, async (req, res) => {
 
 router.get('/availability/:equipmentId', async (req, res) => {
   try {
-    const bookings = await Booking.find({ equipmentId: req.params.equipmentId, status: { $in: ['pending', 'accepted', 'confirmed'] } })
+    const bookings = await Booking.find({ 
+      equipmentId: req.params.equipmentId, 
+      status: { $in: ['pending', 'accepted', 'confirmed', 'arrived', 'in_progress', 'pending_final_payment'] } 
+    })
     res.json(bookings)
   } catch (error) {
     res.status(500).json({ message: error.message })

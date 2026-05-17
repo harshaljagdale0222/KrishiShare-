@@ -47,17 +47,20 @@ export default function MyBookings() {
   }
 
   const statusConfig = {
-    completed: { label: t('completed'), color: 'text-green-600 bg-green-50 border-green-200', dot: 'bg-green-500' },
-    confirmed: { label: language === 'mr' ? 'काम चालू आहे' : 'In Progress', color: 'text-blue-600  bg-blue-50  border-blue-200',  dot: 'bg-blue-500'  },
-    accepted:  { label: language === 'mr' ? 'अॅडव्हान्सची प्रतीक्षा' : 'Wait for Advance', color: 'text-indigo-600  bg-indigo-50  border-indigo-200',  dot: 'bg-indigo-500 animate-bounce'  },
-    pending:   { label: t('pending'),   color: 'text-amber-600 bg-amber-50 border-amber-200', dot: 'bg-amber-500' },
-    cancelled: { label: t('cancelled'), color: 'text-red-500   bg-red-50   border-red-200',   dot: 'bg-red-500'   },
-    rejected:  { label: 'Rejected',     color: 'text-red-500   bg-red-50   border-red-200',   dot: 'bg-red-500'   },
+    pending_final_payment: { label: language === 'mr' ? 'काम पूर्ण झाले (पेमेंट करा) ✅' : 'Work Done (Pay Now) ✅', color: 'text-indigo-600 bg-indigo-50 border-indigo-200', dot: 'bg-indigo-500 shadow-lg' },
+    completed:   { label: t('completed'), color: 'text-green-600 bg-green-50 border-green-200', dot: 'bg-green-500' },
+    in_progress: { label: language === 'mr' ? 'काम चालू आहे 🚜' : 'In Progress 🚜', color: 'text-violet-600 bg-violet-50 border-violet-200', dot: 'bg-violet-500 animate-pulse' },
+    arrived:     { label: language === 'mr' ? 'यंत्र पोहोचले 📍' : 'Equipment Arrived 📍', color: 'text-cyan-600 bg-cyan-50 border-cyan-200', dot: 'bg-cyan-500' },
+    confirmed:   { label: language === 'mr' ? 'बुकिंग कन्फर्म ✅' : 'Confirmed ✅', color: 'text-emerald-600 bg-emerald-50 border-emerald-200', dot: 'bg-emerald-500' },
+    accepted:    { label: language === 'mr' ? 'अॅडव्हान्सची प्रतीक्षा ⏳' : 'Wait for Advance ⏳', color: 'text-indigo-600 bg-indigo-50 border-indigo-200', dot: 'bg-indigo-500 animate-bounce' },
+    pending:     { label: t('pending'), color: 'text-amber-600 bg-amber-50 border-amber-200', dot: 'bg-amber-500' },
+    cancelled:   { label: t('cancelled'), color: 'text-red-500 bg-red-50 border-red-200', dot: 'bg-red-500' },
+    rejected:    { label: 'Rejected', color: 'text-red-500 bg-red-50 border-red-200', dot: 'bg-red-500' },
   }
   // Fallback for any unknown status
   const getStatus = (s) => statusConfig[s] || { label: s, color: 'text-gray-600 bg-gray-50 border-gray-200', dot: 'bg-gray-400' }
 
-  const filters = ['all', 'pending', 'confirmed', 'completed', 'cancelled']
+  const filters = ['all', 'pending', 'confirmed', 'arrived', 'in_progress', 'pending_final_payment', 'completed']
 
   const filtered = bookings.filter(b => activeFilter === 'all' || b.status === activeFilter)
 
@@ -160,7 +163,7 @@ export default function MyBookings() {
                         </div>
                         <div className="flex items-center justify-between mt-2">
                           <span className="text-xs text-gray-500">
-                            ⏱️ {booking.hours} {t('hours')} • 👤 {booking.owner}
+                            ⏱️ {booking.quantity || booking.hours || 0} {booking.unit === 'acre' ? (language === 'mr' ? 'एकर' : 'Acres') : t('hours')} • 👤 {booking.owner}
                           </span>
                           <span className="font-bold text-gray-900">₹{booking.amount}</span>
                         </div>
@@ -196,7 +199,7 @@ export default function MyBookings() {
                         {[
                           [t('bookingId'), booking._id],
                           [t('owner'),     booking.owner],
-                          [t('hours'),     `${booking.hours} ${t('hours')}`],
+                          [language === 'mr' ? 'प्रमाण' : 'Quantity', `${booking.quantity || booking.hours || 0} ${booking.unit || 'unit'}`],
                           [t('timeSlot'),  booking.timeSlot],
                           [t('total2'),    `₹${booking.amount}`],
                           [t('location'),  booking.location],
@@ -225,13 +228,21 @@ export default function MyBookings() {
                             href={`https://wa.me/${booking.ownerPhone?.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(`नमस्ते! मी ${booking.equipmentName} साठी बुकिंग केली आहे. तारीख: ${new Date(booking.date).toLocaleDateString()}, वेळ: ${booking.timeSlot}. - KrishiShare \uD83D\uDE9C`)}`}
                             target="_blank" rel="noreferrer"
                             className="flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20b858] text-white px-4 py-2 rounded-xl text-sm font-bold transition shadow-md shadow-green-300/30 active:scale-95">
-                            \uD83D\uDCF1 WhatsApp
+                            📱 WhatsApp
                           </a>
                         )}
                         {booking.status === 'completed' && (
-                          <button onClick={() => openRating(booking)}
-                            className={`flex items-center gap-1.5 border px-4 py-2 rounded-xl text-sm font-medium hover:shadow-sm transition ${booking.rating ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-amber-50 border-amber-200 text-amber-700'}`}>
-                            <Star size={14} fill={booking.rating ? "currentColor" : "none"} /> {booking.rating ? `${booking.rating} Star Review` : t('writeReview')}
+                          <button 
+                            onClick={() => !booking.rating && openRating(booking)}
+                            className={`flex items-center gap-1.5 border px-4 py-2 rounded-xl text-sm font-medium transition
+                              ${booking.rating 
+                                ? 'bg-emerald-50 border-emerald-200 text-emerald-700 cursor-default' 
+                                : 'bg-amber-50 border-amber-200 text-amber-700 hover:shadow-sm hover:bg-amber-100'}`}
+                          >
+                            <Star size={14} fill={booking.rating ? "currentColor" : "none"} /> 
+                            {booking.rating 
+                              ? (language === 'mr' ? `${booking.rating} स्टार रिव्ह्यू ✅` : `${booking.rating} Star Review ✅`) 
+                              : t('writeReview')}
                           </button>
                         )}
                         {(booking.status === 'pending' || booking.status === 'confirmed') && (
@@ -248,18 +259,48 @@ export default function MyBookings() {
                               : `Pay Advance - ₹${booking.advanceAmount || Math.round(booking.amount * 0.05)}`}
                           </button>
                         )}
-                        {(booking.status === 'confirmed' || booking.status === 'completed') && booking.paymentStatus !== 'paid' && (
+                        {(booking.status === 'pending_final_payment' || (booking.status === 'completed' && booking.paymentStatus !== 'paid')) && (
+                          <div className="p-6 bg-gradient-to-br from-emerald-50 to-white rounded-[32px] border-2 border-emerald-500 shadow-2xl shadow-emerald-500/20 mb-6 animate-in zoom-in-95 duration-500">
+                             <div className="flex items-center justify-center mb-4">
+                               <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xl animate-bounce">💰</div>
+                             </div>
+                             <p className="text-xs font-black text-emerald-800 uppercase tracking-[0.2em] text-center mb-4 leading-relaxed">
+                               🎉 {language === 'mr' ? 'काम यशस्वीरित्या पूर्ण झाले! आता उरलेले पैसे भरून व्यवहार पूर्ण करा.' : 'Work Successfully Completed! Please pay the balance to finish.'}
+                             </p>
+                             <button onClick={() => handleRealPayment(booking, 'full')}
+                               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6 rounded-[24px] font-black text-lg uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/40 active:scale-95 transition-all flex items-center justify-center gap-3">
+                               <span>₹{booking.amount - (booking.advanceAmount || 0)}</span>
+                               <span>{language === 'mr' ? 'पेमेंट करा' : 'Pay Balance'}</span>
+                               <span className="animate-pulse">➔</span>
+                             </button>
+                             <p className="text-[10px] text-emerald-400 font-bold text-center mt-4 uppercase tracking-widest">Safe & Secure Payment via KrishiShare</p>
+                          </div>
+                        )}
+
+                        {(booking.status === 'confirmed' || booking.status === 'arrived' || booking.status === 'in_progress') && booking.paymentStatus !== 'paid' && (
                           <button onClick={() => handleRealPayment(booking, 'full')}
-                            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl text-sm font-black uppercase tracking-widest shadow-lg shadow-emerald-200 active:scale-95 transition-all mt-2 mb-2">
-                            💵 {language === 'mr' 
-                              ? `उर्वरित पूर्ण पैसे भरा - ₹${booking.amount - (booking.advanceAmount || 0)}` 
-                              : `Pay Balance - ₹${booking.amount - (booking.advanceAmount || 0)}`}
+                            className="w-full bg-gray-100 text-gray-500 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-200 transition-all mt-2 mb-2">
+                            💵 {language === 'mr' ? 'पूर्ण पैसे भरा' : 'Pay Full Amount'}
                           </button>
                         )}
                         {booking.status === 'confirmed' && (
                           <button onClick={() => window.confirm(language === 'mr' ? 'मालकाबद्दल फसवणुकीची तक्रार करायची आहे का? (Strike System)' : 'Report this owner for fraud?') && reportOwner(booking._id)}
                             className="mt-3 w-full text-[9px] font-black text-red-300 hover:text-red-500 uppercase tracking-widest transition-colors flex items-center justify-center gap-1 py-2 border border-dashed border-red-100 rounded-xl">
                             ⚠️ {language === 'mr' ? 'मालकाने अवजारे पाठवले नाहीत? (तक्रार करा)' : 'Owner didn\'t send machinery? (Report)'}
+                          </button>
+                        )}
+                        {booking.status === 'in_progress' && (
+                          <button onClick={async () => {
+                            if (window.confirm(language === 'mr' ? 'काम पूर्ण झाले आहे याची खात्री आहे का?' : 'Are you sure the work is completed?')) {
+                              try {
+                                await bookingAPI.updateStatus(booking._id, 'pending_final_payment')
+                                toast.success(language === 'mr' ? 'काम पूर्ण म्हणून नोंदवले गेले! आता उर्वरित पेमेंट करा.' : 'Work marked as done! Please pay the balance.')
+                                fetchMyBookings()
+                              } catch (err) { toast.error('Error updating status') }
+                            }
+                          }}
+                            className="w-full bg-indigo-600 text-white py-4 rounded-2xl text-sm font-black uppercase tracking-widest shadow-lg active:scale-95 transition-all mt-2 mb-2">
+                            ✅ {language === 'mr' ? 'काम पूर्ण झाले (Confirm Work Done)' : 'Confirm Work Done ✅'}
                           </button>
                         )}
                         {booking.status === 'completed' && (

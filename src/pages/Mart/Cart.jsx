@@ -16,7 +16,6 @@ export default function Cart() {
   const { t, language } = useLanguageStore()
   const navigate = useNavigate()
 
-  const [paymentMethod, setPaymentMethod] = useState('upi')
   const [distance, setDistance] = useState(5)
 
   const initialAddress = user?.location?.split(', ') || []
@@ -41,8 +40,7 @@ export default function Cart() {
   const discount = Math.floor(getTotalPrice() * 0.05)
   const finalAmount = getTotalPrice() + deliveryCharge - discount
 
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false)
-  const [paymentStep, setPaymentStep] = useState(0)
+
 
   const handlePincodeChange = async (val) => {
     const cleanVal = val.replace(/\D/g, '')
@@ -88,26 +86,15 @@ export default function Cart() {
   }
 
   const handleCheckout = async () => {
-    if (!district || !taluka || !village || !pincode || !landmark) {
-      toast.error(isMR ? '📍 कृपया पिनकोड आणि लँडमार्कसह पत्ता संपूर्ण भरा!' : '📍 Please complete the address including Pincode & Landmark!');
+    // Pincode is optional if District/Taluka/Village are filled manually
+    const isManualComplete = district && taluka && village;
+    
+    if (!isManualComplete || !landmark) {
+      toast.error(isMR ? '📍 कृपया जिल्हा, तालुका, गाव आणि लँडमार्क संपूर्ण भरा!' : '📍 Please complete the District, Taluka, Village & Landmark!');
       return
     }
 
-    const fullAddress = `${village}, ${taluka}, ${district}, Maharashtra - ${pincode}`
-
-    // ─── Real API / Payment Gateway Simulation ────────────────
-    if (paymentMethod !== 'cod') {
-      setIsProcessingPayment(true)
-      setPaymentStep(1) // Connecting to Bank...
-      await new Promise(r => setTimeout(r, 1500))
-
-      setPaymentStep(2) // Verifying Transaction...
-      await new Promise(r => setTimeout(r, 2000))
-
-      setPaymentStep(3) // Payment Successful!
-      await new Promise(r => setTimeout(r, 1000))
-      setIsProcessingPayment(false)
-    }
+    const fullAddress = `${village}, ${taluka}, ${district}, Maharashtra${pincode ? ` - ${pincode}` : ''}`
 
     setIsOrdering(true)
     const orderData = {
@@ -123,11 +110,11 @@ export default function Cart() {
       deliveryCharge,
       discount,
       finalAmount,
-      payment: paymentMethod,
+      payment: 'cod', 
       distance,
       address: fullAddress,
       landmark,
-      paymentStatus: paymentMethod === 'cod' ? 'pending' : 'paid',
+      paymentStatus: 'pending',
       note,
     }
 
@@ -177,7 +164,9 @@ export default function Cart() {
               </p>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-gray-400 uppercase mb-1 block tracking-wider">{isMR ? 'पिनकोड' : 'Pincode'}</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase mb-1 block tracking-wider">
+                  {isMR ? 'पिनकोड' : 'Pincode'}
+                </label>
                 <div className="relative">
                   <input
                     type="text"
@@ -194,6 +183,14 @@ export default function Cart() {
                     </div>
                   )}
                 </div>
+              </div>
+
+              <div className="flex items-center gap-3 py-1">
+                <div className="flex-1 h-px bg-gray-100" />
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+                  {isMR ? 'किंवा' : 'OR'}
+                </span>
+                <div className="flex-1 h-px bg-gray-100" />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -324,10 +321,33 @@ export default function Cart() {
                     <span className="text-gray-400 text-xs line-through">₹{item.mrp}</span>
                   </div>
                   <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center border-2 border-primary-500 rounded-xl overflow-hidden">
-                      <button onClick={() => updateQuantity(item._id, item.quantity - 1)} className="px-3 py-1.5 text-primary-600 hover:bg-primary-50 transition"><Minus size={13} /></button>
-                      <span className="px-3 font-bold text-primary-700 text-sm">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item._id, item.quantity + 1)} className="px-3 py-1.5 text-primary-600 hover:bg-primary-50 transition"><Plus size={13} /></button>
+                    <div className="flex items-center border-2 border-primary-500 rounded-xl overflow-hidden bg-white shadow-sm">
+                      <button onClick={() => updateQuantity(item._id, item.quantity - 1)} className="px-3 py-1.5 text-primary-600 hover:bg-primary-50 transition border-r-2 border-primary-500 active:bg-primary-100"><Minus size={13} /></button>
+                      <input 
+                        type="number"
+                        min="0"
+                        max={item.stock || 999}
+                        value={item.quantity || ''}
+                        placeholder="0"
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={(e) => {
+                          const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                          if (val > (item.stock || 999)) {
+                            toast.error(isMR ? `फक्त ${item.stock} स्टॉक शिल्लक आहे!` : `Only ${item.stock} stock available!`);
+                            updateQuantity(item._id, item.stock);
+                          } else if (val >= 0) {
+                            updateQuantity(item._id, val);
+                          }
+                        }}
+                        className="w-12 h-full bg-white/50 text-center font-black text-primary-700 text-sm outline-none focus:bg-white transition-colors placeholder-gray-300"
+                      />
+                      <button 
+                        disabled={item.quantity >= (item.stock || 999)}
+                        onClick={() => updateQuantity(item._id, item.quantity + 1)} 
+                        className="px-3 py-1.5 text-primary-600 hover:bg-primary-50 transition border-l-2 border-primary-500 disabled:opacity-30 disabled:cursor-not-allowed active:bg-primary-100"
+                      >
+                        <Plus size={13} />
+                      </button>
                     </div>
                     <button onClick={() => { removeItem(item._id); toast.success(t('itemRemoved')) }} className="text-red-400 hover:text-red-600 transition p-1.5 hover:bg-red-50 rounded-lg"><Trash2 size={16} /></button>
                   </div>
@@ -362,89 +382,24 @@ export default function Cart() {
                 <div className="border-t border-gray-100 pt-3 flex justify-between font-bold text-gray-900 text-base"><span>{t('total')}</span><span>₹{finalAmount}</span></div>
               </div>
 
-              {/* Payment */}
-              <div className="mt-4">
-                <p className="text-sm font-semibold text-gray-700 mb-2">💳 {t('paymentMethod')}</p>
-                <div className="space-y-2">
-                  {[
-                    { id: 'upi', icon: '📱', label: 'UPI', desc: 'GPay, PhonePe, Paytm' },
-                    { id: 'card', icon: '💳', label: 'Card', desc: 'Debit / Credit Card' },
-                    { id: 'cod', icon: '💵', label: 'COD', desc: 'Cash on Delivery' },
-                  ].map((method) => (
-                    <button key={method.id} type="button" onClick={() => setPaymentMethod(method.id)}
-                      className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 text-left transition ${paymentMethod === method.id ? 'border-primary-500 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
-                      <span className="text-xl">{method.icon}</span>
-                      <div className="flex-1">
-                        <p className={`text-sm font-semibold ${paymentMethod === method.id ? 'text-primary-700' : 'text-gray-700'}`}>{method.label}</p>
-                        <p className="text-xs text-gray-400">{method.desc}</p>
-                      </div>
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === method.id ? 'border-primary-500 bg-primary-500' : 'border-gray-300'}`}>
-                        {paymentMethod === method.id && <div className="w-2 h-2 rounded-full bg-white" />}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
+              {/* Checkout Button */}
               <button onClick={handleCheckout} disabled={isOrdering}
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-2xl font-bold text-lg mt-4 transition disabled:opacity-60 flex items-center justify-center gap-2">
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white py-5 rounded-2xl font-black text-lg mt-4 transition disabled:opacity-60 flex items-center justify-center gap-2 shadow-xl shadow-primary-500/20 active:scale-95">
                 {isOrdering ? (
-                  <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {isMR ? 'ऑर्डर होत आहे...' : 'Placing Order...'}</>
+                  <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {isMR ? 'विनंती पाठवत आहे...' : 'Sending Request...'}</>
                 ) : (
-                  <><ShoppingBag size={20} /> {paymentMethod === 'cod' ? t('codOrder') : (isMR ? `${paymentMethod.toUpperCase()} ने पेमेंट करा` : `Pay with ${paymentMethod.toUpperCase()}`)}</>
+                  <><ShoppingBag size={20} /> {isMR ? 'ऑर्डरची विनंती पाठवा' : 'Send Order Request'}</>
                 )}
               </button>
 
-              <div className="flex items-center justify-center gap-2 mt-3 text-xs text-gray-400">
-                <Shield size={12} /><span>{t('safePayment')}</span>
+              <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400 font-bold uppercase tracking-widest">
+                <Shield size={14} className="text-emerald-500" />
+                <span>{isMR ? '१००% सुरक्षित व्यवहार' : '100% Safe & Secure'}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* Payment Processing Overlay */}
-      {isProcessingPayment && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-6 text-center">
-          <div className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl animate-in fade-in zoom-in duration-300">
-            {paymentStep === 1 && (
-              <div className="space-y-6">
-                <div className="relative w-24 h-24 mx-auto">
-                  <div className="absolute inset-0 border-4 border-primary-100 rounded-full" />
-                  <div className="absolute inset-0 border-4 border-primary-600 rounded-full border-t-transparent animate-spin" />
-                  <div className="absolute inset-0 flex items-center justify-center text-3xl">🏦</div>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">{isMR ? 'बँकेशी जोडले जात आहे...' : isHI ? 'बैंक से जुड़ रहे हैं...' : 'Connecting to Bank...'}</h3>
-                  <p className="text-sm text-gray-400 mt-2">{isMR ? 'कृपया बॅक बटन दाबू नका' : 'Please do not press back button'}</p>
-                </div>
-              </div>
-            )}
-            {paymentStep === 2 && (
-              <div className="space-y-6">
-                <div className="relative w-24 h-24 mx-auto scale-110">
-                  <div className="absolute inset-0 bg-primary-100 rounded-full animate-ping opacity-20" />
-                  <div className="absolute inset-0 flex items-center justify-center text-4xl">🔐</div>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">{isMR ? 'पेमेंट व्हेरिफाय होत आहे...' : isHI ? 'पेमेंट सत्यापित हो रहा है...' : 'Verifying Payment...'}</h3>
-                  <div className="w-full bg-gray-100 h-2 rounded-full mt-4 overflow-hidden">
-                    <div className="bg-primary-600 h-full animate-[progress_2s_ease-in-out_infinite]" style={{ width: '60%' }} />
-                  </div>
-                </div>
-              </div>
-            )}
-            {paymentStep === 3 && (
-              <div className="space-y-6 animate-in slide-in-from-bottom duration-500">
-                <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full mx-auto flex items-center justify-center text-5xl animate-bounce">✓</div>
-                <div>
-                  <h3 className="text-2xl font-black text-green-600">{isMR ? 'पेमेंट यशस्वी!' : isHI ? 'भुगतान सफल!' : 'Payment Success!'}</h3>
-                  <p className="text-sm text-gray-500 mt-2">Transaction ID: TXN{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

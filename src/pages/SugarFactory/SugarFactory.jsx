@@ -146,14 +146,22 @@ const SugarFactory = () => {
   const fetchData = async () => {
     setIsFetching(true)
     try {
-      const [facRes, memRes] = await Promise.all([
-        factoryAPI.getAll(),
-        factoryAPI.getMyMemberships()
-      ])
+      const facRes = await factoryAPI.getAll()
       const factories = Array.isArray(facRes.data) ? facRes.data : (facRes.data?.value || [])
       setRawFactories(factories)
-      setMyMemberships(memRes.data)
-    } catch (e) { toast.error('Error') } finally { setIsFetching(false) }
+      
+      try {
+        const memRes = await factoryAPI.getMyMemberships()
+        setMyMemberships(memRes.data)
+      } catch (err) {
+        setMyMemberships([])
+      }
+    } catch (e) { 
+      toast.error('Failed to load factories') 
+      console.error(e)
+    } finally { 
+      setIsFetching(false) 
+    }
   }
 
   useEffect(() => { fetchData() }, [])
@@ -190,10 +198,17 @@ const SugarFactory = () => {
   if (selectedFactory) {
     return <RequestForm factory={selectedFactory} onBack={() => setSelectedFactory(null)} onSubmit={async (data) => {
       try {
-        await postRequest({ ...data, factoryId: selectedFactory._id })
-        toast.success(t('requestSent'))
-        setSelectedFactory(null)
-      } catch (err) { toast.error('Error') }
+        const reqId = await postRequest(
+          selectedFactory._id,
+          selectedFactory.name,
+          selectedFactory.ownerId || null,
+          data
+        )
+        if (reqId) {
+          toast.success(t('requestSent'))
+          setSelectedFactory(null)
+        }
+      } catch (err) { }
     }} loading={loading} t={t} />
   }
 
