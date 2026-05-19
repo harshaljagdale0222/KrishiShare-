@@ -7,7 +7,7 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const clearDB = async () => {
   const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/krishi-share';
-  
+
   try {
     console.log('🔄 MongoDB शी कनेक्ट होत आहे...');
     await mongoose.connect(uri);
@@ -25,7 +25,7 @@ const clearDB = async () => {
 
     console.log('\n✨ अभिनंदन! तुमचा सर्व डेटा सुरक्षितपणे डिलीट झाला आहे. 🚀');
     console.log('आता तुम्ही फ्रेश सुरुवात करू शकता.');
-    
+
     process.exit(0);
   } catch (error) {
     console.error('❌ चूक झाली:', error.message);
